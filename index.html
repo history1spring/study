@@ -903,6 +903,171 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   .bean-flavor-chip{min-height:36px;padding:0 11px;font-size:.8rem}
 }
 
+
+/* ===== 최종 가시성 보정: Q1 핵심맛 + 공부 결점두 ===== */
+.bean-flavor-chip{
+  background:var(--accent)!important;
+  color:#fff!important;
+  border-color:var(--accent)!important;
+  box-shadow:0 1px 0 rgba(73,43,24,.12);
+}
+.bean-flavor-chip:active{
+  transform:translateY(1px);
+}
+
+/* 공부 > 결점두 : 커피 테마 + 큰 글자 */
+.defect-exam-sheet{
+  max-width:940px!important;
+  border:2px solid #c9b49f!important;
+  border-radius:18px!important;
+  background:#fffdf9!important;
+  overflow:hidden!important;
+}
+.defect-exam-caption{
+  padding:14px 16px!important;
+  background:var(--accent)!important;
+  color:#fff!important;
+  border-bottom:0!important;
+  font-size:1.02rem!important;
+  font-weight:900!important;
+  letter-spacing:.02em!important;
+}
+.defect-exam-col{
+  border-color:#c9b49f!important;
+  background:#fffdf9!important;
+}
+.defect-exam-head,
+.defect-exam-col:nth-child(2) .defect-exam-head{
+  min-height:70px!important;
+  padding:12px 14px!important;
+  background:#eadcc9!important;
+  color:#3f2a1c!important;
+  border-color:#c9b49f!important;
+  font-size:1rem!important;
+  line-height:1.25!important;
+}
+.defect-exam-head small{
+  margin-top:3px!important;
+  color:#695746!important;
+  font-size:.78rem!important;
+}
+.defect-exam-subhead,
+.defect-exam-row{
+  grid-template-columns:minmax(0,1fr) 104px!important;
+}
+.defect-exam-subhead{
+  background:#f4ece1!important;
+  color:#5a4636!important;
+  border-color:#d8c8b8!important;
+  font-size:.82rem!important;
+}
+.defect-exam-subhead span{
+  padding:9px 12px!important;
+}
+.defect-exam-subhead span:last-child,
+.defect-exam-ratio{
+  border-color:#d8c8b8!important;
+}
+.defect-exam-row{
+  min-height:48px!important;
+  border-color:#e3d7cb!important;
+  background:#fffdf9!important;
+  font-size:.92rem!important;
+  line-height:1.35!important;
+}
+.defect-exam-row:nth-child(even){
+  background:#fbf6ef!important;
+}
+.defect-exam-name{
+  display:flex!important;
+  align-items:center!important;
+  padding:11px 13px!important;
+  font-weight:700!important;
+}
+.defect-exam-ratio{
+  padding:11px 7px!important;
+  background:#f2e5d6!important;
+  color:#52351f!important;
+  font-size:.9rem!important;
+  font-weight:900!important;
+}
+.defect-exam-grade{
+  border-color:#c9b49f!important;
+  background:#f7eee3!important;
+}
+.defect-exam-grade>div{
+  min-height:52px!important;
+  padding:12px 8px!important;
+  border-color:#d3c0ad!important;
+  background:#f7eee3!important;
+  color:#49311f!important;
+  font-size:.92rem!important;
+}
+.defect-exam-grade b{
+  font-size:1rem!important;
+  color:var(--accent)!important;
+}
+.defect-exam-foot{
+  padding:11px 14px!important;
+  background:#fffaf3!important;
+  border-color:#d8c8b8!important;
+  color:#6c5c50!important;
+  font-size:.8rem!important;
+  line-height:1.55!important;
+}
+
+@media(max-width:620px){
+  .bean-flavor-chip{
+    min-height:40px!important;
+    padding:0 13px!important;
+    font-size:.84rem!important;
+  }
+  .defect-exam-grid{
+    grid-template-columns:1fr!important;
+  }
+  .defect-exam-col{
+    border-right:0!important;
+    border-bottom:10px solid var(--bg)!important;
+  }
+  .defect-exam-col:last-child{
+    border-bottom:0!important;
+  }
+  .defect-exam-head,
+  .defect-exam-col:nth-child(2) .defect-exam-head{
+    min-height:62px!important;
+    padding:11px 13px!important;
+    font-size:.98rem!important;
+  }
+  .defect-exam-head small{
+    font-size:.76rem!important;
+  }
+  .defect-exam-subhead,
+  .defect-exam-row{
+    grid-template-columns:minmax(0,1fr) 98px!important;
+  }
+  .defect-exam-subhead{
+    font-size:.8rem!important;
+  }
+  .defect-exam-row{
+    min-height:50px!important;
+    font-size:.94rem!important;
+  }
+  .defect-exam-name{
+    padding:12px 12px!important;
+  }
+  .defect-exam-ratio{
+    padding:12px 6px!important;
+    font-size:.9rem!important;
+  }
+  .defect-exam-grade>div{
+    min-height:50px!important;
+    font-size:.9rem!important;
+  }
+  .defect-exam-foot{
+    font-size:.78rem!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -953,7 +1118,6 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
           <div id="answer-content"></div>
         </div>
       </div>
-      <p class="footer-note">1번은 5종 원두 중 랜덤 출제하고, 5번은 결점두 개수를 매번 새로 생성합니다.</p>
     </section>
 
     <section class="screen hidden" data-screen="study">
@@ -1865,15 +2029,7 @@ window.APP_DATA = {
   }
 
   function q1SummaryMarkup(bean) {
-    const roastInfo = bean.summary.slice(1, 4).map(x => esc(x)).join(" · ");
-    const strategy = bean.summary[bean.summary.length - 1] || "";
-    return `
-      ${beanFlavorChips(bean)}
-      <div class="bean-answer-copy">
-        <span class="eyebrow">핵심 로스팅 방향</span>
-        <p>${esc(strategy.replace(/^핵심:\s*/, ""))}</p>
-        <p class="bean-roast-line">${roastInfo}</p>
-      </div>`;
+    return `${beanFlavorChips(bean)}`;
   }
 
   function q1FullMarkup(bean) {
