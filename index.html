@@ -531,6 +531,22 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   align-items:flex-start;
 }
 
+
+/* iOS Safari: 커핑폼 칸 탭 시 페이지/가로 위치 고정 */
+.cf-svg-scroll{
+  overflow-anchor:none;
+  overscroll-behavior-x:contain;
+}
+.cf-hotspot{
+  outline:none!important;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.cf-detail{
+  overflow-anchor:none;
+  min-height:118px;
+}
+
 </style>
 </head>
 <body>
@@ -1462,7 +1478,7 @@ window.APP_DATA = {
 
   function cuppingFormModel() {
     const box = (key, x, y, w, h, label, sub = "") => `
-      <g class="cf-hotspot" data-cf-field="${key}" tabindex="0" role="button" aria-label="${label} 설명 보기">
+      <g class="cf-hotspot" data-cf-field="${key}" aria-label="${label} 설명 보기">
         <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3"></rect>
         <text x="${x + 8}" y="${y + 18}" class="cf-svg-label">${label}</text>
         ${sub ? `<text x="${x + 8}" y="${y + 34}" class="cf-svg-sub">${sub}</text>` : ""}
@@ -1508,7 +1524,7 @@ window.APP_DATA = {
           ${box("total", 1210, 94, 50, 180, "Total", "Score")}
 
           ${box("notes", 20, 274, 1190, 38, "Notes")}
-          <g class="cf-hotspot" data-cf-field="total" tabindex="0" role="button" aria-label="Final Score 설명 보기">
+          <g class="cf-hotspot" data-cf-field="total" aria-label="Final Score 설명 보기">
             <rect x="1090" y="282" width="170" height="30" rx="3" class="cf-final-rect"></rect>
             <text x="1110" y="302" class="cf-svg-label cf-final-label">Final Score</text>
           </g>
@@ -1532,26 +1548,54 @@ window.APP_DATA = {
 
   function bindCuppingForm(container) {
     if (!container) return;
+
     const detail = container.querySelector(".cf-detail");
     const title = detail?.querySelector("h3");
     const body = detail?.querySelector("p");
+    const scroller = container.querySelector(".cf-svg-scroll");
     const hotspots = [...container.querySelectorAll("[data-cf-field]")];
 
     const activate = (el) => {
       const info = cuppingFieldDescriptions[el.dataset.cfField];
       if (!info || !title || !body) return;
+
+      // iOS Safari에서 SVG 요소 탭 후 포커스/레이아웃 보정 때문에
+      // 페이지 또는 가로 스크롤이 튀는 현상을 막기 위해 위치를 먼저 저장한다.
+      const pageX = window.scrollX;
+      const pageY = window.scrollY;
+      const formScrollLeft = scroller ? scroller.scrollLeft : 0;
+      const formScrollTop = scroller ? scroller.scrollTop : 0;
+
       hotspots.forEach(x => x.classList.toggle("is-active", x === el));
       title.textContent = info[0];
       body.textContent = info[1];
+
+      // DOM 변경 직후와 다음 프레임에서 두 번 복원하면
+      // iOS의 지연된 scroll anchoring까지 막을 수 있다.
+      window.scrollTo(pageX, pageY);
+      if (scroller) {
+        scroller.scrollLeft = formScrollLeft;
+        scroller.scrollTop = formScrollTop;
+      }
+
+      requestAnimationFrame(() => {
+        window.scrollTo(pageX, pageY);
+        if (scroller) {
+          scroller.scrollLeft = formScrollLeft;
+          scroller.scrollTop = formScrollTop;
+        }
+      });
     };
 
     hotspots.forEach(el => {
-      el.addEventListener("click", () => activate(el));
-      el.addEventListener("keydown", e => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          activate(el);
-        }
+      // pointerdown에서 기본 포커스 이동을 차단
+      el.addEventListener("pointerdown", e => {
+        e.preventDefault();
+      });
+
+      el.addEventListener("click", e => {
+        e.preventDefault();
+        activate(el);
       });
     });
   }
