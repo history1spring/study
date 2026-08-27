@@ -1357,6 +1357,43 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   }
 }
 
+
+/* ===== 문제 1 풀버전 전용 로스팅 프로파일 ===== */
+#answer-content .roast-answer-block{
+  margin-top:14px;
+}
+#answer-content .roast-practice-head{
+  margin-bottom:9px;
+}
+#answer-content .roast-grid{
+  min-width:760px;
+}
+#answer-content .roast-grid th{
+  min-width:92px;
+  background:#eadbc9;
+  color:#4d321f;
+  font-weight:900;
+}
+#answer-content .roast-grid td{
+  min-width:72px;
+  text-align:center;
+}
+@media(max-width:620px){
+  #answer-content .roast-answer-block{
+    margin-top:12px;
+  }
+  #answer-content .roast-grid{
+    min-width:700px;
+    font-size:.78rem;
+  }
+  #answer-content .roast-grid th{
+    min-width:86px;
+  }
+  #answer-content .roast-grid td{
+    min-width:66px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1916,8 +1953,8 @@ window.APP_DATA = {
       <div class="roast-answer-block">
         <div class="roast-practice-head">
           <div>
-            <strong>로스팅 표 정답</strong>
-            <span>온도 · 화력 · 배기 포함</span>
+            <strong>로스팅 프로파일</strong>
+            <span>설명에 따른 온도 · 화력 · 배기 계획</span>
           </div>
           <span class="practice-badge answer">정답</span>
         </div>
@@ -2327,7 +2364,8 @@ window.APP_DATA = {
       <div class="bean-answer-copy">
         <span class="eyebrow">설명</span>
         <p>${esc(bean.full)}</p>
-      </div>`;
+      </div>
+      ${roastAnswerTable(bean)}`;
   }
 
   function showAnswer(type) {
