@@ -547,6 +547,24 @@ html.js-ready .js-required-warning{display:none}
   .study-step-num{width:27px;height:27px}
 }
 
+
+/* 커핑폼 항목 선택 시 화면 위치 유지 */
+.cf-svg-scroll,
+.cf-detail{
+  overflow-anchor:none;
+}
+.cf-hotspot{
+  -webkit-tap-highlight-color:transparent;
+}
+
+
+#question-label{
+  min-width:0;
+}
+.screen-head{
+  align-items:flex-start;
+}
+
 </style>
 </head>
 <body>
@@ -589,7 +607,6 @@ html.js-ready .js-required-warning{display:none}
             <span class="eyebrow">실전형 문제 보기</span>
             <h2 id="question-label">문제 1 · 로스팅 플랜</h2>
           </div>
-          <button id="random-question" type="button" class="primary-btn">랜덤 문제</button>
         </div>
 
         <div class="segmented" aria-label="문제 번호">
@@ -1576,7 +1593,6 @@ window.APP_DATA = {
       hotspots.forEach(x => x.classList.toggle("is-active", x === el));
       title.textContent = info[0];
       body.textContent = info[1];
-      detail.scrollIntoView({behavior:"smooth", block:"nearest"});
     };
 
     hotspots.forEach(el => {
@@ -1752,12 +1768,6 @@ window.APP_DATA = {
     currentQuestion = Number(btn.dataset.q);
     renderQuestion();
   }));
-  $("#random-question").addEventListener("click", () => {
-    currentQuestion = 1 + Math.floor(Math.random() * 5);
-    if (currentQuestion === 1) currentBean = randomBean();
-    if (currentQuestion === 5) currentDefects = generateDefects();
-    renderQuestion();
-  });
   $("#new-variant").addEventListener("click", () => {
     if (currentQuestion === 1) currentBean = randomBean();
     if (currentQuestion === 5) currentDefects = generateDefects();
