@@ -547,6 +547,24 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   min-height:118px;
 }
 
+
+/* 커핑폼 설명 박스 높이를 고정해 설명 변경 시 페이지 높이가 변하지 않도록 함 */
+.cf-detail{
+  height:190px;
+  min-height:190px;
+  max-height:190px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+@media(max-width:520px){
+  .cf-detail{
+    height:220px;
+    min-height:220px;
+    max-height:220px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1555,47 +1573,62 @@ window.APP_DATA = {
     const scroller = container.querySelector(".cf-svg-scroll");
     const hotspots = [...container.querySelectorAll("[data-cf-field]")];
 
+    let savedPageX = window.scrollX;
+    let savedPageY = window.scrollY;
+    let savedFormX = scroller ? scroller.scrollLeft : 0;
+    let savedFormY = scroller ? scroller.scrollTop : 0;
+    let armedHotspot = null;
+
+    const rememberPosition = (el) => {
+      savedPageX = window.scrollX;
+      savedPageY = window.scrollY;
+      savedFormX = scroller ? scroller.scrollLeft : 0;
+      savedFormY = scroller ? scroller.scrollTop : 0;
+      armedHotspot = el;
+    };
+
+    const restorePosition = () => {
+      window.scrollTo(savedPageX, savedPageY);
+      if (scroller) {
+        scroller.scrollLeft = savedFormX;
+        scroller.scrollTop = savedFormY;
+      }
+    };
+
     const activate = (el) => {
       const info = cuppingFieldDescriptions[el.dataset.cfField];
       if (!info || !title || !body) return;
-
-      // iOS Safari에서 SVG 요소 탭 후 포커스/레이아웃 보정 때문에
-      // 페이지 또는 가로 스크롤이 튀는 현상을 막기 위해 위치를 먼저 저장한다.
-      const pageX = window.scrollX;
-      const pageY = window.scrollY;
-      const formScrollLeft = scroller ? scroller.scrollLeft : 0;
-      const formScrollTop = scroller ? scroller.scrollTop : 0;
 
       hotspots.forEach(x => x.classList.toggle("is-active", x === el));
       title.textContent = info[0];
       body.textContent = info[1];
 
-      // DOM 변경 직후와 다음 프레임에서 두 번 복원하면
-      // iOS의 지연된 scroll anchoring까지 막을 수 있다.
-      window.scrollTo(pageX, pageY);
-      if (scroller) {
-        scroller.scrollLeft = formScrollLeft;
-        scroller.scrollTop = formScrollTop;
-      }
-
+      // iOS Safari는 tap → click 사이에 이미 화면을 재배치할 수 있으므로
+      // pointer/touch 시작 시점에 저장해 둔 위치를 여러 프레임에 걸쳐 복원한다.
+      restorePosition();
       requestAnimationFrame(() => {
-        window.scrollTo(pageX, pageY);
-        if (scroller) {
-          scroller.scrollLeft = formScrollLeft;
-          scroller.scrollTop = formScrollTop;
-        }
+        restorePosition();
+        requestAnimationFrame(restorePosition);
       });
+      setTimeout(restorePosition, 80);
     };
 
     hotspots.forEach(el => {
-      // pointerdown에서 기본 포커스 이동을 차단
-      el.addEventListener("pointerdown", e => {
+      el.addEventListener("pointerdown", () => rememberPosition(el), { passive: true });
+      el.addEventListener("touchstart", () => rememberPosition(el), { passive: true });
+
+      el.addEventListener("pointerup", e => {
         e.preventDefault();
+        if (armedHotspot === el) activate(el);
+        armedHotspot = null;
       });
 
+      // 일부 iOS 버전에서 pointerup 대신 click만 오는 경우의 fallback
       el.addEventListener("click", e => {
         e.preventDefault();
+        if (armedHotspot !== null && armedHotspot !== el) return;
         activate(el);
+        armedHotspot = null;
       });
     });
   }
