@@ -1068,6 +1068,249 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   }
 }
 
+
+/* ===== 공부 > 결점두 최종 레이아웃 보정 ===== */
+.defect-study-host{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+}
+.defect-study-host .defect-exam-sheet{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:14px 0 0!important;
+  border:2px solid #bda58e!important;
+  border-radius:16px!important;
+  background:#fffdf9!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+}
+.defect-study-host .defect-exam-caption{
+  padding:13px 14px!important;
+  background:#765238!important;
+  color:#fff!important;
+  border:0!important;
+  font-size:1rem!important;
+  line-height:1.25!important;
+  text-align:center!important;
+  font-weight:900!important;
+}
+.defect-study-host .defect-exam-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  width:100%!important;
+  min-width:0!important;
+  gap:0!important;
+}
+.defect-study-host .defect-exam-col{
+  min-width:0!important;
+  border-right:2px solid #cdb9a6!important;
+  border-bottom:0!important;
+  background:#fffdf9!important;
+}
+.defect-study-host .defect-exam-col:last-child{
+  border-right:0!important;
+}
+.defect-study-host .defect-exam-head,
+.defect-study-host .defect-exam-col:nth-child(2) .defect-exam-head{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  min-height:66px!important;
+  padding:10px 12px!important;
+  background:#e5d4c0!important;
+  color:#402919!important;
+  border-bottom:1px solid #cdb9a6!important;
+  font-size:.94rem!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+  box-sizing:border-box!important;
+}
+.defect-study-host .defect-exam-head small{
+  margin-top:3px!important;
+  color:#6a5747!important;
+  font-size:.72rem!important;
+  line-height:1.25!important;
+}
+.defect-study-host .defect-exam-subhead,
+.defect-study-host .defect-exam-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 94px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.defect-study-host .defect-exam-subhead{
+  background:#f4eadf!important;
+  color:#5b4432!important;
+  border-bottom:1px solid #d7c6b6!important;
+  font-size:.78rem!important;
+  font-weight:900!important;
+}
+.defect-study-host .defect-exam-subhead span{
+  padding:8px 10px!important;
+  min-width:0!important;
+}
+.defect-study-host .defect-exam-subhead span:last-child{
+  border-left:1px solid #d7c6b6!important;
+  text-align:center!important;
+}
+.defect-study-host .defect-exam-row{
+  min-height:48px!important;
+  border-bottom:1px solid #e2d5ca!important;
+  background:#fffdf9!important;
+  font-size:.86rem!important;
+  line-height:1.35!important;
+}
+.defect-study-host .defect-exam-row:nth-child(even){
+  background:#fcf7f1!important;
+}
+.defect-study-host .defect-exam-name{
+  display:flex!important;
+  align-items:center!important;
+  min-width:0!important;
+  padding:10px 11px!important;
+  color:#2f2924!important;
+  font-weight:750!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  hyphens:none!important;
+}
+.defect-study-host .defect-exam-ratio{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:0!important;
+  padding:10px 7px!important;
+  border-left:1px solid #d7c6b6!important;
+  background:#efe0ce!important;
+  color:#56361f!important;
+  font-size:.85rem!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+}
+.defect-study-host .defect-exam-grade{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  width:100%!important;
+  border-top:2px solid #bda58e!important;
+  background:#f5eadc!important;
+}
+.defect-study-host .defect-exam-grade>div{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  min-width:0!important;
+  min-height:52px!important;
+  padding:10px 6px!important;
+  border-right:1px solid #ccb8a4!important;
+  background:#f5eadc!important;
+  color:#402919!important;
+  font-size:.88rem!important;
+  box-sizing:border-box!important;
+}
+.defect-study-host .defect-exam-grade>div:last-child{
+  border-right:0!important;
+}
+.defect-study-host .defect-exam-grade b{
+  color:#765238!important;
+  font-size:.98rem!important;
+  font-weight:950!important;
+}
+.defect-study-host .defect-exam-grade span{
+  white-space:nowrap!important;
+  font-weight:900!important;
+}
+.defect-study-host .defect-exam-foot{
+  margin:0!important;
+  padding:10px 12px!important;
+  border-top:1px solid #d7c6b6!important;
+  background:#fff9f1!important;
+  color:#6b5b4f!important;
+  font-size:.76rem!important;
+  line-height:1.5!important;
+}
+
+/* 모바일: Category 1 / Category 2를 각각 카드 전체 폭으로 크게 표시 */
+@media(max-width:720px){
+  .study-pane[data-study-pane="defect"] .card{
+    padding-left:10px!important;
+    padding-right:10px!important;
+  }
+  .defect-study-host .defect-exam-sheet{
+    margin-top:12px!important;
+    border-radius:15px!important;
+  }
+  .defect-study-host .defect-exam-grid{
+    grid-template-columns:1fr!important;
+  }
+  .defect-study-host .defect-exam-col{
+    width:100%!important;
+    border-right:0!important;
+    border-bottom:9px solid #f5efe6!important;
+  }
+  .defect-study-host .defect-exam-col:last-child{
+    border-bottom:0!important;
+  }
+  .defect-study-host .defect-exam-head,
+  .defect-study-host .defect-exam-col:nth-child(2) .defect-exam-head{
+    min-height:58px!important;
+    padding:10px 12px!important;
+    font-size:.96rem!important;
+  }
+  .defect-study-host .defect-exam-head small{
+    font-size:.72rem!important;
+  }
+  .defect-study-host .defect-exam-subhead,
+  .defect-study-host .defect-exam-row{
+    grid-template-columns:minmax(0,1fr) 88px!important;
+  }
+  .defect-study-host .defect-exam-subhead{
+    font-size:.76rem!important;
+  }
+  .defect-study-host .defect-exam-row{
+    min-height:46px!important;
+    font-size:.88rem!important;
+  }
+  .defect-study-host .defect-exam-name{
+    padding:10px 12px!important;
+  }
+  .defect-study-host .defect-exam-ratio{
+    padding:10px 5px!important;
+    font-size:.84rem!important;
+  }
+  .defect-study-host .defect-exam-grade>div{
+    flex-direction:column!important;
+    gap:2px!important;
+    min-height:58px!important;
+    padding:8px 4px!important;
+    font-size:.8rem!important;
+  }
+  .defect-study-host .defect-exam-grade b{
+    font-size:.95rem!important;
+  }
+  .defect-study-host .defect-exam-foot{
+    padding:10px 11px!important;
+    font-size:.74rem!important;
+  }
+}
+
+@media(max-width:380px){
+  .defect-study-host .defect-exam-subhead,
+  .defect-study-host .defect-exam-row{
+    grid-template-columns:minmax(0,1fr) 82px!important;
+  }
+  .defect-study-host .defect-exam-row{
+    font-size:.84rem!important;
+  }
+  .defect-study-host .defect-exam-ratio{
+    font-size:.8rem!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1174,7 +1417,7 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
         <div class="card">
           <span class="eyebrow">GREEN DEFECTS</span>
           <h2>환산비 암기</h2>
-          <div id="defect-study-table" class="defect-study-grid"></div>
+          <div id="defect-study-table" class="defect-study-host"></div>
         </div>
       </div>
     </section>
