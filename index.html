@@ -79,7 +79,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid rgba(109,76,53,.24)
 .answer-panel h3{margin:4px 0 14px}
 .answer-lines{display:grid;gap:7px}
 .answer-lines p{margin:0;line-height:1.6}
-.full-answer{white-space:normal;line-height:1.85;margin:16px 0 0}
+.full-answer{white-space:pre-line;line-height:1.85;margin:16px 0 0}
 .note{font-size:.82rem;color:var(--muted);line-height:1.6;margin-top:12px}
 .bean-facts,.score-grid{
   display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 14px
@@ -413,6 +413,140 @@ html.js-ready .js-required-warning{display:none}
   .cf-scale-line{height:26px;margin-top:4px}
 }
 
+
+/* Study: beans */
+.bean-study-simple{display:block}
+.bean-keywords{max-width:none!important;justify-content:flex-start!important;margin:12px 0 18px}
+.bean-exam-answer{
+  border-top:1px solid var(--border);
+  padding-top:16px;
+}
+.bean-exam-answer .full-answer{margin-top:8px}
+
+/* Study: cupping complete notes */
+.cupping-study-section{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid var(--border);
+}
+.cupping-study-section:first-of-type{margin-top:10px}
+.cupping-study-section h3{margin:0 0 10px;font-size:1rem}
+.study-numbered{display:grid;gap:8px}
+.study-step{
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr);
+  gap:9px;
+  align-items:start;
+  padding:10px 11px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--viz-panel);
+  font-size:.86rem;
+  line-height:1.65;
+}
+.study-step-num{
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:var(--viz-accent-bg);
+  font-weight:900;
+}
+.study-sub{
+  display:block;
+  margin-top:5px;
+  color:var(--viz-muted);
+  font-size:.78rem;
+  line-height:1.7;
+}
+
+/* Cupping form: fixed-aspect source-like diagram, scrollable rather than broken */
+.cf-guide{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:10px 0 8px;
+  font-size:.75rem;
+  color:var(--viz-muted);
+}
+.cf-guide strong{color:var(--viz-text)}
+.cf-svg-scroll{
+  width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  border:1px solid var(--viz-border);
+  border-radius:15px;
+  background:#fff;
+}
+.cf-svg{
+  display:block;
+  width:980px;
+  height:auto;
+  min-width:980px;
+}
+.cf-page-bg{fill:#fff;stroke:#6b645e;stroke-width:2}
+.cf-brand{font-size:17px;font-weight:900;fill:#473f39}
+.cf-brand-sub{font-size:16px;font-weight:800;fill:#7b5139}
+.cf-meta-svg{font-size:12px;fill:#4b4642}
+.cf-hotspot{cursor:pointer;outline:none}
+.cf-hotspot rect{
+  fill:#fff;
+  stroke:#69635d;
+  stroke-width:1.5;
+  transition:fill .12s ease,stroke .12s ease;
+}
+.cf-hotspot:hover rect,
+.cf-hotspot:focus rect,
+.cf-hotspot.is-active rect{
+  fill:#f1e8dc;
+  stroke:#6d4c35;
+  stroke-width:2.5;
+}
+.cf-hotspot .cf-final-rect{fill:#d8a88f}
+.cf-hotspot.is-active .cf-final-rect{fill:#c99174}
+.cf-svg-label{font-size:12px;font-weight:900;fill:#302b27;pointer-events:none}
+.cf-svg-sub{font-size:9px;fill:#766f68;pointer-events:none}
+.cf-final-label{fill:#2c2520}
+.cf-ticks line{stroke:#777;stroke-width:1;pointer-events:none}
+.cf-detail{
+  margin-top:10px;
+  padding:14px;
+  border:1px solid var(--viz-border);
+  border-radius:14px;
+  background:var(--viz-panel);
+}
+.cf-detail h3{margin:5px 0 6px;font-size:1rem}
+.cf-detail p{margin:0;font-size:.84rem;line-height:1.7;color:var(--viz-muted)}
+
+/* Keep the defect conversion ratios within one mobile page width */
+.defect-study-grid{
+  grid-template-columns:1fr 1fr!important;
+  gap:7px!important;
+}
+.defect-group-title{padding:8px!important;font-size:.68rem!important}
+.defect-row{
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:4px!important;
+  padding:6px 7px!important;
+  font-size:.68rem!important;
+}
+.defect-row strong{
+  justify-self:start;
+  padding:3px 6px!important;
+  font-size:.63rem!important;
+}
+@media(max-width:520px){
+  .defect-study-grid{grid-template-columns:1fr 1fr!important}
+  .defect-group-title{font-size:.62rem!important;line-height:1.25}
+  .defect-row{font-size:.62rem!important;line-height:1.25}
+  .defect-row strong{font-size:.58rem!important}
+  .cf-svg{width:920px;min-width:920px}
+  .study-step{grid-template-columns:30px minmax(0,1fr);padding:9px 8px;font-size:.82rem}
+  .study-step-num{width:27px;height:27px}
+}
+
 </style>
 </head>
 <body>
@@ -504,13 +638,23 @@ html.js-ready .js-required-warning{display:none}
 
       <div class="study-pane hidden" data-study-pane="cupping">
         <div class="card">
-          <span class="eyebrow">BUSINESS CUPPING</span>
-          <h2>시간 흐름 암기</h2>
-          <div id="cupping-timeline" class="timeline"></div>
-          <div class="section-card" style="margin-top:14px">
-            <strong>6명 × 6종 최소 준비</strong>
-            <p class="full-answer">평가컵 30개 + 린싱컵 6개 = 최소 36개<br>커핑스푼 1인 2개 = 최소 12개<br>샘플당 11g × 5컵 / 물 92~94℃</p>
-          </div>
+          <span class="eyebrow">BUSINESS CUPPING · 문제 2·3 기반</span>
+          <h2>비즈니스 커핑 완전 정리</h2>
+
+          <section class="cupping-study-section">
+            <h3>1. 필요한 기물 · 수량 · 조건</h3>
+            <div id="cupping-equipment" class="study-numbered"></div>
+          </section>
+
+          <section class="cupping-study-section">
+            <h3>2. 주최자 진행 순서 · 문제 2</h3>
+            <div id="cupping-host-flow" class="study-numbered"></div>
+          </section>
+
+          <section class="cupping-study-section">
+            <h3>3. Buyer 평가 순서 · 문제 3</h3>
+            <div id="cupping-buyer-flow" class="study-numbered"></div>
+          </section>
         </div>
       </div>
 
@@ -726,27 +870,98 @@ window.APP_DATA = {
   questions: {
     2: {
       title: "비즈니스 커핑 주최",
-      prompt: "Buyer 6명, 생두 샘플 6종, 커핑테이블 1개를 기준으로 필요한 기물과 최소 수량을 쓰고, 커핑 진행 프로토콜을 순서대로 설명하시오.",
+      prompt: "Buyer 6명, 생두 샘플 6종, 커핑테이블 1개를 기준으로 비즈니스 커핑에 필요한 기물과 최소 수량을 빠짐없이 쓰고, 진행 프로토콜을 순서대로 설명하시오.",
       summary: [
-        "샘플당 11g × 5컵",
-        "커핑컵: 6종 × (평가컵 5 + 린싱컵 1) = 최소 36개",
-        "커핑스푼: 1인 2개 = 최소 12개",
-        "물: 92~94℃",
-        "Fragrance → Wet Aroma → 약 5분 Break/Skimming → 10분 Flavor/Aftertaste → 15분 Acidity/Body/Balance → 20분 Uniformity/Clean Cup/Sweetness/Overall → Defect/Final Score"
+        "【필요 기물】",
+        "① 원두: 24시간 전 로스팅, 8시간 이상 디개싱. 실온(24℃ 기준), 직사광선이 없는 서늘한 곳에 보관",
+        "② 물: 정수된 물 또는 일반 생수(50~100ppm 권장), 92~94℃의 끓인 물 사용",
+        "③ 커핑 컵: 샘플당 6개(린싱 컵 포함), 6종 기준 최소 36개",
+        "④ 커핑 스푼: 1인당 2개, 6명 기준 최소 12개",
+        "⑤ 기타: 커핑 폼, 그라인더, 저울, 온도계, 린싱 컵, 전기포트, 타이머, 린넨 및 행주, 필기구",
+        "【진행 핵심】 Fragrance → Wet Aroma → 5분 Break·Skimming → 10분 Flavor·Aftertaste → 15분 Acidity·Body·Balance → 20분 Uniformity·Clean Cup·Sweetness·Overall → Defect·Final Score"
       ],
-      full: "① 커핑 참가자에게 필요한 사전정보와 진행 안내를 전달합니다. ② 각 생두 샘플은 커핑컵의 용량에 맞춰 약 11g씩 5개의 평가컵에 준비합니다. 6종이므로 평가컵 30개에 린싱컵을 포함해 최소 36개의 컵을 준비합니다. ③ 참가자 6명 기준 커핑스푼은 1인 2개씩 최소 12개를 준비하고, 그라인더, 저울, 온도계, 전기포트, 타이머, 린넨과 행주, 필기구 등을 준비합니다. ④ 분쇄 후 Fragrance를 확인합니다. ⑤ 92~94℃의 물을 붓고 Wet Aroma를 확인합니다. ⑥ 약 5분 시점에 Break와 Skimming을 진행합니다. ⑦ 약 10분에 Flavor와 Aftertaste, 15분에 Acidity·Body·Balance, 20분에 Uniformity·Clean Cup·Sweetness·Overall을 평가합니다. ⑧ 마지막으로 Defect와 Final Score를 산출하고 참가자들과 Calibration을 진행합니다."
+      full: `【필요한 기물 및 수량】
+
+① 원두
+24시간 전 로스팅하고 8시간 이상 디개싱합니다. 실온(24℃ 기준)의 직사광선이 없는 서늘한 곳에 보관합니다.
+
+② 물
+정수된 물 또는 일반 생수(50~100ppm 권장)를 준비하고, 92~94℃의 끓인 물을 사용합니다.
+
+③ 커핑 컵
+샘플당 6개(린싱 컵 포함)를 준비합니다. 생두 6종 기준 최소 36개의 커핑 컵이 필요합니다.
+
+④ 커핑 스푼
+1인당 2개씩 준비합니다. Buyer 6명 기준 최소 12개의 커핑 스푼이 필요합니다.
+
+⑤ 기타
+커핑 폼, 그라인더, 저울, 온도계, 린싱 컵, 전기포트, 타이머, 린넨 및 행주, 필기구 등을 준비합니다.
+
+
+【커핑 절차 및 진행 순서】
+
+① 먼저 커핑에 참가한 참가자들에게 커핑에 필요한 사전정보 및 원활한 커핑 진행을 위한 안내사항을 전달합니다.
+
+② 각 종류의 샘플 원두를 커핑 컵의 용량에 맞춰 약 11g씩 소분하여 5개의 커핑 컵에 담아 둡니다.
+
+③ 디팅 그라인더 7.5 분쇄도에 맞춰 린싱 원두를 먼저 그라인딩한 후, 소분한 샘플 원두를 순서대로 분쇄합니다.
+
+④ 분쇄한 원두가 담긴 커핑 컵을 커핑 테이블에 순서대로 세팅한 후, 참가자에게 Fragrance(분쇄커피의 향)를 체크하도록 안내합니다.
+
+⑤ Fragrance 체크가 끝나면 92~94℃의 끓인 물을 부은 후 타이머를 작동하고 Wet Aroma 체크를 안내합니다.
+
+⑥ Wet Aroma(추출커피의 향) 체크가 끝나고 타이머가 5분이 되어갈 때 Break(결정향)와 Skimming을 안내합니다.
+
+⑦ Skimming이 모두 끝나면 사용한 린싱 컵을 정리하고 새로운 린싱 컵에 물을 부어 테이블에 준비해 둡니다.
+
+⑧ 타이머가 10분이 되면 첫 번째 Slurping의 시작을 알리고 Flavor / Aftertaste 항목의 평가를 안내합니다.
+
+⑨ 타이머가 15분이 되면 두 번째 Slurping의 시작을 알리고 Acidity / Body / Balance 항목의 평가를 안내합니다.
+
+⑩ 타이머가 20분이 되면 세 번째 Slurping의 시작을 알리고 Uniformity / Clean Cup / Sweetness / Overall 항목의 평가를 안내합니다.
+
+⑪ 모든 항목의 평가가 끝나면 Defect 점수와 Final Score를 산출한 후 주최자 및 참가자들과 자유로운 의견을 나눌 수 있도록 안내합니다.
+
+⑫ 참가자들이 의견을 나누는 동안 다음 샘플 원두를 준비하여 같은 방법으로 커핑을 진행합니다.`
     },
     3: {
       title: "구매자 커핑 프로토콜",
       prompt: "SCAA Specialty Grade Coffee 구매를 위한 비즈니스 커핑에 참여한다고 가정하고, 실제 커핑하듯 시간의 흐름과 Cupping Form 순서에 맞춰 정확한 프로토콜을 기술하시오.",
       summary: [
-        "Fragrance → Wet Aroma → Break/Skim",
-        "10분: Flavor / Aftertaste",
-        "15분: Acidity / Body / Balance",
-        "20분: Uniformity / Clean Cup / Sweetness / Overall",
-        "Defect → Final Score → Calibration"
+        "① 안내 확인 → 커핑 폼에 샘플 넘버·날짜·이름 기재",
+        "② 로스팅 정도 확인 → Fragrance 평가",
+        "③ 물 주입 후 Wet Aroma·Break·Skimming, Fragrance : Wet Aroma : Break = 5 : 3 : 2",
+        "④ 10분: Flavor / Aftertaste",
+        "⑤ 15분: Acidity / Body / Balance",
+        "⑥ 20분: Uniformity / Clean Cup / Sweetness / Overall",
+        "⑦ Total Score 계산 → Defect 반영 → Final Score",
+        "⑧ 다음 샘플 동일 진행",
+        "⑨ 전체 종료 후 Calibration·샘플 정보 의견 공유 → 생두 구매 여부 결정"
       ],
-      full: "샘플의 로스팅 상태를 확인하고 물을 붓기 전 Fragrance를 평가합니다. 주최자의 안내에 따라 물을 붓고 Wet Aroma를 확인한 뒤 약 5분에 Break와 Skimming을 진행합니다. 온도가 내려가면 첫 Slurping에서 Flavor와 Aftertaste를 평가합니다. 약 15분에는 Acidity, Body, Balance를 평가하고, 약 20분에는 Uniformity, Clean Cup, Sweetness, Overall을 평가합니다. 모든 항목 평가가 끝나면 Total Score를 계산하고 Defect를 반영해 Final Score를 산출합니다. 모든 샘플 커핑이 끝난 후 Calibration과 샘플 정보에 대한 의견을 나누고 구매 여부를 결정합니다."
+      full: `① 주최측의 안내와 주의사항을 잘 듣고 커핑 폼에 샘플 넘버, 날짜와 이름 등을 기재합니다.
+
+② 샘플 원두가 세팅되면 시각적으로 보이는 로스팅 정도를 체크한 후 Fragrance(분쇄커피의 향)를 체크합니다.
+• 분쇄커피의 향은 7.0~7.5점을 기준으로 부정적인 향과 긍정적인 향의 명확성, 복합성, 강도 등을 체크하여 점수에 반영합니다.
+• 고무탄 내, 암모니아, 페놀 등의 향이 지배적일 때(부정): 6.0~6.5점
+• 흙, 나무, 익히지 않은 야채 등의 향이 지배적일 때(부정): 6.5~6.75점
+• 볶은 곡물, 볶은 견과류 등의 고소한 향이 지배적일 때(긍정): 7.0~7.5점
+• 고소한 향과 더불어 잘 익은 과일의 달콤하고 새콤한 향이 느껴질 때(긍정): 7.5~8.0점
+• 과일의 달콤하고 새콤한 향과 더불어 블랙 티, 허브 또는 꽃향기가 느껴질 때(매우 긍정): 8.0~8.5점
+
+③ 주최측이 커핑 컵에 물을 부은 후 안내에 따라 Wet Aroma, Break, Skimming을 진행하고 점수를 기입합니다.
+• Fragrance, Wet Aroma, Break의 점수는 5 : 3 : 2 정도의 비율을 적용하여 점수에 산정합니다.
+
+④ 물을 부은 지 10분 후, 주최측이 첫 번째 Slurping을 안내하면 커핑 컵 순서에 맞게 Slurping을 한 후 Flavor(커피에서 느껴지는 지배적인 향미)와 Aftertaste(커피를 마시고 난 후 느껴지는 후미·여운)를 평가합니다.
+
+⑤ 물을 부은 지 15분 후, 주최측이 두 번째 Slurping을 안내하면 커핑 컵 순서에 맞게 Slurping을 한 후 Acidity(산미), Body(농도와 촉감), Balance(맛과 향, 바디의 조화로움)를 평가합니다.
+
+⑥ 물을 부은 지 20분 후, 주최측이 세 번째 Slurping을 안내하면 커핑 컵 순서에 맞게 Slurping을 한 후 Uniformity(균일성), Clean Cup(결점향의 여부 및 투명성), Sweetness(단맛의 속성), Overall(평가자의 기호)을 평가합니다.
+
+⑦ 모든 항목의 평가가 끝나면 지금까지의 점수를 계산하여 Total 점수를 산정한 후, Defect(향미결점) 여부를 반영하여 Final 점수를 산출합니다.
+
+⑧ 주최자의 진행에 따라 다음 샘플도 동일하게 진행합니다.
+
+⑨ 모든 원두 샘플의 커핑이 끝나면 Calibration 및 샘플 정보 등의 의견을 나눈 후 생두의 구입 여부를 결정합니다.`
     },
     4: {
       title: "SCAA Cupping Form",
@@ -1200,6 +1415,10 @@ window.APP_DATA = {
           </div>
           <p class="note">등급 기준: G1 0~4 / G2 5~12 / G3 13~24. 환산 시 나머지는 올림하지 않습니다.</p>`;
       }
+    } else if (currentQuestion === 4) {
+      html = `
+        ${cuppingFormModel()}
+        <p class="note">커핑폼의 각 칸을 눌러 항목 설명을 확인할 수 있습니다. 시험에서는 항목의 위치와 전체 틀을 함께 암기하세요.</p>`;
     } else {
       const q = data.questions[currentQuestion];
       if (type === "summary") {
@@ -1211,6 +1430,7 @@ window.APP_DATA = {
 
     $("#answer-title").textContent = type === "summary" ? "요약 답안" : "풀버전 답안";
     $("#answer-content").innerHTML = html;
+    if (currentQuestion === 4) bindCuppingForm($("#answer-content"));
     panel.classList.remove("hidden");
     panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
@@ -1219,25 +1439,17 @@ window.APP_DATA = {
     currentStudyBean = bean;
     setActive("[data-bean]", el => el.dataset.bean === bean.id);
     $("#bean-detail").innerHTML = `
-      <div class="study-head">
+      <div class="study-head bean-study-simple">
         <div>
-          <span class="eyebrow">원두 5종</span>
+          <span class="eyebrow">원두 특색</span>
           <h2>${esc(bean.name)}</h2>
         </div>
-        <div class="keyword-wrap">${bean.keywords.map(k => `<span class="tag">${esc(k)}</span>`).join("")}</div>
       </div>
-      <div class="bean-facts">
-        <div><span>배전</span><strong>${esc(bean.roastLevel)}</strong></div>
-        <div><span>투입</span><strong>${esc(bean.charge)}</strong></div>
-        <div><span>1C</span><strong>${esc(bean.firstCrack)}</strong></div>
-        <div><span>배출</span><strong>${esc(bean.drop)}</strong></div>
-        <div><span>발현</span><strong>${esc(bean.development)}</strong></div>
-      </div>
-      ${profileTable(bean)}
-      <details>
-        <summary>시험용 풀답안 펼치기</summary>
+      <div class="keyword-wrap bean-keywords">${bean.keywords.map(k => `<span class="tag">${esc(k)}</span>`).join("")}</div>
+      <section class="bean-exam-answer">
+        <span class="eyebrow">시험용 풀답안</span>
         <p class="full-answer">${esc(bean.full)}</p>
-      </details>`;
+      </section>`;
   }
 
   function renderStudy(kind) {
@@ -1246,91 +1458,120 @@ window.APP_DATA = {
     if (kind === "beans") renderStudyBean(currentStudyBean);
   }
 
+  const cuppingFieldDescriptions = {
+    sample: ["Sample No.", "각 커핑 샘플을 구분하기 위한 번호를 적는 칸입니다."],
+    roast: ["Roast Level", "샘플이 세팅되면 시각적으로 보이는 로스팅 정도를 확인·표시하는 부분입니다."],
+    fragrance: ["Fragrance / Aroma", "분쇄커피의 향(Fragrance)과 물을 부은 뒤의 향을 평가하는 영역입니다. 이 시험자료에서는 Fragrance, Wet Aroma, Break를 5 : 3 : 2 정도의 비율로 점수에 반영합니다."],
+    flavor: ["Flavor", "Slurping할 때 커피에서 느껴지는 지배적인 향미를 평가합니다. 문제 3에서는 물을 부은 지 약 10분 후 첫 번째 Slurping에서 평가합니다."],
+    aftertaste: ["Aftertaste", "커피를 마신 뒤 남는 후미와 여운을 평가합니다. Flavor와 함께 첫 번째 Slurping에서 평가합니다."],
+    acidity: ["Acidity", "커피의 산미를 평가하는 영역입니다. 문제 3에서는 약 15분 후 두 번째 Slurping에서 평가합니다."],
+    body: ["Body", "커피의 농도와 입안에서 느껴지는 촉감을 평가합니다. Acidity, Balance와 함께 두 번째 Slurping에서 평가합니다."],
+    uniformity: ["Uniformity", "여러 커핑 컵에서 향미가 균일하게 나타나는지를 평가합니다. 약 20분 후 세 번째 Slurping에서 평가합니다."],
+    balance: ["Balance", "맛과 향, 바디가 서로 얼마나 조화로운지를 평가합니다."],
+    clean: ["Clean Cup", "결점향의 여부와 커피가 깨끗하고 투명하게 느껴지는지를 평가합니다."],
+    sweetness: ["Sweetness", "커피에서 느껴지는 단맛의 속성을 평가합니다."],
+    overall: ["Overall", "전체적인 커피 품질에 대한 평가자의 기호와 종합적인 인상을 반영합니다."],
+    defects: ["Defects", "향미 결점 여부를 기록하는 영역입니다. 모든 평가가 끝난 뒤 Defect를 반영하여 Final Score를 산출합니다."],
+    total: ["Total / Final Score", "각 평가항목을 합산해 Total Score를 계산하고 Defect를 반영해 Final Score를 산출합니다."],
+    notes: ["Notes", "샘플의 향미 특징이나 평가 중 확인한 내용을 자유롭게 메모하는 영역입니다."],
+    quality: ["Quality Scale", "6점대 GOOD, 7점대 VERY GOOD, 8점대 EXCELLENT, 9점대 OUTSTANDING으로 점수 범위를 참고하는 표입니다."]
+  };
+
   function cuppingFormModel() {
+    const box = (key, x, y, w, h, label, sub = "") => `
+      <g class="cf-hotspot" data-cf-field="${key}" tabindex="0" role="button" aria-label="${label} 설명 보기">
+        <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3"></rect>
+        <text x="${x + 8}" y="${y + 18}" class="cf-svg-label">${label}</text>
+        ${sub ? `<text x="${x + 8}" y="${y + 34}" class="cf-svg-sub">${sub}</text>` : ""}
+      </g>`;
+
     return `
-      <div class="cf-paper" role="img" aria-label="SCAA Arabica Cupping Form 모형">
-        <div class="cf-header">
-          <div class="cf-title">
-            <strong>Specialty Coffee Association</strong>
-            <span>Arabica Cupping Form</span>
-          </div>
-          <div class="cf-meta">
-            <div>Name <i></i></div>
-            <div>Date <i></i></div>
-            <div>Table no. <i></i></div>
-          </div>
-          <div class="cf-quality">
-            <b>Quality Scale</b>
-            <span>6.00 · GOOD</span>
-            <span>7.00 · VERY GOOD</span>
-            <span>8.00 · EXCELLENT</span>
-            <span>9.00 · OUTSTANDING</span>
-          </div>
-        </div>
+      <div class="cf-guide">
+        <span>↔ 가로로 밀어 전체 틀 확인</span>
+        <strong>각 칸을 누르면 설명이 나옵니다.</strong>
+      </div>
+      <div class="cf-svg-scroll">
+        <svg class="cf-svg" viewBox="0 0 1280 330" xmlns="http://www.w3.org/2000/svg" aria-label="SCAA Arabica Cupping Form 모형">
+          <rect class="cf-page-bg" x="1" y="1" width="1278" height="328" rx="10"></rect>
 
-        <div class="cf-main">
-          <div class="cf-cell cf-sample">
-            <b>Sample<br>No.</b>
-            <div class="cf-blank-tall"></div>
-          </div>
+          <text x="24" y="30" class="cf-brand">Specialty Coffee Association</text>
+          <text x="24" y="50" class="cf-brand-sub">Arabica Cupping Form</text>
 
-          <div class="cf-cell cf-roast">
-            <b>Roast<br>Level</b>
-            <div class="cf-roast-bars">
-              <i></i><i></i><i></i><i></i><i></i>
-            </div>
-          </div>
+          <g class="cf-meta-svg">
+            <text x="250" y="28">Name: __________________</text>
+            <text x="250" y="47">Date: ___________________</text>
+            <text x="250" y="66">Table no: _______________</text>
+          </g>
 
-          <div class="cf-cell cf-fragrance">
-            <div class="cf-label">Fragrance/Aroma <small>Score</small></div>
-            <div class="cf-scale-line"></div>
-            <div class="cf-mini-row"><span>Dry</span><span>Crust</span><span>Break</span></div>
-            <div class="cf-intensity"><span>Intensity</span><i></i><i></i><i></i><i></i></div>
-          </div>
+          ${box("quality", 650, 14, 600, 62, "Quality Scale", "6 GOOD · 7 VERY GOOD · 8 EXCELLENT · 9 OUTSTANDING")}
 
-          <div class="cf-cell">
-            <div class="cf-label">Flavor <small>Score</small></div>
-            <div class="cf-scale-line"></div>
-          </div>
+          <!-- Main form, matching the long horizontal structure of the source form -->
+          ${box("sample", 20, 94, 70, 180, "Sample No.")}
+          ${box("roast", 90, 94, 70, 180, "Roast Level")}
 
-          <div class="cf-cell">
-            <div class="cf-label">Aftertaste <small>Score</small></div>
-            <div class="cf-scale-line"></div>
-          </div>
+          ${box("fragrance", 160, 94, 210, 90, "Fragrance/Aroma", "Dry · Crust · Break · Intensity")}
+          ${box("flavor", 370, 94, 130, 90, "Flavor", "Score")}
+          ${box("aftertaste", 500, 94, 130, 90, "Aftertaste", "Score")}
+          ${box("acidity", 630, 94, 130, 90, "Acidity", "Intensity · High / Low")}
+          ${box("body", 760, 94, 120, 90, "Body", "Level · Heavy / Thin")}
+          ${box("uniformity", 880, 94, 110, 44, "Uniformity", "□ □ □ □ □")}
+          ${box("clean", 990, 94, 110, 44, "Clean Cup", "□ □ □ □ □")}
+          ${box("overall", 1100, 94, 110, 90, "Overall", "Score")}
 
-          <div class="cf-cell">
-            <div class="cf-label">Acidity <small>Score</small></div>
-            <div class="cf-scale-line"></div>
-            <div class="cf-level"><span>Intensity</span><span>High</span><span>Low</span></div>
-          </div>
+          ${box("fragrance", 160, 184, 210, 90, "Aroma / Intensity", "향 강도 기록")}
+          ${box("balance", 370, 184, 260, 90, "Balance", "Score")}
+          ${box("sweetness", 630, 184, 250, 90, "Sweetness", "□ □ □ □ □")}
+          ${box("defects", 880, 138, 330, 136, "Defects", "Taint · Fault · # of cups · Intensity")}
+          ${box("total", 1210, 94, 50, 180, "Total", "Score")}
 
-          <div class="cf-cell">
-            <div class="cf-label">Body <small>Score</small></div>
-            <div class="cf-scale-line"></div>
-            <div class="cf-level"><span>Level</span><span>Heavy</span><span>Thin</span></div>
-          </div>
+          ${box("notes", 20, 274, 1190, 38, "Notes")}
+          <g class="cf-hotspot" data-cf-field="total" tabindex="0" role="button" aria-label="Final Score 설명 보기">
+            <rect x="1090" y="282" width="170" height="30" rx="3" class="cf-final-rect"></rect>
+            <text x="1110" y="302" class="cf-svg-label cf-final-label">Final Score</text>
+          </g>
 
-          <div class="cf-right">
-            <div class="cf-right-top">
-              <div class="cf-small-box"><b>Uniformity</b><div class="cf-boxes"><i></i><i></i><i></i><i></i><i></i></div></div>
-              <div class="cf-small-box"><b>Clean Cup</b><div class="cf-boxes"><i></i><i></i><i></i><i></i><i></i></div></div>
-              <div class="cf-small-box"><b>Overall</b><div class="cf-scale-line"></div></div>
-            </div>
-            <div class="cf-right-bottom">
-              <div class="cf-small-box"><b>Balance</b><div class="cf-scale-line"></div></div>
-              <div class="cf-small-box"><b>Sweetness</b><div class="cf-boxes"><i></i><i></i><i></i><i></i><i></i></div></div>
-              <div class="cf-small-box cf-defects"><b>Defects</b><span>Taint × 2</span><span>Fault × 4</span><div class="cf-defect-input"></div></div>
-            </div>
-          </div>
-
-          <div class="cf-score-box">
-            <span>Total Score</span>
-            <b>Final Score</b>
-          </div>
-
-          <div class="cf-notes"><b>Notes:</b></div>
-        </div>
+          <!-- scale-like marks to keep the form visually close to the paper form -->
+          <g class="cf-ticks">
+            ${Array.from({length: 13}, (_,i)=>`<line x1="${174+i*15}" y1="130" x2="${190+i*15}" y2="${i%2?145:151}"></line>`).join("")}
+            ${Array.from({length: 7}, (_,i)=>`<line x1="${384+i*14}" y1="130" x2="${400+i*14}" y2="${i%2?145:151}"></line>`).join("")}
+            ${Array.from({length: 7}, (_,i)=>`<line x1="${514+i*14}" y1="130" x2="${518+i*14}" y2="${i%2?145:151}"></line>`).join("")}
+            ${Array.from({length: 7}, (_,i)=>`<line x1="${644+i*14}" y1="130" x2="${643+i*14}" y2="${i%2?145:151}"></line>`).join("")}
+            ${Array.from({length: 7}, (_,i)=>`<line x1="${774+i*14}" y1="130" x2="${769+i*14}" y2="${i%2?145:151}"></line>`).join("")}
+          </g>
+        </svg>
+      </div>
+      <div class="cf-detail" aria-live="polite">
+        <span class="eyebrow">항목 설명</span>
+        <h3>커핑폼의 칸을 눌러보세요</h3>
+        <p>각 평가항목이 무엇을 의미하는지 아래에 설명합니다.</p>
       </div>`;
+  }
+
+  function bindCuppingForm(container) {
+    if (!container) return;
+    const detail = container.querySelector(".cf-detail");
+    const title = detail?.querySelector("h3");
+    const body = detail?.querySelector("p");
+    const hotspots = [...container.querySelectorAll("[data-cf-field]")];
+
+    const activate = (el) => {
+      const info = cuppingFieldDescriptions[el.dataset.cfField];
+      if (!info || !title || !body) return;
+      hotspots.forEach(x => x.classList.toggle("is-active", x === el));
+      title.textContent = info[0];
+      body.textContent = info[1];
+      detail.scrollIntoView({behavior:"smooth", block:"nearest"});
+    };
+
+    hotspots.forEach(el => {
+      el.addEventListener("click", () => activate(el));
+      el.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          activate(el);
+        }
+      });
+    });
   }
 
   function defectStudyMarkup() {
@@ -1350,27 +1591,96 @@ window.APP_DATA = {
     return `${group("Category 1 · Primary Defects", cat1)}${group("Category 2 · Secondary Defects", cat2)}`;
   }
 
+  function numberedStudy(items) {
+    return items.map((item, i) => `
+      <div class="study-step">
+        <span class="study-step-num">${["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩","⑪","⑫"][i] || (i+1)}</span>
+        <div>${item}</div>
+      </div>`).join("");
+  }
+
   function buildStaticStudy() {
-    $("#cupping-timeline").innerHTML = data.cuppingTimeline.map(([time, item]) => `
-      <div class="timeline-row"><span>${esc(time)}</span><strong>${esc(item)}</strong></div>`).join("");
-    $("#cupping-form-model").innerHTML = cuppingFormModel();
+    const equipment = [
+      `<strong>원두</strong><br>24시간 전 로스팅, 8시간 이상 디개싱. 실온(24℃ 기준), 직사광선이 없는 서늘한 곳에 보관`,
+      `<strong>물</strong><br>정수된 물 또는 일반 생수(50~100ppm 권장), 92~94℃의 끓인 물 사용`,
+      `<strong>커핑 컵</strong><br>샘플당 6개(린싱 컵 포함). 6종 기준 최소 36개`,
+      `<strong>커핑 스푼</strong><br>1인당 2개. Buyer 6명 기준 최소 12개`,
+      `<strong>기타</strong><br>커핑 폼, 그라인더, 저울, 온도계, 린싱 컵, 전기포트, 타이머, 린넨 및 행주, 필기구`
+    ];
+
+    const hostFlow = [
+      `참가자에게 커핑에 필요한 사전정보와 원활한 진행을 위한 안내사항 전달`,
+      `각 샘플 원두를 커핑 컵 용량에 맞춰 약 <strong>11g씩</strong> 소분하여 <strong>5개의 커핑 컵</strong>에 담기`,
+      `<strong>디팅 그라인더 7.5</strong> 분쇄도에 맞춰 린싱 원두를 먼저 그라인딩한 후 샘플 원두를 순서대로 분쇄`,
+      `분쇄 원두가 담긴 컵을 순서대로 세팅하고 <strong>Fragrance(분쇄커피의 향)</strong> 체크 안내`,
+      `Fragrance 체크 후 <strong>92~94℃</strong>의 물을 붓고 타이머 작동 → <strong>Wet Aroma</strong> 체크 안내`,
+      `타이머 약 <strong>5분</strong>에 <strong>Break(결정향)와 Skimming</strong> 안내`,
+      `Skimming 종료 후 사용한 린싱 컵을 정리하고 새 린싱 컵에 물을 부어 준비`,
+      `타이머 <strong>10분</strong>: 첫 번째 Slurping → <strong>Flavor / Aftertaste</strong> 평가 안내`,
+      `타이머 <strong>15분</strong>: 두 번째 Slurping → <strong>Acidity / Body / Balance</strong> 평가 안내`,
+      `타이머 <strong>20분</strong>: 세 번째 Slurping → <strong>Uniformity / Clean Cup / Sweetness / Overall</strong> 평가 안내`,
+      `모든 평가 종료 후 <strong>Defect 점수와 Final Score</strong> 산출 → 자유로운 의견 공유 안내`,
+      `의견을 나누는 동안 다음 샘플 원두를 준비하고 같은 방법으로 반복`
+    ];
+
+    const buyerFlow = [
+      `주최측 안내와 주의사항 확인 → 커핑 폼에 <strong>샘플 넘버·날짜·이름</strong> 기재`,
+      `샘플의 <strong>로스팅 정도</strong>를 시각적으로 체크한 뒤 <strong>Fragrance</strong> 평가<br>
+       <span class="study-sub">Fragrance 기준: 7.0~7.5점을 기준으로 명확성·복합성·강도 등을 반영<br>
+       6.0~6.5: 고무탄 내·암모니아·페놀 등 / 6.5~6.75: 흙·나무·익히지 않은 야채 등<br>
+       7.0~7.5: 볶은 곡물·볶은 견과류 / 7.5~8.0: 고소함 + 잘 익은 과일의 달콤·새콤함<br>
+       8.0~8.5: 과일의 달콤·새콤함 + 블랙 티·허브·꽃향</span>`,
+      `물 주입 후 <strong>Wet Aroma → Break → Skimming</strong> 진행 후 점수 기입<br>
+       <span class="study-sub"><strong>Fragrance : Wet Aroma : Break = 5 : 3 : 2</strong> 정도의 비율로 점수 산정</span>`,
+      `물 주입 후 <strong>10분</strong>: 첫 번째 Slurping → <strong>Flavor(지배적 향미) / Aftertaste(후미·여운)</strong> 평가`,
+      `물 주입 후 <strong>15분</strong>: 두 번째 Slurping → <strong>Acidity(산미) / Body(농도와 촉감) / Balance(맛·향·바디의 조화)</strong> 평가`,
+      `물 주입 후 <strong>20분</strong>: 세 번째 Slurping → <strong>Uniformity(균일성) / Clean Cup(결점향 여부·투명성) / Sweetness(단맛 속성) / Overall(평가자의 기호)</strong> 평가`,
+      `각 항목 점수를 계산해 <strong>Total Score</strong> 산정 → <strong>Defect</strong>를 반영하여 <strong>Final Score</strong> 산출`,
+      `주최자의 진행에 따라 다음 샘플도 동일한 방법으로 진행`,
+      `모든 샘플 종료 후 <strong>Calibration</strong>과 샘플 정보 등에 대한 의견 공유 → <strong>생두 구입 여부 결정</strong>`
+    ];
+
+    $("#cupping-equipment").innerHTML = numberedStudy(equipment);
+    $("#cupping-host-flow").innerHTML = numberedStudy(hostFlow);
+    $("#cupping-buyer-flow").innerHTML = numberedStudy(buyerFlow);
+
+    const formRoot = $("#cupping-form-model");
+    formRoot.innerHTML = cuppingFormModel();
+    bindCuppingForm(formRoot);
+
     $("#defect-study-table").innerHTML = defectStudyMarkup();
   }
 
   function memoryCards() {
-    const cards = [];
-    cards.push(
-      { cat: "cupping", label: "커핑", q: "물을 붓고 약 10분 시점에 평가하는 항목은?", a: "Flavor / Aftertaste" },
-      { cat: "cupping", label: "커핑", q: "약 15분 시점에 평가하는 항목은?", a: "Acidity / Body / Balance" },
-      { cat: "cupping", label: "커핑", q: "약 20분 시점에 평가하는 항목은?", a: "Uniformity / Clean Cup / Sweetness / Overall" },
-      { cat: "cupping", label: "커핑", q: "Buyer 6명, 원두 6종일 때 최소 커핑컵 수는?", a: "36개 — 평가컵 30개 + 린싱컵 6개" },
-      { cat: "cupping", label: "커핑", q: "Buyer 6명일 때 커핑스푼 최소 수는?", a: "12개 — 1인 2개" },
-      { cat: "defect", label: "결점", q: "Partial Black 몇 개가 Full Defect 1점인가?", a: "3개" },
+    const cards = [
+      { cat: "cupping", label: "커핑", q: "커핑용 원두는 언제 로스팅하고 얼마나 디개싱하는가?", a: "24시간 전 로스팅 / 8시간 이상 디개싱" },
+      { cat: "cupping", label: "커핑", q: "커핑용 물의 권장 ppm과 사용 온도는?", a: "50~100ppm 권장 / 92~94℃" },
+      { cat: "cupping", label: "커핑", q: "Buyer 6명, 원두 6종일 때 최소 커핑컵 수는?", a: "36개 — 샘플당 6개(린싱 컵 포함)" },
+      { cat: "cupping", label: "커핑", q: "Buyer 6명일 때 최소 커핑스푼 수는?", a: "12개 — 1인당 2개" },
+      { cat: "cupping", label: "커핑", q: "샘플 원두는 컵당 몇 g, 몇 컵에 담는가?", a: "약 11g씩 / 5개의 커핑 컵" },
+      { cat: "cupping", label: "커핑", q: "시험자료의 디팅 그라인더 분쇄도는?", a: "7.5" },
+      { cat: "cupping", label: "커핑", q: "물을 붓기 전에 평가하는 것은?", a: "Fragrance — 분쇄커피의 향" },
+      { cat: "cupping", label: "커핑", q: "물을 부은 직후 체크하는 것은?", a: "Wet Aroma — 추출커피의 향" },
+      { cat: "cupping", label: "커핑", q: "약 5분 시점에 진행하는 것은?", a: "Break(결정향) / Skimming" },
+      { cat: "cupping", label: "커핑", q: "Fragrance : Wet Aroma : Break 점수 반영 비율은?", a: "5 : 3 : 2 정도" },
+      { cat: "cupping", label: "커핑", q: "약 10분 첫 번째 Slurping 평가항목은?", a: "Flavor / Aftertaste" },
+      { cat: "cupping", label: "커핑", q: "약 15분 두 번째 Slurping 평가항목은?", a: "Acidity / Body / Balance" },
+      { cat: "cupping", label: "커핑", q: "약 20분 세 번째 Slurping 평가항목은?", a: "Uniformity / Clean Cup / Sweetness / Overall" },
+      { cat: "cupping", label: "커핑", q: "Skimming이 끝난 뒤 주최자가 해야 하는 일은?", a: "사용한 린싱 컵을 정리하고 새 린싱 컵에 물을 부어 테이블에 준비" },
+      { cat: "cupping", label: "커핑", q: "모든 샘플 커핑이 끝난 뒤 하는 것은?", a: "Calibration 및 샘플 정보 의견 공유 후 생두 구입 여부 결정" },
+
+      { cat: "defect", label: "결점", q: "Full Black 몇 개가 Full Defect 1점인가?", a: "1개" },
+      { cat: "defect", label: "결점", q: "Full Sour 몇 개가 Full Defect 1점인가?", a: "1개" },
       { cat: "defect", label: "결점", q: "Severe Insect Damaged 몇 개가 1점인가?", a: "5개" },
+      { cat: "defect", label: "결점", q: "Partial Black 몇 개가 1점인가?", a: "3개" },
+      { cat: "defect", label: "결점", q: "Partial Sour 몇 개가 1점인가?", a: "3개" },
+      { cat: "defect", label: "결점", q: "Parchment·Floater·Immature·Withered·Shell·Broken/Chipped/Cut·Hull/Husk는 몇 개가 1점인가?", a: "각 5개" },
       { cat: "defect", label: "결점", q: "Slight Insect Damaged 몇 개가 1점인가?", a: "10개" },
+      { cat: "defect", label: "결점", q: "Ethiopia G1의 결점수 범위는?", a: "0~4점" },
       { cat: "defect", label: "결점", q: "Ethiopia G2의 결점수 범위는?", a: "5~12점" },
+      { cat: "defect", label: "결점", q: "Ethiopia G3의 결점수 범위는?", a: "13~24점" },
       { cat: "defect", label: "결점", q: "결점두 환산에서 나머지는 올림하는가?", a: "아니오. 완성된 묶음만 환산합니다." }
-    );
+    ];
     return cards;
   }
 
