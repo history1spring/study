@@ -1794,6 +1794,112 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   color:#7c7168!important;
 }
 
+
+/* ===== 문제 5 자동 합계 ===== */
+.q5-summary-inputs .q5-auto-total{
+  background:#f4eadf!important;
+  color:#5a3923!important;
+  border-color:#d7c1aa!important;
+  font-weight:900!important;
+  text-align:center!important;
+  cursor:default;
+}
+.q5-summary-inputs .q5-auto-total:focus{
+  outline:none;
+  box-shadow:none;
+}
+
+
+/* ===== 문제 1 · 다른 원두 직접 선택 ===== */
+.q1-bean-picker{
+  margin-top:10px;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:#f8f2ea;
+}
+.q1-bean-picker-head{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+.q1-bean-picker-head strong{
+  color:#4d321f;
+  font-size:.92rem;
+}
+.q1-bean-picker-head span{
+  color:var(--muted);
+  font-size:.72rem;
+  font-weight:700;
+}
+.q1-bean-picker-options{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:7px;
+}
+.q1-bean-option{
+  min-width:0;
+  min-height:72px;
+  padding:9px 7px;
+  border:1px solid #d6c7b8;
+  border-radius:12px;
+  background:#fffdf9;
+  color:var(--text);
+  text-align:left;
+}
+.q1-bean-option strong,
+.q1-bean-option span{
+  display:block;
+}
+.q1-bean-option strong{
+  margin-bottom:4px;
+  color:#4d321f;
+  font-size:.82rem;
+}
+.q1-bean-option span{
+  color:var(--muted);
+  font-size:.62rem;
+  line-height:1.35;
+}
+.q1-bean-option.is-current{
+  border-color:#7b5639;
+  background:#eadbc9;
+}
+.q1-bean-option.is-current strong{
+  color:#4b301e;
+}
+
+@media(max-width:620px){
+  .q1-bean-picker-head{
+    display:block;
+  }
+  .q1-bean-picker-head span{
+    display:block;
+    margin-top:3px;
+  }
+  .q1-bean-picker-options{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .q1-bean-option{
+    min-height:68px;
+  }
+}
+
+
+/* ===== 문제 5 풀버전: 0점 결점도 모두 표시 ===== */
+.q5-answer-table tr.is-zero td{
+  background:#fbfaf8;
+  color:#857b73;
+}
+.q5-answer-table tr.is-zero td:first-child{
+  color:#615a54;
+}
+.q5-answer-table tr.is-zero td:last-child strong{
+  color:#8b8179;
+}
+
 </style>
 </head>
 <body>
@@ -1836,6 +1942,14 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
           <button id="summary-answer" type="button" class="action-btn">요약 답안</button>
           <button id="full-answer" type="button" class="action-btn">풀버전 답안</button>
           <button id="new-variant" type="button" class="action-btn primary wide">새 랜덤 출제</button>
+        </div>
+
+        <div id="q1-bean-picker" class="q1-bean-picker hidden" aria-label="다른 원두 선택">
+          <div class="q1-bean-picker-head">
+            <strong>다른 원두 선택</strong>
+            <span>연습할 원두를 직접 선택하세요.</span>
+          </div>
+          <div id="q1-bean-picker-options" class="q1-bean-picker-options"></div>
         </div>
 
         <div id="answer-panel" class="answer-panel hidden" aria-live="polite">
@@ -2267,12 +2381,70 @@ window.APP_DATA = {
   }
 
   function generateDefects() {
-    for (let tries = 0; tries < 300; tries++) {
-      const rows = data.defects.map(d => ({ ...d, count: Math.floor(Math.random() * (d.max + 1)) }));
-      const total = rows.reduce((sum, d) => sum + Math.floor(d.count / d.ratio), 0);
-      if (total >= 3 && total <= 24) return rows;
+    // 등급 연습이 한쪽으로 치우치지 않도록 먼저 목표 등급대를 정한 뒤
+    // 그 범위 안에서 Full Defect Equivalent가 나오도록 결점 개수를 생성한다.
+    // G1 약 35% / G2 약 40% / G3 약 25%
+    const roll = Math.random();
+    const band = roll < 0.35
+      ? { min: 1, max: 4 }
+      : roll < 0.75
+        ? { min: 5, max: 12 }
+        : { min: 13, max: 24 };
+
+    const targetTotal = band.min + Math.floor(Math.random() * (band.max - band.min + 1));
+    const rows = data.defects.map(d => ({ ...d, count: 0 }));
+
+    let remaining = targetTotal;
+    let safety = 0;
+
+    // 환산점수의 합이 목표 총점이 되도록 1점 단위로 무작위 배분
+    while (remaining > 0 && safety < 500) {
+      safety++;
+      const candidates = rows.filter(d =>
+        Math.floor(d.count / d.ratio) < Math.floor(d.max / d.ratio)
+      );
+      if (!candidates.length) break;
+
+      const picked = candidates[Math.floor(Math.random() * candidates.length)];
+      picked.count += picked.ratio;
+      remaining--;
     }
-    return data.defects.map(d => ({ ...d, count: 0 }));
+
+    // 같은 환산점수 안에서도 실제 개수는 매번 조금씩 달라지도록
+    // ratio 미만의 나머지를 일부 행에만 추가한다.
+    const activeSecondary = rows
+      .filter(d => d.ratio > 1 && d.count > 0 && d.count < d.max)
+      .sort(() => Math.random() - 0.5);
+
+    const remainderRows =
+      targetTotal <= 4 ? 1 :
+      targetTotal <= 12 ? 2 :
+      3;
+
+    activeSecondary.slice(0, remainderRows).forEach(d => {
+      const maxRemainder = Math.min(d.ratio - 1, d.max - d.count);
+      if (maxRemainder > 0) {
+        d.count += Math.floor(Math.random() * (maxRemainder + 1));
+      }
+    });
+
+    // 낮은 등급에서도 '개수는 있으나 환산점수 0점'인 사례를 가끔 연습할 수 있게
+    // 0~1개 행에만 나머지 개수를 추가한다.
+    if (Math.random() < 0.45) {
+      const zeroScoreCandidates = rows
+        .filter(d => d.ratio > 1 && d.count === 0)
+        .sort(() => Math.random() - 0.5);
+
+      const d = zeroScoreCandidates[0];
+      if (d) {
+        const maxZeroCount = Math.min(d.ratio - 1, d.max);
+        if (maxZeroCount > 0) {
+          d.count = 1 + Math.floor(Math.random() * maxZeroCount);
+        }
+      }
+    }
+
+    return rows;
   }
 
   function defectTotals(rows) {
@@ -2417,15 +2589,15 @@ window.APP_DATA = {
         <div class="q5-summary-inputs">
           <label>
             <span>Category 1 합계</span>
-            <input id="q5-cat1" type="number" inputmode="numeric" min="0" max="50" step="1" placeholder="점수">
+            <input id="q5-cat1" class="q5-auto-total" type="number" value="0" readonly aria-label="Category 1 자동 합계">
           </label>
           <label>
             <span>Category 2 합계</span>
-            <input id="q5-cat2" type="number" inputmode="numeric" min="0" max="50" step="1" placeholder="점수">
+            <input id="q5-cat2" class="q5-auto-total" type="number" value="0" readonly aria-label="Category 2 자동 합계">
           </label>
           <label>
-            <span>총 결점수</span>
-            <input id="q5-total" type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="점수">
+            <span>총 점수 합계</span>
+            <input id="q5-total" class="q5-auto-total" type="number" value="0" readonly aria-label="Category 1과 Category 2 총 점수 자동 합계">
           </label>
           <label>
             <span>등급</span>
@@ -2445,6 +2617,32 @@ window.APP_DATA = {
         </div>
         <div id="q5-grade-result" class="q5-grade-result hidden" aria-live="polite"></div>
       </div>`;
+  }
+
+
+  function updateQ5AutoTotals() {
+    if (currentQuestion !== 5) return;
+
+    const t = defectTotals(currentDefects);
+    let cat1 = 0;
+    let cat2 = 0;
+
+    t.rows.forEach((d, i) => {
+      const input = $(`[data-q5-eq="${i}"]`);
+      const value = readIntInput(input);
+      const score = value === null ? 0 : Math.max(0, value);
+
+      if (d.cat === 1) cat1 += score;
+      if (d.cat === 2) cat2 += score;
+    });
+
+    const cat1El = $("#q5-cat1");
+    const cat2El = $("#q5-cat2");
+    const totalEl = $("#q5-total");
+
+    if (cat1El) cat1El.value = cat1;
+    if (cat2El) cat2El.value = cat2;
+    if (totalEl) totalEl.value = cat1 + cat2;
   }
 
   function readIntInput(el) {
@@ -2478,31 +2676,10 @@ window.APP_DATA = {
       }
     });
 
-    const checks = [
-      { id: "#q5-cat1", expected: t.c1, label: "Category 1" },
-      { id: "#q5-cat2", expected: t.c2, label: "Category 2" },
-      { id: "#q5-total", expected: t.total, label: "총 결점수" }
-    ];
+    updateQ5AutoTotals();
 
-    let summaryCorrect = 0;
-    let summaryAnswered = 0;
-
-    checks.forEach(item => {
-      const input = $(item.id);
-      input.classList.remove("is-correct", "is-wrong", "is-empty");
-      const user = readIntInput(input);
-      if (user === null) {
-        input.classList.add("is-empty");
-      } else {
-        summaryAnswered++;
-        if (user === item.expected) {
-          summaryCorrect++;
-          input.classList.add("is-correct");
-        } else {
-          input.classList.add("is-wrong");
-        }
-      }
-    });
+    const summaryCorrect = 0;
+    const summaryAnswered = 0;
 
     const gradeInput = $("#q5-grade");
     const expectedGrade = grade(t.total);
@@ -2521,9 +2698,9 @@ window.APP_DATA = {
       }
     }
 
-    const totalCorrect = correctRows + summaryCorrect + gradeCorrect;
-    const totalItems = t.rows.length + checks.length + 1;
-    const totalAnswered = answeredRows + summaryAnswered + gradeAnswered;
+    const totalCorrect = correctRows + gradeCorrect;
+    const totalItems = t.rows.length + 1;
+    const totalAnswered = answeredRows + gradeAnswered;
     const result = $("#q5-grade-result");
 
     if (totalAnswered === 0) {
@@ -2541,7 +2718,7 @@ window.APP_DATA = {
       <div class="q5-result-key">
         <span>정답: Cat.1 ${t.c1}</span>
         <span>Cat.2 ${t.c2}</span>
-        <span>총 ${t.total}</span>
+        <span>총 점수 합계 ${t.total}</span>
         <span>${expectedGrade}</span>
       </div>`;
     result.className = `q5-grade-result ${perfect ? "perfect" : "graded"}`;
@@ -2555,7 +2732,7 @@ window.APP_DATA = {
     ["#q5-cat1", "#q5-cat2", "#q5-total"].forEach(id => {
       const el = $(id);
       if (el) {
-        el.value = "";
+        el.value = "0";
         el.classList.remove("is-correct", "is-wrong", "is-empty");
       }
     });
@@ -2572,6 +2749,28 @@ window.APP_DATA = {
     }
   }
 
+
+  function renderQ1BeanPicker() {
+    const picker = $("#q1-bean-picker-options");
+    if (!picker) return;
+
+    picker.innerHTML = data.beans.map(bean => `
+      <button
+        type="button"
+        class="q1-bean-option ${bean.id === currentBean.id ? "is-current" : ""}"
+        data-q1-bean="${bean.id}"
+        aria-pressed="${bean.id === currentBean.id ? "true" : "false"}">
+        <strong>${esc(bean.short)}</strong>
+        <span>${esc(bean.name)}</span>
+      </button>
+    `).join("");
+  }
+
+  function closeQ1BeanPicker() {
+    const picker = $("#q1-bean-picker");
+    if (picker) picker.classList.add("hidden");
+  }
+
   function renderQuestion() {
     setActive("[data-q]", el => Number(el.dataset.q) === currentQuestion);
     const label = $("#question-label");
@@ -2581,6 +2780,7 @@ window.APP_DATA = {
     const fullBtn = $("#full-answer");
 
     // 기본 상태
+    closeQ1BeanPicker();
     summaryBtn.textContent = "요약 답안";
     summaryBtn.classList.remove("wide");
     fullBtn.classList.remove("hidden");
@@ -2593,15 +2793,17 @@ window.APP_DATA = {
         <span class="eyebrow">랜덤 지정 생두</span>
         <h2>${esc(currentBean.name)}</h2>
         <p>위 생두의 특성을 고려하여 목표 향미를 설정하고, 투입부터 배출까지의 로스팅 플랜과 그 이유를 서술하시오.</p>`;
-      variantBtn.textContent = "다른 원두 출제";
+      variantBtn.textContent = "다른 원두 선택하기";
+      renderQ1BeanPicker();
     } else if (currentQuestion === 5) {
       label.textContent = "문제 5 · 결점두 환산";
       const t = defectTotals(currentDefects);
       body.innerHTML = `
         <span class="eyebrow">랜덤 결점수</span>
         <h2>Full Defect Equivalent 계산</h2>
-        <p>아래 결점두를 환산한 뒤 각 항목의 환산점수, Category별 합계, 총 결점수와 에티오피아 등급을 작성하고 채점해 보세요.</p>
+        <p>아래 결점두를 환산한 뒤 각 항목의 환산점수, 각 항목의 환산점수를 입력하면 Category별 합계와 총 점수 합계가 자동 계산됩니다. 에티오피아 등급을 선택한 뒤 채점해 보세요.</p>
         ${q5EntryForm(t)}`;
+      updateQ5AutoTotals();
       variantBtn.textContent = "새 결점수 생성";
     } else {
       const q = data.questions[currentQuestion];
@@ -2790,12 +2992,12 @@ window.APP_DATA = {
           <div class="score-grid">
             <div><span>Category 1</span><strong>${t.c1}</strong></div>
             <div><span>Category 2</span><strong>${t.c2}</strong></div>
-            <div><span>총 결점수</span><strong>${t.total}</strong></div>
+            <div><span>총 점수 합계</span><strong>${t.total}</strong></div>
             <div><span>등급</span><strong>${grade(t.total)}</strong></div>
           </div>`;
       } else {
         const answerCategoryTable = (cat, title) => {
-          const rows = t.rows.filter(d => d.cat === cat && d.count > 0);
+          const rows = t.rows.filter(d => d.cat === cat);
           return `
             <section class="q5-answer-category">
               <div class="q5-answer-category-head">
@@ -2813,14 +3015,13 @@ window.APP_DATA = {
                     </tr>
                   </thead>
                   <tbody>
-                    ${rows.length ? rows.map(d => `
-                      <tr>
+                    ${rows.map(d => `
+                      <tr class="${d.eq === 0 ? "is-zero" : ""}">
                         <td>${esc(d.name)}</td>
                         <td><strong>${d.count}개</strong></td>
                         <td>${d.ratio}개 → 1점</td>
                         <td><strong>${d.eq}점</strong></td>
-                      </tr>`).join("") : `
-                      <tr><td colspan="4" class="q5-answer-empty">출제된 결점 없음</td></tr>`}
+                      </tr>`).join("")}
                   </tbody>
                 </table>
               </div>
@@ -2836,7 +3037,7 @@ window.APP_DATA = {
           <div class="q5-answer-summary">
             <div><span>Category 1 합계</span><strong>${t.c1}점</strong></div>
             <div><span>Category 2 합계</span><strong>${t.c2}점</strong></div>
-            <div><span>총 결점수</span><strong>${t.total}점</strong></div>
+            <div><span>총 점수 합계</span><strong>${t.total}점</strong></div>
             <div class="grade"><span>에티오피아 등급</span><strong>${grade(t.total)}</strong></div>
           </div>
 
@@ -3363,9 +3564,28 @@ window.APP_DATA = {
     renderQuestion();
   }));
   $("#new-variant").addEventListener("click", () => {
-    if (currentQuestion === 1) currentBean = randomBean();
-    if (currentQuestion === 5) currentDefects = generateDefects();
+    if (currentQuestion === 1) {
+      const picker = $("#q1-bean-picker");
+      renderQ1BeanPicker();
+      picker.classList.toggle("hidden");
+      return;
+    }
+    if (currentQuestion === 5) {
+      currentDefects = generateDefects();
+      renderQuestion();
+    }
+  });
+
+  $("#q1-bean-picker").addEventListener("click", (event) => {
+    const btn = event.target.closest("[data-q1-bean]");
+    if (!btn) return;
+
+    const bean = data.beans.find(item => item.id === btn.dataset.q1Bean);
+    if (!bean) return;
+
+    currentBean = bean;
     renderQuestion();
+    closeQ1BeanPicker();
   });
   $("#summary-answer").addEventListener("click", () => showAnswer("summary"));
   $("#full-answer").addEventListener("click", () => showAnswer("full"));
@@ -3374,6 +3594,9 @@ window.APP_DATA = {
     const resetBtn = event.target.closest("#q5-reset-btn");
     if (gradeBtn) gradeQ5();
     if (resetBtn) resetQ5Inputs();
+  });
+  $("#question-body").addEventListener("input", (event) => {
+    if (event.target.matches("[data-q5-eq]")) updateQ5AutoTotals();
   });
 
   $$("[data-study]").forEach(btn => btn.addEventListener("click", () => renderStudy(btn.dataset.study)));
