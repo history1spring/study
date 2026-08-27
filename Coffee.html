@@ -1,0 +1,1214 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f2eb">
+  <meta name="description" content="로스트마스터 종강평가 모바일 학습 웹앱">
+  <title>로스트마스터 스터디</title>
+  <style>
+
+:root{
+  --bg:#f6f2eb;
+  --surface:#fffdfa;
+  --surface-2:#f1ebe2;
+  --text:#2e2925;
+  --muted:#766f68;
+  --border:#ded5ca;
+  --accent:#6d4c35;
+  --accent-2:#eadfce;
+  --good:#446451;
+  --shadow:0 10px 30px rgba(58,45,35,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+button{font:inherit}
+button:focus-visible,summary:focus-visible{outline:3px solid rgba(109,76,53,.24);outline-offset:2px}
+.hidden{display:none!important}
+.app-shell{max-width:1040px;margin:0 auto;padding:18px 16px 96px}
+.hero{
+  display:flex;gap:18px;align-items:flex-end;justify-content:space-between;
+  padding:8px 2px 18px;
+}
+.hero h1{margin:4px 0 0;font-size:clamp(1.6rem,5vw,2.4rem);letter-spacing:-.04em}
+.hero p{margin:6px 0 0;color:var(--muted);font-size:.94rem;line-height:1.6}
+.hero-badge{
+  flex:0 0 auto;background:var(--accent);color:#fff;border-radius:999px;
+  padding:9px 12px;font-size:.78rem;font-weight:800
+}
+.top-tabs{
+  position:sticky;top:0;z-index:20;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+  padding:10px 0 14px;background:linear-gradient(var(--bg) 78%,rgba(246,242,235,0));
+}
+.top-tabs button,.segmented button,.chip-row button,.action-btn,.primary-btn{
+  min-height:46px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text);font-weight:800;
+}
+.top-tabs button[aria-selected=true],.segmented button[aria-pressed=true],.chip-row button[aria-pressed=true]{
+  background:var(--accent);color:#fff;border-color:var(--accent)
+}
+.screen{animation:fade .18s ease}
+@keyframes fade{from{opacity:.5;transform:translateY(3px)}to{opacity:1;transform:none}}
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);
+  padding:18px;
+}
+.section-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px}
+.screen-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.screen-head h2{margin:2px 0 0;font-size:1.15rem}
+.eyebrow{display:block;color:var(--muted);font-size:.74rem;font-weight:900;letter-spacing:.04em}
+.primary-btn{padding:0 16px;background:var(--accent-2)}
+.segmented{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:14px 0}
+.question-box{
+  background:var(--surface-2);border:1px solid var(--border);border-radius:18px;padding:18px
+}
+.question-box h2{font-size:1.2rem;line-height:1.45;margin:7px 0 8px;letter-spacing:-.02em}
+.question-box p{margin:0;color:#504942;line-height:1.75}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.actions .wide{grid-column:1/-1}
+.action-btn{padding:0 13px;background:var(--surface)}
+.action-btn.primary{background:var(--accent-2)}
+.answer-panel{margin-top:12px;padding:16px;border:1px solid var(--border);border-radius:18px;background:var(--surface)}
+.answer-panel h3{margin:4px 0 14px}
+.answer-lines{display:grid;gap:7px}
+.answer-lines p{margin:0;line-height:1.6}
+.full-answer{white-space:normal;line-height:1.85;margin:16px 0 0}
+.note{font-size:.82rem;color:var(--muted);line-height:1.6;margin-top:12px}
+.bean-facts,.score-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 14px
+}
+.bean-facts div,.score-grid div{
+  background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:11px;min-width:0
+}
+.bean-facts span,.score-grid span{display:block;color:var(--muted);font-size:.72rem;font-weight:700}
+.bean-facts strong,.score-grid strong{display:block;margin-top:4px;font-size:.95rem;overflow-wrap:anywhere}
+.table-wrap{overflow-x:auto;margin-top:14px;border:1px solid var(--border);border-radius:14px;background:#fff}
+table{border-collapse:collapse;width:100%;min-width:520px}
+th,td{padding:11px 10px;border-bottom:1px solid var(--border);text-align:left;font-size:.86rem}
+th{font-size:.75rem;color:var(--muted);background:#faf7f2}
+tr:last-child td{border-bottom:0}
+.compact table{min-width:560px}
+.study-nav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.study-nav button{
+  min-height:46px;border:1px solid var(--border);border-radius:14px;background:var(--surface);font-weight:800
+}
+.study-nav button[aria-pressed=true]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-row{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px}
+.chip-row button{flex:0 0 auto;padding:0 14px}
+.study-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.study-head h2{font-size:1.18rem;margin:5px 0}
+.keyword-wrap{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;max-width:48%}
+.tag{font-size:.75rem;font-weight:800;padding:7px 9px;background:var(--accent-2);border-radius:999px}
+details{margin-top:14px;border-top:1px solid var(--border);padding-top:14px}
+summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:center}
+.timeline{display:grid;gap:8px}
+.timeline-row{
+  display:grid;grid-template-columns:90px 1fr;gap:12px;align-items:center;
+  padding:12px 0;border-bottom:1px solid var(--border)
+}
+.timeline-row:last-child{border-bottom:0}
+.timeline-row span{color:var(--muted);font-size:.8rem}
+.order-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.order-chip{display:flex;align-items:center;gap:9px;border:1px solid var(--border);border-radius:13px;padding:10px;font-size:.86rem;font-weight:800}
+.order-chip span{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--accent-2);font-size:.72rem}
+.memory-filters{display:flex;gap:7px;overflow-x:auto;margin:10px 0 12px}
+.memory-filters button{
+  flex:0 0 auto;min-height:44px;border:1px solid var(--border);border-radius:999px;background:var(--surface);padding:0 14px;font-weight:800
+}
+.memory-filters button[aria-pressed=true]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.memory-card{background:var(--surface-2);border:1px solid var(--border);border-radius:20px;padding:20px;min-height:210px;display:flex;flex-direction:column}
+.memory-card h2{font-size:1.25rem;line-height:1.55;margin:12px 0}
+.memory-answer{margin-top:auto;padding-top:18px;border-top:1px solid var(--border);font-size:1.05rem;font-weight:850;line-height:1.6}
+.memory-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.footer-note{margin:14px 4px 0;color:var(--muted);font-size:.76rem;line-height:1.6}
+@media(max-width:720px){
+  .hero{align-items:flex-start;flex-direction:column}
+  .hero-badge{align-self:flex-start}
+  .study-nav{grid-template-columns:repeat(2,1fr)}
+  .bean-facts{grid-template-columns:repeat(2,1fr)}
+  .score-grid{grid-template-columns:repeat(2,1fr)}
+  .study-head{display:block}
+  .keyword-wrap{max-width:none;justify-content:flex-start;margin-top:10px}
+}
+@media(max-width:380px){
+  .app-shell{padding-left:12px;padding-right:12px}
+  .card{padding:14px}
+  .segmented{gap:5px}
+  .segmented button{min-height:44px}
+  .actions,.memory-actions{grid-template-columns:1fr}
+  .actions .wide{grid-column:auto}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important}
+  .screen{animation:none}
+}
+
+
+.roast-practice{margin-top:16px;padding-top:15px;border-top:1px dashed var(--border)}
+.roast-answer-block{margin:4px 0 16px}
+.roast-practice-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}
+.roast-practice-head strong{display:block;font-size:.92rem}
+.roast-practice-head span:not(.practice-badge){display:block;margin-top:2px;color:var(--muted);font-size:.74rem}
+.practice-badge{flex:0 0 auto;padding:6px 9px;border-radius:999px;background:#eee7dd;color:var(--muted);font-size:.7rem;font-weight:900}
+.practice-badge.answer{background:var(--accent);color:#fff}
+.roast-grid-wrap{margin-top:0}
+.roast-grid{min-width:900px}
+.roast-grid th{position:sticky;left:0;z-index:2;min-width:92px;background:#faf7f2}
+.roast-grid td{min-width:68px;text-align:center;font-size:.8rem;white-space:nowrap}
+.practice-grid td{height:46px;background:#fff}
+.practice-grid .blank-cell span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#f4efe8;color:#9a9289;font-size:.68rem;font-weight:800}
+.answer-grid td{font-weight:750}
+@media(max-width:520px){
+  .roast-practice{margin-left:-2px;margin-right:-2px}
+  .roast-grid{min-width:820px}
+  .roast-grid th{min-width:86px}
+  .roast-grid td{min-width:62px;padding:10px 7px}
+}
+
+
+.q5-entry{margin-top:16px;padding-top:16px;border-top:1px dashed var(--border)}
+.q5-entry-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.q5-entry-head strong{display:block;font-size:.95rem}
+.q5-entry-head span{display:block;margin-top:3px;color:var(--muted);font-size:.75rem}
+.q5-input-table input{
+  width:72px;min-height:42px;border:1px solid var(--border);border-radius:10px;background:#fff;
+  padding:8px;text-align:center;font-size:16px;color:var(--text)
+}
+.q5-summary-inputs{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px
+}
+.q5-summary-inputs label{display:block}
+.q5-summary-inputs label>span{display:block;margin:0 0 5px 2px;color:var(--muted);font-size:.73rem;font-weight:800}
+.q5-summary-inputs input,.q5-summary-inputs select{
+  width:100%;min-height:46px;border:1px solid var(--border);border-radius:12px;background:#fff;
+  padding:8px 10px;font-size:16px;color:var(--text)
+}
+.q5-grade-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.q5-grade-result{
+  margin-top:12px;border:1px solid var(--border);border-radius:14px;padding:12px;background:var(--surface)
+}
+.q5-grade-result strong{display:block}
+.q5-grade-result span{display:block;margin-top:4px;color:var(--muted);font-size:.78rem;line-height:1.5}
+.q5-grade-result.perfect{border-color:#8fb49a;background:#eef6f0}
+.q5-grade-result.graded{background:#fbf8f3}
+.q5-grade-result.warning{background:#f4f1ec}
+.q5-result-key{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.q5-result-key span{
+  margin:0;padding:5px 8px;border-radius:999px;background:var(--surface-2);color:var(--text);font-weight:800;font-size:.72rem
+}
+.q5-input-table tr.is-correct td{background:#f0f8f2}
+.q5-input-table tr.is-wrong td{background:#fff0ef}
+.q5-input-table tr.is-empty td{background:#f7f5f2}
+.q5-score-input.is-correct,.q5-summary-inputs input.is-correct,.q5-summary-inputs select.is-correct{
+  border-color:#6f9d7a;background:#f0f8f2
+}
+.q5-score-input.is-wrong,.q5-summary-inputs input.is-wrong,.q5-summary-inputs select.is-wrong{
+  border-color:#c87d74;background:#fff0ef
+}
+.q5-score-input.is-empty,.q5-summary-inputs input.is-empty,.q5-summary-inputs select.is-empty{
+  border-color:#aaa39b;background:#f7f5f2
+}
+@media(max-width:720px){
+  .q5-summary-inputs{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:380px){
+  .q5-grade-actions{grid-template-columns:1fr}
+}
+
+
+.js-required-warning{display:block}
+html.js-ready .js-required-warning{display:none}
+
+
+.browser-guide{
+  max-width:720px;
+  margin:14px auto 2px;
+  padding:13px 14px;
+  display:flex;
+  align-items:flex-start;
+  gap:11px;
+  border:1px solid #d9cec1;
+  border-radius:16px;
+  background:#fffaf3;
+  color:#3c342e;
+  box-shadow:0 4px 14px rgba(58,45,35,.05);
+}
+.browser-guide-icon{
+  flex:0 0 auto;
+  font-size:1.35rem;
+  line-height:1.2;
+  padding-top:1px;
+}
+.browser-guide-text{
+  min-width:0;
+  line-height:1.55;
+}
+.browser-guide-text strong{
+  display:block;
+  margin-bottom:3px;
+  font-size:.9rem;
+}
+.browser-guide-text span{
+  display:block;
+  color:#6f665e;
+  font-size:.8rem;
+}
+@media(max-width:520px){
+  .browser-guide{
+    margin:10px 12px 2px;
+    padding:12px;
+    border-radius:14px;
+  }
+  .browser-guide-text span{
+    font-size:.78rem;
+  }
+}
+
+</style>
+</head>
+<body>
+
+  <noscript>
+    <div style="max-width:720px;margin:20px auto;padding:16px;border:1px solid #cbbfb1;border-radius:14px;background:#fff8ef;color:#3c342e;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;line-height:1.65">
+      <strong style="display:block;margin-bottom:6px">이 화면은 HTML 미리보기라 기능이 실행되지 않습니다.</strong>
+      이 파일은 JavaScript를 사용하는 학습앱입니다. 파일을 내려받은 뒤 Safari·Chrome·Edge 같은 실제 브라우저에서 열어 주세요.
+    </div>
+  </noscript>
+  
+  
+  <div class="js-required-warning browser-guide" role="note" aria-label="브라우저 실행 안내">
+    <div class="browser-guide-icon" aria-hidden="true">🌐</div>
+    <div class="browser-guide-text">
+      <strong>브라우저에서 열어주세요</strong>
+      <span>이 화면이 미리보기로 열리면 버튼이 작동하지 않을 수 있어요. 파일을 다운로드한 뒤 Safari · Chrome · Edge에서 열면 정상적으로 사용할 수 있습니다.</span>
+    </div>
+  </div>
+
+
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <span class="eyebrow">ROASTMASTER STUDY</span>
+        <h1>종강평가 스터디</h1>
+      </div>
+    </header>
+
+    <nav class="top-tabs" aria-label="주요 화면">
+      <button type="button" data-screen="practice" aria-selected="true">문제</button>
+      <button type="button" data-screen="study" aria-selected="false">공부</button>
+      <button type="button" data-screen="memory" aria-selected="false">암기</button>
+    </nav>
+
+    <section class="screen" data-screen="practice">
+      <div class="card">
+        <div class="screen-head">
+          <div>
+            <span class="eyebrow">실전형 문제 보기</span>
+            <h2 id="question-label">문제 1 · 로스팅 플랜</h2>
+          </div>
+          <button id="random-question" type="button" class="primary-btn">랜덤 문제</button>
+        </div>
+
+        <div class="segmented" aria-label="문제 번호">
+          <button type="button" data-q="1" aria-pressed="true">1</button>
+          <button type="button" data-q="2" aria-pressed="false">2</button>
+          <button type="button" data-q="3" aria-pressed="false">3</button>
+          <button type="button" data-q="4" aria-pressed="false">4</button>
+          <button type="button" data-q="5" aria-pressed="false">5</button>
+        </div>
+
+        <div id="question-body" class="question-box"></div>
+
+        <div class="actions">
+          <button id="summary-answer" type="button" class="action-btn">요약 답안</button>
+          <button id="full-answer" type="button" class="action-btn">풀버전 답안</button>
+          <button id="new-variant" type="button" class="action-btn primary wide">새 랜덤 출제</button>
+        </div>
+
+        <div id="answer-panel" class="answer-panel hidden" aria-live="polite">
+          <span class="eyebrow">ANSWER</span>
+          <h3 id="answer-title">요약 답안</h3>
+          <div id="answer-content"></div>
+        </div>
+      </div>
+      <p class="footer-note">1번은 5종 원두 중 랜덤 출제, 5번은 결점두 개수를 매번 새로 생성합니다. 답안 입력·채점 기능은 넣지 않았습니다.</p>
+    </section>
+
+    <section class="screen hidden" data-screen="study">
+      <div class="study-nav" aria-label="공부 범위">
+        <button type="button" data-study="beans" aria-pressed="true">원두 5종</button>
+        <button type="button" data-study="cupping" aria-pressed="false">커핑</button>
+        <button type="button" data-study="form" aria-pressed="false">커핑 폼</button>
+        <button type="button" data-study="defect" aria-pressed="false">결점두</button>
+      </div>
+
+      <div class="study-pane" data-study-pane="beans">
+        <div class="chip-row" aria-label="원두 선택">
+          <button type="button" data-bean="guatemala" aria-pressed="true">과테말라</button>
+          <button type="button" data-bean="colombia" aria-pressed="false">콜롬비아</button>
+          <button type="button" data-bean="ethiopia" aria-pressed="false">에티오피아</button>
+          <button type="button" data-bean="brazil" aria-pressed="false">브라질</button>
+          <button type="button" data-bean="mandheling" aria-pressed="false">만델링</button>
+        </div>
+        <div id="bean-detail" class="card"></div>
+      </div>
+
+      <div class="study-pane hidden" data-study-pane="cupping">
+        <div class="card">
+          <span class="eyebrow">BUSINESS CUPPING</span>
+          <h2>시간 흐름 암기</h2>
+          <div id="cupping-timeline" class="timeline"></div>
+          <div class="section-card" style="margin-top:14px">
+            <strong>6명 × 6종 최소 준비</strong>
+            <p class="full-answer">평가컵 30개 + 린싱컵 6개 = 최소 36개<br>커핑스푼 1인 2개 = 최소 12개<br>샘플당 11g × 5컵 / 물 92~94℃</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="study-pane hidden" data-study-pane="form">
+        <div class="card">
+          <span class="eyebrow">SCAA ARABICA CUPPING FORM</span>
+          <h2>평가항목 순서</h2>
+          <div id="form-order" class="order-grid"></div>
+          <p class="note">시험에서는 항목 이름뿐 아니라 배치까지 손으로 그릴 수 있도록 반복 암기.</p>
+        </div>
+      </div>
+
+      <div class="study-pane hidden" data-study-pane="defect">
+        <div class="card">
+          <span class="eyebrow">GREEN DEFECTS</span>
+          <h2>환산비 암기</h2>
+          <div id="defect-study-table" class="table-wrap"></div>
+          <p class="note"><strong>에티오피아 기준:</strong> G1 0~4 / G2 5~12 / G3 13~24. 나머지는 올림하지 않습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen hidden" data-screen="memory">
+      <div class="card">
+        <span class="eyebrow">ACTIVE RECALL</span>
+        <h2 style="margin:5px 0 0">먼저 떠올리고 정답 확인</h2>
+
+        <div class="memory-filters" aria-label="암기 범위">
+          <button type="button" data-memory-filter="all" aria-pressed="true">전체</button>
+          <button type="button" data-memory-filter="bean" aria-pressed="false">원두</button>
+          <button type="button" data-memory-filter="cupping" aria-pressed="false">커핑</button>
+          <button type="button" data-memory-filter="defect" aria-pressed="false">결점</button>
+        </div>
+
+        <div class="memory-card">
+          <span id="memory-category" class="eyebrow">원두</span>
+          <h2 id="memory-question"></h2>
+          <div id="memory-answer" class="memory-answer hidden"></div>
+        </div>
+
+        <div class="memory-actions">
+          <button id="reveal-memory" type="button" class="action-btn">정답 펼치기</button>
+          <button id="next-memory" type="button" class="action-btn primary">다음 랜덤</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+
+window.APP_DATA = {
+  beans: [
+    {
+      id: "guatemala",
+      short: "과테말라",
+      name: "과테말라 안티구아 필라델피아 SHB",
+      keywords: ["레드애플", "아몬드", "실키", "단맛", "클린"],
+      roastLevel: "약~중약배전",
+      charge: "185℃ 전후",
+      firstCrack: "193~195℃",
+      drop: "203~205℃",
+      development: "약 1:40~2:00",
+      summary: [
+        "목표 향미: 레드애플, 아몬드, 실키한 바디, 깔끔한 후미",
+        "1C: 약 193~195℃",
+        "배출: 203~205℃",
+        "발현: 약 1:40~2:00",
+        "핵심: 초반 충분한 열량 → 170℃ 이후 단계적 감열 → 산미와 단맛 보존"
+      ],
+      profile: [
+        ["투입", "185℃", "60", "50"],
+        ["1분", "-", "100", "50"],
+        ["150℃", "Yellow", "90", "60"],
+        ["160℃", "-", "90", "60"],
+        ["170℃", "-", "80", "60"],
+        ["180℃", "-", "70", "60"],
+        ["190℃", "-", "60", "60"],
+        ["1C", "193~195℃", "50", "60"],
+        ["200℃", "-", "30~40", "60"],
+        ["배출", "203~205℃", "0", "60"]
+      ],
+      full: "과테말라 안티구아 필라델피아 SHB는 높은 밀도의 SHB와 워시드 특성을 고려하여 깨끗한 산미와 단맛, 실키한 질감을 살리는 방향으로 로스팅하겠습니다. 초반에는 충분한 열량을 공급하고 Yellow 이후 배기를 확보하겠습니다. 170℃ 이후부터 화력을 단계적으로 낮추어 RoR이 완만하게 감소하도록 유지하고, 1차 크랙은 약 193~195℃를 목표로 하겠습니다. 1차 크랙 이후 약 1분 40초~2분 정도 발현한 뒤 203~205℃에서 배출하여 잘 익은 사과의 산미, 아몬드 같은 고소한 단맛, 실키한 바디와 깔끔한 후미를 표현하겠습니다."
+    },
+    {
+      id: "colombia",
+      short: "콜롬비아",
+      name: "콜롬비아 카우카 수프리모",
+      keywords: ["과일", "캐러멜", "밀크초콜릿", "밸런스", "클린"],
+      roastLevel: "중약배전",
+      charge: "185~190℃",
+      firstCrack: "193~195℃",
+      drop: "206~208℃",
+      development: "약 1:50~2:10",
+      summary: [
+        "목표 향미: 과일 산미, 캐러멜, 밀크초콜릿, 균형",
+        "1C: 약 193~195℃",
+        "배출: 206~208℃",
+        "발현: 약 1:50~2:10",
+        "핵심: Maillard 충분히 확보해 산미와 단맛의 균형"
+      ],
+      profile: [
+        ["투입", "185~190℃", "60", "50~60"],
+        ["1분", "-", "100", "50~60"],
+        ["150℃", "Yellow", "90", "60"],
+        ["160℃", "-", "90", "60"],
+        ["170℃", "-", "80", "60"],
+        ["180℃", "-", "70", "60"],
+        ["190℃", "-", "60", "60"],
+        ["1C", "193~195℃", "50", "60"],
+        ["200℃", "-", "40", "60"],
+        ["205℃", "-", "30", "60"],
+        ["배출", "206~208℃", "0", "60"]
+      ],
+      full: "콜롬비아 카우카 수프리모는 산미와 단맛의 균형을 중심으로 로스팅하겠습니다. 초반에는 충분한 열량으로 건조를 진행하고, Maillard 구간을 충분히 확보하여 캐러멜과 초콜릿 계열의 단맛을 형성하겠습니다. 170℃ 이후부터 단계적으로 감열해 RoR이 과도하게 상승하지 않도록 하고, 약 193~195℃에서 1차 크랙에 진입하겠습니다. 1차 크랙 이후 약 1분 50초~2분 10초 정도 발현한 뒤 206~208℃에서 배출하여 과일 산미, 캐러멜과 밀크초콜릿의 단맛, 부드러운 바디와 균형 잡힌 후미를 표현하겠습니다."
+    },
+    {
+      id: "ethiopia",
+      short: "에티오피아",
+      name: "에티오피아 코케 허니 예가체프 G1",
+      keywords: ["플로럴", "잘 익은 과일", "시럽", "클린"],
+      roastLevel: "약배전",
+      charge: "195℃ 전후",
+      firstCrack: "195℃ 전후",
+      drop: "205~206℃",
+      development: "약 1:20~1:40",
+      summary: [
+        "목표 향미: 플로럴, 잘 익은 과일, 시럽 같은 단맛, Clean finish",
+        "1C: 약 195℃ 전후",
+        "배출: 205~206℃",
+        "발현: 약 1:20~1:40",
+        "핵심: 향미 보존을 위해 발현을 길게 끌지 않기"
+      ],
+      profile: [
+        ["투입", "195℃", "60", "60"],
+        ["1분", "-", "100", "60"],
+        ["150℃", "Yellow", "-", "65"],
+        ["160℃", "-", "90", "70"],
+        ["170℃", "-", "80", "70"],
+        ["175℃", "-", "70", "70"],
+        ["180℃", "-", "60", "70"],
+        ["185℃", "-", "50", "70"],
+        ["190℃", "-", "40", "70"],
+        ["200℃", "-", "30", "70"],
+        ["203℃", "-", "20", "70"],
+        ["배출", "205~206℃", "0", "70"]
+      ],
+      full: "에티오피아 코케 허니 예가체프 G1은 플로럴한 아로마와 잘 익은 과일의 산미, Honey process에서 오는 시럽 같은 단맛을 살리는 방향으로 로스팅하겠습니다. 초반에는 충분한 에너지를 공급하되 생두 크기와 섬세한 향미를 고려해 과도한 표면 열을 피하겠습니다. 160~170℃ 이후 화력을 점진적으로 줄이고 배기를 충분히 확보하여 연기와 채프를 제거하겠습니다. 1차 크랙 이후 약 1분 20초~1분 40초 정도 발현한 뒤 205~206℃에서 배출하여 플로럴, 과일 산미, 시럽 같은 단맛과 깔끔한 후미를 유지하겠습니다."
+    },
+    {
+      id: "brazil",
+      short: "브라질",
+      name: "브라질 시에라 옐로우 버번 내추럴 NY2 FC",
+      keywords: ["갈색설탕", "피칸", "밀크초콜릿", "건과일", "바디"],
+      roastLevel: "중배전",
+      charge: "185℃ 전후",
+      firstCrack: "약 193℃",
+      drop: "211℃",
+      development: "약 2:30~2:40",
+      summary: [
+        "목표 향미: 갈색설탕, 피칸, 밀크초콜릿, 건과일, 부드러운 바디",
+        "1C: 약 193℃",
+        "배출: 211℃",
+        "발현: 약 2:30~2:40",
+        "핵심: 170℃부터 감열하되 마지막 구간의 열량 부족 방지"
+      ],
+      profile: [
+        ["투입", "185℃ 전후", "60~70", "50"],
+        ["1분", "-", "100", "50"],
+        ["150℃", "Yellow", "90", "60"],
+        ["170℃", "-", "80", "60"],
+        ["180℃", "-", "70", "60"],
+        ["190℃", "-", "60", "60"],
+        ["1C", "약 193℃", "50", "70"],
+        ["205℃", "-", "30", "80"],
+        ["210℃", "-", "20", "80"],
+        ["배출", "211℃", "0", "80"]
+      ],
+      full: "브라질 시에라 옐로우 버번 내추럴 NY2 FC는 Natural process와 Yellow Bourbon의 단맛을 중심으로 로스팅하겠습니다. 초반에는 충분한 열량을 공급하고 Yellow 이후부터 배기를 확보합니다. 170℃ 이후부터 화력을 단계적으로 낮추어 표면 과열과 쓴맛을 방지하되, 1차 크랙 이후 열량을 지나치게 빨리 끊어 RoR이 급락하지 않도록 하겠습니다. 약 193℃에서 1차 크랙에 진입한 뒤 2분 30초~2분 40초 정도 충분히 발현하여 211℃에서 배출합니다. 갈색설탕과 밀크초콜릿의 단맛, 피칸과 아몬드 같은 고소함, 건과일의 풍미와 부드러운 바디를 목표로 하겠습니다."
+    },
+    {
+      id: "mandheling",
+      short: "만델링",
+      name: "인도네시아 만델링 G1 TP",
+      keywords: ["다크초콜릿", "허브", "스파이스", "묵직한 바디", "긴 후미"],
+      roastLevel: "중~중강배전",
+      charge: "185~190℃",
+      firstCrack: "194~196℃",
+      drop: "212~214℃",
+      development: "약 2:20~2:40",
+      summary: [
+        "목표 향미: 다크초콜릿, 허브·스파이스, 묵직한 바디, 긴 후미",
+        "1C: 약 194~196℃",
+        "배출: 212~214℃",
+        "발현: 약 2:20~2:40",
+        "핵심: 내부까지 충분히 발현하되 탄맛·과도한 쓴맛 방지"
+      ],
+      profile: [
+        ["투입", "185~190℃", "70", "50"],
+        ["1분", "-", "100", "50"],
+        ["150℃", "Yellow", "90", "60"],
+        ["170℃", "-", "80", "60"],
+        ["180℃", "-", "70", "60"],
+        ["190℃", "-", "60", "60"],
+        ["1C", "194~196℃", "50", "60~70"],
+        ["200℃", "-", "40", "70"],
+        ["205℃", "-", "30", "70"],
+        ["210℃", "-", "20", "70"],
+        ["배출", "212~214℃", "0", "70"]
+      ],
+      full: "인도네시아 만델링 G1 TP는 묵직한 바디와 다크초콜릿, 허브와 스파이스 계열의 풍미를 살리는 방향으로 로스팅하겠습니다. 초반에는 내부까지 충분한 열이 전달되도록 열량을 확보하고, Yellow 이후부터 배기를 증가시키겠습니다. 170℃ 이후부터 단계적으로 감열하여 과도한 쓴맛과 탄맛을 방지하고 약 194~196℃에서 1차 크랙에 진입하겠습니다. 1차 크랙 후 약 2분 20초~2분 40초 정도 충분히 발현한 뒤 212~214℃에서 배출하여 낮고 둥근 산미, 다크초콜릿, 허브와 스파이스, 묵직한 바디와 긴 후미를 표현하겠습니다."
+    }
+  ],
+
+  questions: {
+    2: {
+      title: "비즈니스 커핑 주최",
+      prompt: "Buyer 6명, 생두 샘플 6종, 커핑테이블 1개를 기준으로 필요한 기물과 최소 수량을 쓰고, 커핑 진행 프로토콜을 순서대로 설명하시오.",
+      summary: [
+        "샘플당 11g × 5컵",
+        "커핑컵: 6종 × (평가컵 5 + 린싱컵 1) = 최소 36개",
+        "커핑스푼: 1인 2개 = 최소 12개",
+        "물: 92~94℃",
+        "Fragrance → Wet Aroma → 약 5분 Break/Skimming → 10분 Flavor/Aftertaste → 15분 Acidity/Body/Balance → 20분 Uniformity/Clean Cup/Sweetness/Overall → Defect/Final Score"
+      ],
+      full: "① 커핑 참가자에게 필요한 사전정보와 진행 안내를 전달합니다. ② 각 생두 샘플은 커핑컵의 용량에 맞춰 약 11g씩 5개의 평가컵에 준비합니다. 6종이므로 평가컵 30개에 린싱컵을 포함해 최소 36개의 컵을 준비합니다. ③ 참가자 6명 기준 커핑스푼은 1인 2개씩 최소 12개를 준비하고, 그라인더, 저울, 온도계, 전기포트, 타이머, 린넨과 행주, 필기구 등을 준비합니다. ④ 분쇄 후 Fragrance를 확인합니다. ⑤ 92~94℃의 물을 붓고 Wet Aroma를 확인합니다. ⑥ 약 5분 시점에 Break와 Skimming을 진행합니다. ⑦ 약 10분에 Flavor와 Aftertaste, 15분에 Acidity·Body·Balance, 20분에 Uniformity·Clean Cup·Sweetness·Overall을 평가합니다. ⑧ 마지막으로 Defect와 Final Score를 산출하고 참가자들과 Calibration을 진행합니다."
+    },
+    3: {
+      title: "구매자 커핑 프로토콜",
+      prompt: "SCAA Specialty Grade Coffee 구매를 위한 비즈니스 커핑에 참여한다고 가정하고, 실제 커핑하듯 시간의 흐름과 Cupping Form 순서에 맞춰 정확한 프로토콜을 기술하시오.",
+      summary: [
+        "Fragrance → Wet Aroma → Break/Skim",
+        "10분: Flavor / Aftertaste",
+        "15분: Acidity / Body / Balance",
+        "20분: Uniformity / Clean Cup / Sweetness / Overall",
+        "Defect → Final Score → Calibration"
+      ],
+      full: "샘플의 로스팅 상태를 확인하고 물을 붓기 전 Fragrance를 평가합니다. 주최자의 안내에 따라 물을 붓고 Wet Aroma를 확인한 뒤 약 5분에 Break와 Skimming을 진행합니다. 온도가 내려가면 첫 Slurping에서 Flavor와 Aftertaste를 평가합니다. 약 15분에는 Acidity, Body, Balance를 평가하고, 약 20분에는 Uniformity, Clean Cup, Sweetness, Overall을 평가합니다. 모든 항목 평가가 끝나면 Total Score를 계산하고 Defect를 반영해 Final Score를 산출합니다. 모든 샘플 커핑이 끝난 후 Calibration과 샘플 정보에 대한 의견을 나누고 구매 여부를 결정합니다."
+    },
+    4: {
+      title: "SCAA Cupping Form",
+      prompt: "SCAA Arabica Cupping Form의 주요 항목과 배치 순서를 정확하게 떠올려 보시오.",
+      summary: [
+        "Fragrance/Aroma → Flavor → Aftertaste → Acidity → Body",
+        "Uniformity → Balance → Clean Cup → Sweetness → Overall",
+        "Defects → Total Score → Final Score"
+      ],
+      full: "상단에는 Name, Date, Table No., Quality Scale이 위치합니다. 평가항목은 Fragrance/Aroma, Flavor, Aftertaste, Acidity와 Intensity, Body와 Level, Uniformity, Balance, Clean Cup, Sweetness, Overall, Defects 순으로 구성되며 마지막에 Total Score와 Final Score를 산출합니다. 시험에서는 명칭만이 아니라 전체 배치 순서를 손으로 그릴 수 있도록 반복해서 암기하는 것이 핵심입니다."
+    }
+  },
+
+  defects: [
+    { cat: 1, name: "Full Black", ratio: 1, max: 2 },
+    { cat: 1, name: "Full Sour", ratio: 1, max: 2 },
+    { cat: 1, name: "Dried Cherry/Pod", ratio: 1, max: 2 },
+    { cat: 1, name: "Fungus Damaged", ratio: 1, max: 2 },
+    { cat: 1, name: "Foreign Matter", ratio: 1, max: 2 },
+    { cat: 1, name: "Severe Insect Damaged", ratio: 5, max: 12 },
+    { cat: 2, name: "Partial Black", ratio: 3, max: 14 },
+    { cat: 2, name: "Partial Sour", ratio: 3, max: 14 },
+    { cat: 2, name: "Parchment", ratio: 5, max: 14 },
+    { cat: 2, name: "Floater", ratio: 5, max: 14 },
+    { cat: 2, name: "Immature", ratio: 5, max: 14 },
+    { cat: 2, name: "Withered", ratio: 5, max: 14 },
+    { cat: 2, name: "Shell", ratio: 5, max: 14 },
+    { cat: 2, name: "Broken/Chipped/Cut", ratio: 5, max: 18 },
+    { cat: 2, name: "Hull/Husk", ratio: 5, max: 14 },
+    { cat: 2, name: "Slight Insect Damaged", ratio: 10, max: 25 }
+  ],
+
+  cuppingTimeline: [
+    ["물 붓기 전", "Fragrance"],
+    ["물 붓기 직후", "Wet Aroma"],
+    ["약 5분", "Break / Skimming"],
+    ["약 10분", "Flavor / Aftertaste"],
+    ["약 15분", "Acidity / Body / Balance"],
+    ["약 20분", "Uniformity / Clean Cup / Sweetness / Overall"],
+    ["마지막", "Defect / Final Score / Calibration"]
+  ],
+
+  formOrder: [
+    "Fragrance/Aroma","Flavor","Aftertaste","Acidity","Body",
+    "Uniformity","Balance","Clean Cup","Sweetness","Overall",
+    "Defects","Total Score","Final Score"
+  ]
+};
+
+</script>
+  <script>
+
+(() => {
+  const data = window.APP_DATA;
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+  const esc = (s) => String(s)
+    .replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+
+  let currentQuestion = 1;
+  let currentBean = randomBean();
+  let currentDefects = generateDefects();
+  let currentStudyBean = data.beans[0];
+  let memoryFilter = "all";
+  let currentMemory = null;
+
+  function randomBean() {
+    return data.beans[Math.floor(Math.random() * data.beans.length)];
+  }
+
+  function grade(total) {
+    if (total <= 4) return "G1";
+    if (total <= 12) return "G2";
+    if (total <= 24) return "G3";
+    return "G4 이상";
+  }
+
+  function generateDefects() {
+    for (let tries = 0; tries < 300; tries++) {
+      const rows = data.defects.map(d => ({ ...d, count: Math.floor(Math.random() * (d.max + 1)) }));
+      const total = rows.reduce((sum, d) => sum + Math.floor(d.count / d.ratio), 0);
+      if (total >= 3 && total <= 24) return rows;
+    }
+    return data.defects.map(d => ({ ...d, count: 0 }));
+  }
+
+  function defectTotals(rows) {
+    let c1 = 0, c2 = 0;
+    const calc = rows.map(d => {
+      const eq = Math.floor(d.count / d.ratio);
+      if (d.cat === 1) c1 += eq; else c2 += eq;
+      return { ...d, eq };
+    });
+    return { rows: calc, c1, c2, total: c1 + c2 };
+  }
+
+  function setActive(selector, predicate, attr = "aria-pressed") {
+    $$(selector).forEach(el => el.setAttribute(attr, String(predicate(el))));
+  }
+
+  function profileTable(bean) {
+    return `
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>구간</th><th>온도/이벤트</th><th>화력</th><th>배기</th></tr></thead>
+          <tbody>
+            ${bean.profile.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+
+  function roastPracticeTable(slotCount = 12) {
+    const blanks = Array.from({ length: slotCount }, (_, i) => `<td class="blank-cell"><span>${i + 1}</span></td>`).join("");
+    return `
+      <div class="roast-practice">
+        <div class="roast-practice-head">
+          <div>
+            <strong>로스팅 플랜 표</strong>
+            <span>온도 · 화력 · 배기까지 직접 채우기</span>
+          </div>
+          <span class="practice-badge">빈 표</span>
+        </div>
+        <div class="table-wrap roast-grid-wrap">
+          <table class="roast-grid practice-grid">
+            <tbody>
+              <tr><th>구간/이벤트</th>${blanks}</tr>
+              <tr><th>온도</th>${blanks}</tr>
+              <tr><th>화력</th>${blanks}</tr>
+              <tr><th>배기</th>${blanks}</tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">실제 시험처럼 먼저 빈 표를 보고 각 구간의 온도, 화력, 배기를 종이나 머릿속으로 완성한 뒤 답안을 확인하세요.</p>
+      </div>`;
+  }
+
+  function normalizedProfile(bean) {
+    return bean.profile.map(r => {
+      const stage = r[0];
+      const second = r[1];
+      let event = "";
+      let temp = "";
+      if (stage.includes("℃")) {
+        temp = stage;
+        if (second && second !== "-") event = second;
+      } else {
+        event = stage;
+        if (second && second !== "-") temp = second;
+      }
+      return { event, temp, flame: r[2] || "", air: r[3] || "" };
+    });
+  }
+
+  function roastAnswerTable(bean) {
+    const rows = normalizedProfile(bean);
+    const cells = (key) => rows.map(r => `<td>${esc(r[key] || "—")}</td>`).join("");
+    return `
+      <div class="roast-answer-block">
+        <div class="roast-practice-head">
+          <div>
+            <strong>로스팅 표 정답</strong>
+            <span>온도 · 화력 · 배기 포함</span>
+          </div>
+          <span class="practice-badge answer">정답</span>
+        </div>
+        <div class="table-wrap roast-grid-wrap">
+          <table class="roast-grid answer-grid">
+            <tbody>
+              <tr><th>구간/이벤트</th>${cells("event")}</tr>
+              <tr><th>온도</th>${cells("temp")}</tr>
+              <tr><th>화력</th>${cells("flame")}</tr>
+              <tr><th>배기</th>${cells("air")}</tr>
+            </tbody>
+          </table>
+        </div>
+      </div>`;
+  }
+
+
+  function q5EntryForm(t) {
+    return `
+      <div class="q5-entry">
+        <div class="q5-entry-head">
+          <div>
+            <strong>내 답안 작성</strong>
+            <span>각 결점의 환산점수부터 최종 등급까지 입력</span>
+          </div>
+        </div>
+
+        <div class="table-wrap compact q5-input-table">
+          <table>
+            <thead>
+              <tr><th>Cat.</th><th>결점</th><th>개수</th><th>기준</th><th>내 환산</th></tr>
+            </thead>
+            <tbody>
+              ${t.rows.map((d, i) => `
+                <tr data-q5-row="${i}">
+                  <td>${d.cat}</td>
+                  <td>${esc(d.name)}</td>
+                  <td><strong>${d.count}</strong></td>
+                  <td>${d.ratio}개=1점</td>
+                  <td>
+                    <input
+                      class="q5-score-input"
+                      type="number"
+                      inputmode="numeric"
+                      min="0"
+                      max="30"
+                      step="1"
+                      data-q5-eq="${i}"
+                      aria-label="${esc(d.name)} 환산 점수"
+                      placeholder="0">
+                  </td>
+                </tr>`).join("")}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="q5-summary-inputs">
+          <label>
+            <span>Category 1</span>
+            <input id="q5-cat1" type="number" inputmode="numeric" min="0" max="50" step="1" placeholder="점수">
+          </label>
+          <label>
+            <span>Category 2</span>
+            <input id="q5-cat2" type="number" inputmode="numeric" min="0" max="50" step="1" placeholder="점수">
+          </label>
+          <label>
+            <span>총 결점수</span>
+            <input id="q5-total" type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="점수">
+          </label>
+          <label>
+            <span>등급</span>
+            <select id="q5-grade" aria-label="에티오피아 등급">
+              <option value="">선택</option>
+              <option value="G1">G1</option>
+              <option value="G2">G2</option>
+              <option value="G3">G3</option>
+              <option value="G4 이상">G4 이상</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="q5-grade-actions">
+          <button id="q5-grade-btn" type="button" class="action-btn primary">채점하기</button>
+          <button id="q5-reset-btn" type="button" class="action-btn">작성 초기화</button>
+        </div>
+        <div id="q5-grade-result" class="q5-grade-result hidden" aria-live="polite"></div>
+      </div>`;
+  }
+
+  function readIntInput(el) {
+    if (!el || el.value.trim() === "") return null;
+    const n = Number(el.value);
+    return Number.isFinite(n) ? Math.trunc(n) : null;
+  }
+
+  function gradeQ5() {
+    if (currentQuestion !== 5) return;
+    const t = defectTotals(currentDefects);
+    let correctRows = 0;
+    let answeredRows = 0;
+
+    t.rows.forEach((d, i) => {
+      const input = $(`[data-q5-eq="${i}"]`);
+      const row = $(`[data-q5-row="${i}"]`);
+      if (!input || !row) return;
+      row.classList.remove("is-correct", "is-wrong", "is-empty");
+      const user = readIntInput(input);
+      if (user === null) {
+        row.classList.add("is-empty");
+      } else {
+        answeredRows++;
+        if (user === d.eq) {
+          correctRows++;
+          row.classList.add("is-correct");
+        } else {
+          row.classList.add("is-wrong");
+        }
+      }
+    });
+
+    const checks = [
+      { id: "#q5-cat1", expected: t.c1, label: "Category 1" },
+      { id: "#q5-cat2", expected: t.c2, label: "Category 2" },
+      { id: "#q5-total", expected: t.total, label: "총 결점수" }
+    ];
+
+    let summaryCorrect = 0;
+    let summaryAnswered = 0;
+
+    checks.forEach(item => {
+      const input = $(item.id);
+      input.classList.remove("is-correct", "is-wrong", "is-empty");
+      const user = readIntInput(input);
+      if (user === null) {
+        input.classList.add("is-empty");
+      } else {
+        summaryAnswered++;
+        if (user === item.expected) {
+          summaryCorrect++;
+          input.classList.add("is-correct");
+        } else {
+          input.classList.add("is-wrong");
+        }
+      }
+    });
+
+    const gradeInput = $("#q5-grade");
+    const expectedGrade = grade(t.total);
+    gradeInput.classList.remove("is-correct", "is-wrong", "is-empty");
+    let gradeCorrect = 0;
+    let gradeAnswered = 0;
+    if (!gradeInput.value) {
+      gradeInput.classList.add("is-empty");
+    } else {
+      gradeAnswered = 1;
+      if (gradeInput.value === expectedGrade) {
+        gradeCorrect = 1;
+        gradeInput.classList.add("is-correct");
+      } else {
+        gradeInput.classList.add("is-wrong");
+      }
+    }
+
+    const totalCorrect = correctRows + summaryCorrect + gradeCorrect;
+    const totalItems = t.rows.length + checks.length + 1;
+    const totalAnswered = answeredRows + summaryAnswered + gradeAnswered;
+    const result = $("#q5-grade-result");
+
+    if (totalAnswered === 0) {
+      result.innerHTML = `<strong>입력한 답이 없습니다.</strong><span>환산점수나 최종 답안을 먼저 작성해 주세요.</span>`;
+      result.className = "q5-grade-result warning";
+      return;
+    }
+
+    const perfect = totalCorrect === totalItems;
+    result.innerHTML = `
+      <div>
+        <strong>${perfect ? "전부 정답입니다." : `${totalCorrect} / ${totalItems} 정답`}</strong>
+        <span>초록색은 정답, 붉은색은 오답, 회색은 미작성입니다.</span>
+      </div>
+      <div class="q5-result-key">
+        <span>정답: Cat.1 ${t.c1}</span>
+        <span>Cat.2 ${t.c2}</span>
+        <span>총 ${t.total}</span>
+        <span>${expectedGrade}</span>
+      </div>`;
+    result.className = `q5-grade-result ${perfect ? "perfect" : "graded"}`;
+  }
+
+  function resetQ5Inputs() {
+    $$("[data-q5-eq]").forEach(input => {
+      input.value = "";
+      input.classList.remove("is-correct", "is-wrong", "is-empty");
+    });
+    ["#q5-cat1", "#q5-cat2", "#q5-total"].forEach(id => {
+      const el = $(id);
+      if (el) {
+        el.value = "";
+        el.classList.remove("is-correct", "is-wrong", "is-empty");
+      }
+    });
+    const gradeEl = $("#q5-grade");
+    if (gradeEl) {
+      gradeEl.value = "";
+      gradeEl.classList.remove("is-correct", "is-wrong", "is-empty");
+    }
+    $$("[data-q5-row]").forEach(row => row.classList.remove("is-correct", "is-wrong", "is-empty"));
+    const result = $("#q5-grade-result");
+    if (result) {
+      result.className = "q5-grade-result hidden";
+      result.innerHTML = "";
+    }
+  }
+
+  function renderQuestion() {
+    setActive("[data-q]", el => Number(el.dataset.q) === currentQuestion);
+    const label = $("#question-label");
+    const body = $("#question-body");
+    const variantBtn = $("#new-variant");
+    $("#answer-panel").classList.add("hidden");
+
+    if (currentQuestion === 1) {
+      label.textContent = "문제 1 · 로스팅 플랜";
+      body.innerHTML = `
+        <span class="eyebrow">랜덤 지정 생두</span>
+        <h2>${esc(currentBean.name)}</h2>
+        <p>위 생두의 특성을 고려하여 목표 향미를 설정하고, 투입부터 배출까지의 로스팅 플랜과 그 이유를 서술하시오.</p>
+        ${roastPracticeTable(12)}`;
+      variantBtn.textContent = "다른 원두 출제";
+    } else if (currentQuestion === 5) {
+      label.textContent = "문제 5 · 결점두 환산";
+      const t = defectTotals(currentDefects);
+      body.innerHTML = `
+        <span class="eyebrow">랜덤 결점수</span>
+        <h2>Full Defect Equivalent 계산</h2>
+        <p>아래 결점두를 환산한 뒤 각 항목의 환산점수, Category별 합계, 총 결점수와 에티오피아 등급을 작성하고 채점해 보세요.</p>
+        ${q5EntryForm(t)}`;
+      variantBtn.textContent = "새 결점수 생성";
+    } else {
+      const q = data.questions[currentQuestion];
+      label.textContent = `문제 ${currentQuestion} · ${q.title}`;
+      body.innerHTML = `<span class="eyebrow">기출형</span><h2>${esc(q.title)}</h2><p>${esc(q.prompt)}</p>`;
+      variantBtn.textContent = "문제 다시 보기";
+    }
+  }
+
+  function showAnswer(type) {
+    const panel = $("#answer-panel");
+    let html = "";
+
+    if (currentQuestion === 1) {
+      if (type === "summary") {
+        html = `
+          ${roastAnswerTable(currentBean)}
+          <div class="answer-lines">${currentBean.summary.map(x => `<p>${esc(x)}</p>`).join("")}</div>`;
+      } else {
+        html = `
+          <div class="bean-facts">
+            <div><span>배전</span><strong>${esc(currentBean.roastLevel)}</strong></div>
+            <div><span>1C</span><strong>${esc(currentBean.firstCrack)}</strong></div>
+            <div><span>배출</span><strong>${esc(currentBean.drop)}</strong></div>
+            <div><span>발현</span><strong>${esc(currentBean.development)}</strong></div>
+          </div>
+          ${roastAnswerTable(currentBean)}
+          <p class="full-answer">${esc(currentBean.full)}</p>`;
+      }
+    } else if (currentQuestion === 5) {
+      const t = defectTotals(currentDefects);
+      if (type === "summary") {
+        html = `
+          <div class="score-grid">
+            <div><span>Category 1</span><strong>${t.c1}</strong></div>
+            <div><span>Category 2</span><strong>${t.c2}</strong></div>
+            <div><span>총 결점수</span><strong>${t.total}</strong></div>
+            <div><span>등급</span><strong>${grade(t.total)}</strong></div>
+          </div>`;
+      } else {
+        const used = t.rows.filter(d => d.eq > 0);
+        html = `
+          <div class="answer-lines">
+            ${used.length ? used.map(d => `<p><strong>${esc(d.name)}</strong>: ${d.count}개 ÷ ${d.ratio} → ${d.eq}점</p>`).join("") : "<p>환산되는 결점 없음</p>"}
+          </div>
+          <div class="score-grid">
+            <div><span>Category 1</span><strong>${t.c1}</strong></div>
+            <div><span>Category 2</span><strong>${t.c2}</strong></div>
+            <div><span>총 결점수</span><strong>${t.total}</strong></div>
+            <div><span>등급</span><strong>${grade(t.total)}</strong></div>
+          </div>
+          <p class="note">등급 기준: G1 0~4 / G2 5~12 / G3 13~24. 환산 시 나머지는 올림하지 않습니다.</p>`;
+      }
+    } else {
+      const q = data.questions[currentQuestion];
+      if (type === "summary") {
+        html = `<div class="answer-lines">${q.summary.map(x => `<p>${esc(x)}</p>`).join("")}</div>`;
+      } else {
+        html = `<p class="full-answer">${esc(q.full)}</p>`;
+      }
+    }
+
+    $("#answer-title").textContent = type === "summary" ? "요약 답안" : "풀버전 답안";
+    $("#answer-content").innerHTML = html;
+    panel.classList.remove("hidden");
+    panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function renderStudyBean(bean) {
+    currentStudyBean = bean;
+    setActive("[data-bean]", el => el.dataset.bean === bean.id);
+    $("#bean-detail").innerHTML = `
+      <div class="study-head">
+        <div>
+          <span class="eyebrow">원두 5종</span>
+          <h2>${esc(bean.name)}</h2>
+        </div>
+        <div class="keyword-wrap">${bean.keywords.map(k => `<span class="tag">${esc(k)}</span>`).join("")}</div>
+      </div>
+      <div class="bean-facts">
+        <div><span>배전</span><strong>${esc(bean.roastLevel)}</strong></div>
+        <div><span>투입</span><strong>${esc(bean.charge)}</strong></div>
+        <div><span>1C</span><strong>${esc(bean.firstCrack)}</strong></div>
+        <div><span>배출</span><strong>${esc(bean.drop)}</strong></div>
+        <div><span>발현</span><strong>${esc(bean.development)}</strong></div>
+      </div>
+      ${profileTable(bean)}
+      <details>
+        <summary>시험용 풀답안 펼치기</summary>
+        <p class="full-answer">${esc(bean.full)}</p>
+      </details>`;
+  }
+
+  function renderStudy(kind) {
+    setActive("[data-study]", el => el.dataset.study === kind);
+    $$(".study-pane").forEach(p => p.classList.toggle("hidden", p.dataset.studyPane !== kind));
+    if (kind === "beans") renderStudyBean(currentStudyBean);
+  }
+
+  function buildStaticStudy() {
+    $("#cupping-timeline").innerHTML = data.cuppingTimeline.map(([time, item]) => `
+      <div class="timeline-row"><span>${esc(time)}</span><strong>${esc(item)}</strong></div>`).join("");
+    $("#form-order").innerHTML = data.formOrder.map((x, i) => `<div class="order-chip"><span>${i + 1}</span>${esc(x)}</div>`).join("");
+    $("#defect-study-table").innerHTML = `
+      <table>
+        <thead><tr><th>Cat.</th><th>결점</th><th>환산</th></tr></thead>
+        <tbody>${data.defects.map(d => `<tr><td>${d.cat}</td><td>${esc(d.name)}</td><td><strong>${d.ratio}개 = 1점</strong></td></tr>`).join("")}</tbody>
+      </table>`;
+  }
+
+  function memoryCards() {
+    const cards = [];
+    data.beans.forEach(b => {
+      cards.push({ cat: "bean", label: "원두", q: `${b.name}의 핵심 향미는?`, a: b.keywords.join(" · ") });
+      cards.push({ cat: "bean", label: "원두", q: `${b.name}의 1C와 배출 목표는?`, a: `1C ${b.firstCrack} / 배출 ${b.drop}` });
+      cards.push({ cat: "bean", label: "원두", q: `${b.name}의 발현시간은?`, a: b.development });
+    });
+    cards.push(
+      { cat: "cupping", label: "커핑", q: "물을 붓고 약 10분 시점에 평가하는 항목은?", a: "Flavor / Aftertaste" },
+      { cat: "cupping", label: "커핑", q: "약 15분 시점에 평가하는 항목은?", a: "Acidity / Body / Balance" },
+      { cat: "cupping", label: "커핑", q: "약 20분 시점에 평가하는 항목은?", a: "Uniformity / Clean Cup / Sweetness / Overall" },
+      { cat: "cupping", label: "커핑", q: "Buyer 6명, 원두 6종일 때 최소 커핑컵 수는?", a: "36개 — 평가컵 30개 + 린싱컵 6개" },
+      { cat: "cupping", label: "커핑", q: "Buyer 6명일 때 커핑스푼 최소 수는?", a: "12개 — 1인 2개" },
+      { cat: "defect", label: "결점", q: "Partial Black 몇 개가 Full Defect 1점인가?", a: "3개" },
+      { cat: "defect", label: "결점", q: "Severe Insect Damaged 몇 개가 1점인가?", a: "5개" },
+      { cat: "defect", label: "결점", q: "Slight Insect Damaged 몇 개가 1점인가?", a: "10개" },
+      { cat: "defect", label: "결점", q: "Ethiopia G2의 결점수 범위는?", a: "5~12점" },
+      { cat: "defect", label: "결점", q: "결점두 환산에서 나머지는 올림하는가?", a: "아니오. 완성된 묶음만 환산합니다." }
+    );
+    return cards;
+  }
+
+  const allMemory = memoryCards();
+  function nextMemory() {
+    const pool = memoryFilter === "all" ? allMemory : allMemory.filter(c => c.cat === memoryFilter);
+    currentMemory = pool[Math.floor(Math.random() * pool.length)];
+    $("#memory-category").textContent = currentMemory.label;
+    $("#memory-question").textContent = currentMemory.q;
+    $("#memory-answer").textContent = currentMemory.a;
+    $("#memory-answer").classList.add("hidden");
+    $("#reveal-memory").textContent = "정답 펼치기";
+  }
+
+  function switchScreen(screen) {
+    setActive("[data-screen]", el => el.dataset.screen === screen, "aria-selected");
+    $$(".screen").forEach(s => s.classList.toggle("hidden", s.dataset.screen !== screen));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Events
+  $$("[data-screen]").forEach(btn => btn.addEventListener("click", () => switchScreen(btn.dataset.screen)));
+  $$("[data-q]").forEach(btn => btn.addEventListener("click", () => {
+    currentQuestion = Number(btn.dataset.q);
+    renderQuestion();
+  }));
+  $("#random-question").addEventListener("click", () => {
+    currentQuestion = 1 + Math.floor(Math.random() * 5);
+    if (currentQuestion === 1) currentBean = randomBean();
+    if (currentQuestion === 5) currentDefects = generateDefects();
+    renderQuestion();
+  });
+  $("#new-variant").addEventListener("click", () => {
+    if (currentQuestion === 1) currentBean = randomBean();
+    if (currentQuestion === 5) currentDefects = generateDefects();
+    renderQuestion();
+  });
+  $("#summary-answer").addEventListener("click", () => showAnswer("summary"));
+  $("#full-answer").addEventListener("click", () => showAnswer("full"));
+  $("#question-body").addEventListener("click", (event) => {
+    const gradeBtn = event.target.closest("#q5-grade-btn");
+    const resetBtn = event.target.closest("#q5-reset-btn");
+    if (gradeBtn) gradeQ5();
+    if (resetBtn) resetQ5Inputs();
+  });
+
+  $$("[data-study]").forEach(btn => btn.addEventListener("click", () => renderStudy(btn.dataset.study)));
+  $$("[data-bean]").forEach(btn => btn.addEventListener("click", () => {
+    const bean = data.beans.find(b => b.id === btn.dataset.bean);
+    renderStudyBean(bean);
+  }));
+
+  $$("[data-memory-filter]").forEach(btn => btn.addEventListener("click", () => {
+    memoryFilter = btn.dataset.memoryFilter;
+    setActive("[data-memory-filter]", el => el === btn);
+    nextMemory();
+  }));
+  $("#next-memory").addEventListener("click", nextMemory);
+  $("#reveal-memory").addEventListener("click", () => {
+    const el = $("#memory-answer");
+    const willHide = !el.classList.contains("hidden");
+    el.classList.toggle("hidden");
+    $("#reveal-memory").textContent = willHide ? "정답 펼치기" : "정답 가리기";
+  });
+
+  // Init
+  buildStaticStudy();
+  renderStudyBean(data.beans[0]);
+  renderQuestion();
+  nextMemory();
+})();
+
+</script>
+</body>
+</html>
