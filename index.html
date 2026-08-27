@@ -552,6 +552,117 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   }
 }
 
+
+/* 원본 커핑폼 이미지를 기준으로 정확한 순서/배치를 익히기 위한 레이아웃 */
+.cf-reference-wrap{
+  margin-top:12px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:#fff;
+  padding:10px;
+}
+.cf-reference-stage{
+  position:relative;
+  width:100%;
+}
+.cf-reference-image{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:10px;
+}
+.cf-hotspot-btn{
+  position:absolute;
+  border:2px solid rgba(124,85,46,.28);
+  background:rgba(124,85,46,.06);
+  border-radius:4px;
+  padding:0;
+  margin:0;
+  cursor:pointer;
+}
+.cf-hotspot-btn:hover,
+.cf-hotspot-btn.is-active{
+  border-color:#8d5e33;
+  background:rgba(141,94,51,.16);
+}
+.cf-hotspot-btn:focus{
+  outline:2px solid #8d5e33;
+  outline-offset:1px;
+}
+.cf-inline-detail{
+  margin-top:10px;
+  min-height:128px;
+  padding:14px 15px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--surface-2);
+}
+.cf-inline-detail h3{margin:4px 0 7px;font-size:1rem}
+.cf-inline-detail p{margin:0;color:var(--muted);line-height:1.7;font-size:.86rem}
+.defect-reference{margin-top:14px}
+.defect-note{margin-bottom:10px;color:var(--muted);font-size:.82rem}
+.defect-columns{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.defect-panel{
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  background:#fff;
+}
+.defect-panel-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 110px;
+  gap:8px;
+  align-items:center;
+  padding:10px 12px;
+  font-weight:800;
+  font-size:.82rem;
+  line-height:1.35;
+}
+.defect-panel-head small{font-size:.72rem;font-weight:700}
+.defect-panel-head.primary{background:#d8e8fb}
+.defect-panel-head.secondary{background:#eaf3ff}
+.defect-panel-body{display:grid}
+.defect-line{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 110px;
+  gap:8px;
+  align-items:center;
+  padding:9px 12px;
+  border-top:1px solid var(--border);
+  font-size:.8rem;
+}
+.defect-line span{overflow-wrap:anywhere}
+.defect-line strong{font-size:.78rem;text-align:right}
+.defect-grade-boxes{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:12px;
+}
+.defect-grade-box{
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--surface-2);
+  padding:10px 12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.defect-grade-box b{font-size:.9rem}
+.defect-grade-box span{font-weight:800}
+@media(max-width:720px){
+  .defect-columns{grid-template-columns:1fr}
+  .defect-panel-head,.defect-line{
+    grid-template-columns:minmax(0,1fr) 92px;
+    font-size:.76rem;
+  }
+  .defect-grade-boxes{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -1462,140 +1573,137 @@ window.APP_DATA = {
   }
 
   const cuppingFieldDescriptions = {
-    sample: ["Sample No.", "각 커핑 샘플을 구분하기 위한 번호를 적는 칸입니다."],
-    roast: ["Roast Level", "샘플이 세팅되면 시각적으로 보이는 로스팅 정도를 확인·표시하는 부분입니다."],
-    fragrance: ["Fragrance / Aroma", "분쇄커피의 향(Fragrance)과 물을 부은 뒤의 향을 평가하는 영역입니다. 이 시험자료에서는 Fragrance, Wet Aroma, Break를 5 : 3 : 2 정도의 비율로 점수에 반영합니다."],
-    flavor: ["Flavor", "Slurping할 때 커피에서 느껴지는 지배적인 향미를 평가합니다. 문제 3에서는 물을 부은 지 약 10분 후 첫 번째 Slurping에서 평가합니다."],
-    aftertaste: ["Aftertaste", "커피를 마신 뒤 남는 후미와 여운을 평가합니다. Flavor와 함께 첫 번째 Slurping에서 평가합니다."],
-    acidity: ["Acidity", "커피의 산미를 평가하는 영역입니다. 문제 3에서는 약 15분 후 두 번째 Slurping에서 평가합니다."],
-    body: ["Body", "커피의 농도와 입안에서 느껴지는 촉감을 평가합니다. Acidity, Balance와 함께 두 번째 Slurping에서 평가합니다."],
-    uniformity: ["Uniformity", "여러 커핑 컵에서 향미가 균일하게 나타나는지를 평가합니다. 약 20분 후 세 번째 Slurping에서 평가합니다."],
-    balance: ["Balance", "맛과 향, 바디가 서로 얼마나 조화로운지를 평가합니다."],
-    clean: ["Clean Cup", "결점향의 여부와 커피가 깨끗하고 투명하게 느껴지는지를 평가합니다."],
-    sweetness: ["Sweetness", "커피에서 느껴지는 단맛의 속성을 평가합니다."],
-    overall: ["Overall", "전체적인 커피 품질에 대한 평가자의 기호와 종합적인 인상을 반영합니다."],
-    defects: ["Defects", "향미 결점 여부를 기록하는 영역입니다. 모든 평가가 끝난 뒤 Defect를 반영하여 Final Score를 산출합니다."],
-    total: ["Total / Final Score", "각 평가항목을 합산해 Total Score를 계산하고 Defect를 반영해 Final Score를 산출합니다."],
-    notes: ["Notes", "샘플의 향미 특징이나 평가 중 확인한 내용을 자유롭게 메모하는 영역입니다."],
-    quality: ["Quality Scale", "6점대 GOOD, 7점대 VERY GOOD, 8점대 EXCELLENT, 9점대 OUTSTANDING으로 점수 범위를 참고하는 표입니다."]
+    sample: ["Sample No.", "샘플 번호를 적는 칸입니다. 각 샘플을 구분하기 위한 번호를 기록합니다."],
+    roast: ["Roast Level of Sample", "샘플의 로스팅 정도를 시각적으로 확인하여 표시하는 칸입니다. Buyer는 Fragrance 전에 먼저 로스팅 정도를 확인합니다."],
+    fragrance: ["Fragrance / Aroma", "분쇄커피의 향(Fragrance)과 물을 부은 뒤의 향(Aroma)을 평가하는 핵심 영역입니다. Dry, Crust, Break 순서와 강도를 함께 봅니다. 이 시험 자료에서는 Fragrance : Wet Aroma : Break를 5 : 3 : 2 정도의 비율로 반영합니다."],
+    flavor: ["Flavor", "첫 번째 Slurping(약 10분)에서 평가합니다. 커피에서 느껴지는 지배적인 향미를 기록하는 항목입니다."],
+    aftertaste: ["Aftertaste", "Flavor와 함께 첫 번째 Slurping에서 평가합니다. 커피를 마신 뒤 남는 후미와 여운을 보는 항목입니다."],
+    acidity: ["Acidity", "두 번째 Slurping(약 15분)에서 평가합니다. 산미와 함께 Intensity(High/Low)도 같이 봅니다."],
+    body: ["Body", "두 번째 Slurping(약 15분)에서 평가합니다. 농도와 촉감, 무게감(Heavy/Thin)을 보는 항목입니다."],
+    uniformity: ["Uniformity", "세 번째 Slurping(약 20분)에서 평가합니다. 여러 컵에서 향미가 균일하게 나타나는지 확인합니다."],
+    balance: ["Balance", "두 번째 Slurping(약 15분)에서 평가합니다. 맛, 향, 바디의 조화로움을 기록합니다."],
+    clean: ["Clean Cup", "세 번째 Slurping(약 20분)에서 평가합니다. 결점향의 여부와 컵의 깨끗함·투명성을 봅니다."],
+    sweetness: ["Sweetness", "세 번째 Slurping(약 20분)에서 평가합니다. 단맛의 속성을 보는 항목입니다."],
+    overall: ["Overall", "세 번째 Slurping(약 20분)에서 평가합니다. 평가자의 전반적 기호와 종합 인상을 반영합니다."],
+    defects: ["Defects (taint / fault)", "향미 결점을 기록하는 영역입니다. Taint는 2점, Fault는 4점으로 반영하며, # of cups와 intensity를 함께 고려합니다."],
+    total: ["Total Score / Final Score", "각 항목의 점수를 합산한 총점(Total Score)과 최종 점수(Final Score)를 확인하는 영역입니다."],
+    notes: ["Notes", "샘플에 대한 메모를 적는 영역입니다."],
+    quality: ["Quality Scale", "6.00 GOOD / 7.00 VERY GOOD / 8.00 EXCELLENT / 9.00 OUTSTANDING 기준을 참고하는 표입니다."]
   };
 
   function cuppingFormModel() {
-    const box = (key, x, y, w, h, label, sub = "") => `
-      <g class="cf-hotspot" data-cf-field="${key}" aria-label="${label} 설명 보기">
-        <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3"></rect>
-        <text x="${x + 8}" y="${y + 18}" class="cf-svg-label">${label}</text>
-        ${sub ? `<text x="${x + 8}" y="${y + 34}" class="cf-svg-sub">${sub}</text>` : ""}
-      </g>`;
-
     return `
       <div class="cf-guide">
-        <span>↔ 가로로 밀어 전체 틀 확인</span>
-        <strong>각 칸을 누르면 설명이 나옵니다.</strong>
+        <span>원본 양식의 순서와 배치를 그대로 확인</span>
+        <strong>각 영역을 누르면 아래 설명이 바뀝니다.</strong>
       </div>
-      <div class="cf-svg-scroll">
-        <svg class="cf-svg" viewBox="0 0 1280 330" xmlns="http://www.w3.org/2000/svg" aria-label="SCAA Arabica Cupping Form 모형">
-          <rect class="cf-page-bg" x="1" y="1" width="1278" height="328" rx="10"></rect>
-
-          <text x="24" y="30" class="cf-brand">Specialty Coffee Association</text>
-          <text x="24" y="50" class="cf-brand-sub">Arabica Cupping Form</text>
-
-          <g class="cf-meta-svg">
-            <text x="250" y="28">Name: __________________</text>
-            <text x="250" y="47">Date: ___________________</text>
-            <text x="250" y="66">Table no: _______________</text>
-          </g>
-
-          ${box("quality", 650, 14, 600, 62, "Quality Scale", "6 GOOD · 7 VERY GOOD · 8 EXCELLENT · 9 OUTSTANDING")}
-
-          <!-- Main form, matching the long horizontal structure of the source form -->
-          ${box("sample", 20, 94, 70, 180, "Sample No.")}
-          ${box("roast", 90, 94, 70, 180, "Roast Level")}
-
-          ${box("fragrance", 160, 94, 210, 90, "Fragrance/Aroma", "Dry · Crust · Break · Intensity")}
-          ${box("flavor", 370, 94, 130, 90, "Flavor", "Score")}
-          ${box("aftertaste", 500, 94, 130, 90, "Aftertaste", "Score")}
-          ${box("acidity", 630, 94, 130, 90, "Acidity", "Intensity · High / Low")}
-          ${box("body", 760, 94, 120, 90, "Body", "Level · Heavy / Thin")}
-          ${box("uniformity", 880, 94, 110, 44, "Uniformity", "□ □ □ □ □")}
-          ${box("clean", 990, 94, 110, 44, "Clean Cup", "□ □ □ □ □")}
-          ${box("overall", 1100, 94, 110, 90, "Overall", "Score")}
-
-          ${box("fragrance", 160, 184, 210, 90, "Aroma / Intensity", "향 강도 기록")}
-          ${box("balance", 370, 184, 260, 90, "Balance", "Score")}
-          ${box("sweetness", 630, 184, 250, 90, "Sweetness", "□ □ □ □ □")}
-          ${box("defects", 880, 138, 330, 136, "Defects", "Taint · Fault · # of cups · Intensity")}
-          ${box("total", 1210, 94, 50, 180, "Total", "Score")}
-
-          ${box("notes", 20, 274, 1190, 38, "Notes")}
-          <g class="cf-hotspot" data-cf-field="total" aria-label="Final Score 설명 보기">
-            <rect x="1090" y="282" width="170" height="30" rx="3" class="cf-final-rect"></rect>
-            <text x="1110" y="302" class="cf-svg-label cf-final-label">Final Score</text>
-          </g>
-
-          <!-- scale-like marks to keep the form visually close to the paper form -->
-          <g class="cf-ticks">
-            ${Array.from({length: 13}, (_,i)=>`<line x1="${174+i*15}" y1="130" x2="${190+i*15}" y2="${i%2?145:151}"></line>`).join("")}
-            ${Array.from({length: 7}, (_,i)=>`<line x1="${384+i*14}" y1="130" x2="${400+i*14}" y2="${i%2?145:151}"></line>`).join("")}
-            ${Array.from({length: 7}, (_,i)=>`<line x1="${514+i*14}" y1="130" x2="${518+i*14}" y2="${i%2?145:151}"></line>`).join("")}
-            ${Array.from({length: 7}, (_,i)=>`<line x1="${644+i*14}" y1="130" x2="${643+i*14}" y2="${i%2?145:151}"></line>`).join("")}
-            ${Array.from({length: 7}, (_,i)=>`<line x1="${774+i*14}" y1="130" x2="${769+i*14}" y2="${i%2?145:151}"></line>`).join("")}
-          </g>
-        </svg>
+      <div class="cf-reference-wrap">
+        <div class="cf-reference-stage">
+          <img src="/mnt/data/ghostwriter_images/context/19923956-739a-5c21-a7a3-a620025b4331.png" alt="SCAA Arabica Cupping Form 원본 참고 이미지" class="cf-reference-image">
+          <button type="button" class="cf-hotspot-btn" data-cf-field="sample" style="left:0.6%;top:45.4%;width:7.8%;height:39.2%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="roast" style="left:8.5%;top:45.4%;width:4.5%;height:39.2%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="fragrance" style="left:13.3%;top:45.4%;width:12.8%;height:22.7%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="flavor" style="left:26.4%;top:45.4%;width:8.2%;height:22.7%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="aftertaste" style="left:26.4%;top:68.3%;width:8.2%;height:16.3%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="acidity" style="left:34.9%;top:45.4%;width:12.2%;height:22.7%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="body" style="left:47.4%;top:45.4%;width:9.4%;height:22.7%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="uniformity" style="left:58.1%;top:45.4%;width:11.3%;height:11.3%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="clean" style="left:69.8%;top:45.4%;width:11.8%;height:11.3%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="overall" style="left:82.1%;top:45.4%;width:9.8%;height:11.3%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="balance" style="left:58.1%;top:60.3%;width:10.8%;height:8.9%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="sweetness" style="left:69.8%;top:60.3%;width:11.6%;height:8.9%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="defects" style="left:82.1%;top:60.0%;width:13.8%;height:16.0%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="total" style="left:96.0%;top:45.0%;width:3.2%;height:11.6%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="final" style="left:89.8%;top:77.2%;width:9.7%;height:8.9%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="quality" style="left:55.4%;top:3.2%;width:34.1%;height:18.3%;"></button>
+          <button type="button" class="cf-hotspot-btn" data-cf-field="notes" style="left:5.8%;top:84.0%;width:79.9%;height:9.8%;"></button>
+        </div>
       </div>
       <section class="cf-inline-detail" aria-live="polite">
         <span class="eyebrow">항목 설명</span>
         <h3 class="cf-inline-title">커핑폼의 칸을 눌러보세요</h3>
-        <p class="cf-inline-body">선택한 항목의 의미와 평가 시점이 이 자리에 표시됩니다.</p>
+        <p class="cf-inline-body">원본 양식 이미지 위 각 영역을 누르면 해당 항목의 의미와 평가 순서가 이 자리에 표시됩니다.</p>
       </section>`;
   }
 
   function bindCuppingForm(container) {
     if (!container) return;
 
-    const svg = container.querySelector(".cf-svg");
     const title = container.querySelector(".cf-inline-title");
     const body = container.querySelector(".cf-inline-body");
     const hotspots = [...container.querySelectorAll("[data-cf-field]")];
 
-    if (!svg || !title || !body) return;
+    if (!title || !body || !hotspots.length) return;
 
-    svg.addEventListener("click", (event) => {
-      const hotspot = event.target.closest("[data-cf-field]");
-      if (!hotspot || !svg.contains(hotspot)) return;
-
-      const info = cuppingFieldDescriptions[hotspot.dataset.cfField];
-      if (!info) return;
-
-      hotspots.forEach(x => x.classList.toggle("is-active", x === hotspot));
-      title.textContent = info[0];
-      body.textContent = info[1];
+    hotspots.forEach((hotspot) => {
+      hotspot.addEventListener("click", () => {
+        const info = cuppingFieldDescriptions[hotspot.dataset.cfField];
+        if (!info) return;
+        hotspots.forEach(x => x.classList.toggle("is-active", x === hotspot));
+        title.textContent = info[0];
+        body.textContent = info[1];
+      });
     });
   }
 
   function defectStudyMarkup() {
-    const cat1 = data.defects.filter(d => d.cat === 1);
-    const cat2 = data.defects.filter(d => d.cat === 2);
-    const group = (title, rows) => `
-      <section class="defect-group">
-        <div class="defect-group-title">${title}</div>
-        <div class="defect-list">
-          ${rows.map(d => `
-            <div class="defect-row">
-              <span>${esc(d.name)}</span>
-              <strong>${d.ratio}개 = 1점</strong>
-            </div>`).join("")}
+    const primary = [
+      ["Full black", "1개 = 1점"],
+      ["Full sour", "1개 = 1점"],
+      ["Dried cherry / pod", "1개 = 1점"],
+      ["Fungus damaged", "1개 = 1점"],
+      ["Foreign matter", "1개 = 1점"],
+      ["Severe insect damaged", "5개 = 1점"]
+    ];
+    const secondary = [
+      ["Partial black", "3개 = 1점"],
+      ["Partial sour", "3개 = 1점"],
+      ["Parchment", "5개 = 1점"],
+      ["Floater", "5개 = 1점"],
+      ["Immature", "5개 = 1점"],
+      ["Withered", "5개 = 1점"],
+      ["Shell", "5개 = 1점"],
+      ["Broken / chipped / cut", "5개 = 1점"],
+      ["Hull / husk", "5개 = 1점"],
+      ["Slight insect damaged", "10개 = 1점"]
+    ];
+    return `
+      <div class="defect-reference">
+        <div class="defect-note">시험지 표 구조 그대로: Category 1 / Category 2 / Full Defect Equivalent 순서로 암기</div>
+        <div class="defect-columns">
+          <section class="defect-panel">
+            <div class="defect-panel-head primary">
+              <div>Category 1 defects<br><small>(Primary Defects)</small></div>
+              <div>Full Defect Equivalent</div>
+            </div>
+            <div class="defect-panel-body">
+              ${primary.map(([name, ratio]) => `
+                <div class="defect-line">
+                  <span>${name}</span>
+                  <strong>${ratio}</strong>
+                </div>`).join("")}
+            </div>
+          </section>
+          <section class="defect-panel">
+            <div class="defect-panel-head secondary">
+              <div>Category 2 defects<br><small>(Secondary Defects)</small></div>
+              <div>Full Defect Equivalent</div>
+            </div>
+            <div class="defect-panel-body">
+              ${secondary.map(([name, ratio]) => `
+                <div class="defect-line">
+                  <span>${name}</span>
+                  <strong>${ratio}</strong>
+                </div>`).join("")}
+            </div>
+          </section>
         </div>
-      </section>`;
-    return `${group("Category 1 · Primary Defects", cat1)}${group("Category 2 · Secondary Defects", cat2)}`;
-  }
-
-  function numberedStudy(items) {
-    return items.map((item, i) => `
-      <div class="study-step">
-        <span class="study-step-num">${["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩","⑪","⑫"][i] || (i+1)}</span>
-        <div>${item}</div>
-      </div>`).join("");
+        <div class="defect-grade-boxes">
+          <div class="defect-grade-box"><b>G1</b><span>0 ~ 4</span></div>
+          <div class="defect-grade-box"><b>G2</b><span>5 ~ 12</span></div>
+          <div class="defect-grade-box"><b>G3</b><span>13 ~ 24</span></div>
+        </div>
+      </div>`;
   }
 
   function buildStaticStudy() {
