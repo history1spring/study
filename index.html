@@ -476,16 +476,6 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
 .cf-svg-sub{font-size:9px;fill:#766f68;pointer-events:none}
 .cf-final-label{fill:#2c2520}
 .cf-ticks line{stroke:#777;stroke-width:1;pointer-events:none}
-.cf-detail{
-  margin-top:10px;
-  padding:14px;
-  border:1px solid var(--viz-border);
-  border-radius:14px;
-  background:var(--viz-panel);
-}
-.cf-detail h3{margin:5px 0 6px;font-size:1rem}
-.cf-detail p{margin:0;font-size:.84rem;line-height:1.7;color:var(--viz-muted)}
-
 /* Keep the defect conversion ratios within one mobile page width */
 .defect-study-grid{
   grid-template-columns:1fr 1fr!important;
@@ -514,54 +504,83 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
 }
 
 
-/* 커핑폼 항목 선택 시 화면 위치 유지 */
-.cf-svg-scroll,
-.cf-detail{
+
+/* 커핑폼 항목 설명: 페이지를 움직이지 않는 고정형 bottom sheet */
+#cupping-form-model,
+#answer-content .cf-svg-scroll{
   overflow-anchor:none;
 }
-.cf-hotspot{
-  -webkit-tap-highlight-color:transparent;
-}
-
-
-#question-label{
-  min-width:0;
-}
-.screen-head{
-  align-items:flex-start;
-}
-
-
-/* iOS Safari: 커핑폼 칸 탭 시 페이지/가로 위치 고정 */
 .cf-svg-scroll{
   overflow-anchor:none;
-  overscroll-behavior-x:contain;
 }
 .cf-hotspot{
   outline:none!important;
   -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
 }
-.cf-detail{
-  overflow-anchor:none;
-  min-height:118px;
+.cf-explain-overlay{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding:0;
 }
-
-
-/* 커핑폼 설명 박스 높이를 고정해 설명 변경 시 페이지 높이가 변하지 않도록 함 */
-.cf-detail{
-  height:190px;
-  min-height:190px;
-  max-height:190px;
+.cf-explain-overlay.hidden{display:none!important}
+.cf-explain-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(33,27,23,.28);
+}
+.cf-explain-sheet{
+  position:relative;
+  z-index:1;
+  width:min(680px,100%);
+  max-height:52vh;
   overflow-y:auto;
-  overscroll-behavior:contain;
-  -webkit-overflow-scrolling:touch;
+  background:var(--viz-card);
+  border:1px solid var(--viz-border);
+  border-radius:22px 22px 0 0;
+  padding:10px 18px calc(18px + env(safe-area-inset-bottom));
+  box-shadow:0 -10px 30px rgba(33,27,23,.14);
+}
+.cf-sheet-handle{
+  width:42px;
+  height:5px;
+  margin:1px auto 12px;
+  border-radius:999px;
+  background:var(--viz-border);
+}
+.cf-sheet-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+.cf-sheet-head h3{
+  margin:4px 0 0;
+  font-size:1.12rem;
+}
+.cf-sheet-close{
+  min-width:52px;
+  min-height:42px;
+  border:1px solid var(--viz-border);
+  border-radius:12px;
+  background:var(--viz-panel);
+  color:var(--viz-text);
+  font-weight:800;
+}
+.cf-sheet-body{
+  margin:13px 0 0;
+  color:var(--viz-muted);
+  font-size:.9rem;
+  line-height:1.75;
 }
 @media(max-width:520px){
-  .cf-detail{
-    height:220px;
-    min-height:220px;
-    max-height:220px;
+  .cf-explain-sheet{
+    max-height:58vh;
+    padding-left:15px;
+    padding-right:15px;
   }
 }
 
@@ -1557,79 +1576,62 @@ window.APP_DATA = {
           </g>
         </svg>
       </div>
-      <div class="cf-detail" aria-live="polite">
-        <span class="eyebrow">항목 설명</span>
-        <h3>커핑폼의 칸을 눌러보세요</h3>
-        <p>각 평가항목이 무엇을 의미하는지 아래에 설명합니다.</p>
+      <div class="cf-explain-overlay hidden" aria-hidden="true">
+        <div class="cf-explain-backdrop" data-cf-close></div>
+        <section class="cf-explain-sheet" role="dialog" aria-modal="true" aria-label="커핑폼 항목 설명">
+          <div class="cf-sheet-handle" aria-hidden="true"></div>
+          <div class="cf-sheet-head">
+            <div>
+              <span class="eyebrow">항목 설명</span>
+              <h3 class="cf-sheet-title">커핑폼 항목</h3>
+            </div>
+            <button type="button" class="cf-sheet-close" data-cf-close aria-label="설명 닫기">닫기</button>
+          </div>
+          <p class="cf-sheet-body"></p>
+        </section>
       </div>`;
   }
 
   function bindCuppingForm(container) {
     if (!container) return;
 
-    const detail = container.querySelector(".cf-detail");
-    const title = detail?.querySelector("h3");
-    const body = detail?.querySelector("p");
-    const scroller = container.querySelector(".cf-svg-scroll");
+    const svg = container.querySelector(".cf-svg");
+    const overlay = container.querySelector(".cf-explain-overlay");
+    const title = container.querySelector(".cf-sheet-title");
+    const body = container.querySelector(".cf-sheet-body");
     const hotspots = [...container.querySelectorAll("[data-cf-field]")];
 
-    let savedPageX = window.scrollX;
-    let savedPageY = window.scrollY;
-    let savedFormX = scroller ? scroller.scrollLeft : 0;
-    let savedFormY = scroller ? scroller.scrollTop : 0;
-    let armedHotspot = null;
+    if (!svg || !overlay || !title || !body) return;
 
-    const rememberPosition = (el) => {
-      savedPageX = window.scrollX;
-      savedPageY = window.scrollY;
-      savedFormX = scroller ? scroller.scrollLeft : 0;
-      savedFormY = scroller ? scroller.scrollTop : 0;
-      armedHotspot = el;
-    };
+    const openExplanation = (hotspot) => {
+      const info = cuppingFieldDescriptions[hotspot.dataset.cfField];
+      if (!info) return;
 
-    const restorePosition = () => {
-      window.scrollTo(savedPageX, savedPageY);
-      if (scroller) {
-        scroller.scrollLeft = savedFormX;
-        scroller.scrollTop = savedFormY;
-      }
-    };
-
-    const activate = (el) => {
-      const info = cuppingFieldDescriptions[el.dataset.cfField];
-      if (!info || !title || !body) return;
-
-      hotspots.forEach(x => x.classList.toggle("is-active", x === el));
+      hotspots.forEach(x => x.classList.toggle("is-active", x === hotspot));
       title.textContent = info[0];
       body.textContent = info[1];
 
-      // iOS Safari는 tap → click 사이에 이미 화면을 재배치할 수 있으므로
-      // pointer/touch 시작 시점에 저장해 둔 위치를 여러 프레임에 걸쳐 복원한다.
-      restorePosition();
-      requestAnimationFrame(() => {
-        restorePosition();
-        requestAnimationFrame(restorePosition);
-      });
-      setTimeout(restorePosition, 80);
+      // fixed overlay만 열고 문서의 스크롤 위치/높이는 전혀 건드리지 않는다.
+      overlay.classList.remove("hidden");
+      overlay.setAttribute("aria-hidden", "false");
     };
 
-    hotspots.forEach(el => {
-      el.addEventListener("pointerdown", () => rememberPosition(el), { passive: true });
-      el.addEventListener("touchstart", () => rememberPosition(el), { passive: true });
+    const closeExplanation = () => {
+      overlay.classList.add("hidden");
+      overlay.setAttribute("aria-hidden", "true");
+      hotspots.forEach(x => x.classList.remove("is-active"));
+    };
 
-      el.addEventListener("pointerup", e => {
-        e.preventDefault();
-        if (armedHotspot === el) activate(el);
-        armedHotspot = null;
-      });
+    // SVG 자체에 하나의 click listener만 둔다.
+    // SVG 요소에 focus/tabindex를 주지 않아 iOS Safari의 자동 스크롤을 유발하지 않는다.
+    svg.addEventListener("click", (event) => {
+      const hotspot = event.target.closest("[data-cf-field]");
+      if (!hotspot || !svg.contains(hotspot)) return;
+      openExplanation(hotspot);
+    });
 
-      // 일부 iOS 버전에서 pointerup 대신 click만 오는 경우의 fallback
-      el.addEventListener("click", e => {
-        e.preventDefault();
-        if (armedHotspot !== null && armedHotspot !== el) return;
-        activate(el);
-        armedHotspot = null;
-      });
+    overlay.addEventListener("click", (event) => {
+      if (event.target.closest("[data-cf-close]")) closeExplanation();
     });
   }
 
