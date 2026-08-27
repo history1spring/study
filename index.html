@@ -406,7 +406,7 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   padding:10px 11px;
   border:1px solid var(--border);
   border-radius:13px;
-  background:var(--viz-panel);
+  background:var(--surface-2);
   font-size:.86rem;
   line-height:1.65;
 }
@@ -416,13 +416,13 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   width:30px;
   height:30px;
   border-radius:50%;
-  background:var(--viz-accent-bg);
+  background:var(--accent-2);
   font-weight:900;
 }
 .study-sub{
   display:block;
   margin-top:5px;
-  color:var(--viz-muted);
+  color:var(--muted);
   font-size:.78rem;
   line-height:1.7;
 }
@@ -435,14 +435,14 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   flex-wrap:wrap;
   margin:10px 0 8px;
   font-size:.75rem;
-  color:var(--viz-muted);
+  color:var(--muted);
 }
-.cf-guide strong{color:var(--viz-text)}
+.cf-guide strong{color:var(--text)}
 .cf-svg-scroll{
   width:100%;
   overflow-x:auto;
   -webkit-overflow-scrolling:touch;
-  border:1px solid var(--viz-border);
+  border:1px solid var(--border);
   border-radius:15px;
   background:#fff;
 }
@@ -505,10 +505,31 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
 
 
 
-/* 커핑폼 항목 설명: 페이지를 움직이지 않는 고정형 bottom sheet */
-#cupping-form-model,
-#answer-content .cf-svg-scroll{
+
+/* 커핑폼 항목 설명: 페이지 하단 인라인 고정 영역 */
+.cf-inline-detail{
+  margin-top:10px;
+  height:170px;
+  min-height:170px;
+  max-height:170px;
+  padding:14px 15px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--surface-2);
+  color:var(--text);
+  overflow:hidden;
   overflow-anchor:none;
+}
+.cf-inline-detail h3{
+  margin:5px 0 7px;
+  font-size:1rem;
+  line-height:1.35;
+}
+.cf-inline-detail p{
+  margin:0;
+  color:var(--muted);
+  font-size:.84rem;
+  line-height:1.65;
 }
 .cf-svg-scroll{
   overflow-anchor:none;
@@ -516,71 +537,18 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
 .cf-hotspot{
   outline:none!important;
   -webkit-tap-highlight-color:transparent;
-}
-.cf-explain-overlay{
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-  padding:0;
-}
-.cf-explain-overlay.hidden{display:none!important}
-.cf-explain-backdrop{
-  position:absolute;
-  inset:0;
-  background:rgba(33,27,23,.28);
-}
-.cf-explain-sheet{
-  position:relative;
-  z-index:1;
-  width:min(680px,100%);
-  max-height:52vh;
-  overflow-y:auto;
-  background:var(--viz-card);
-  border:1px solid var(--viz-border);
-  border-radius:22px 22px 0 0;
-  padding:10px 18px calc(18px + env(safe-area-inset-bottom));
-  box-shadow:0 -10px 30px rgba(33,27,23,.14);
-}
-.cf-sheet-handle{
-  width:42px;
-  height:5px;
-  margin:1px auto 12px;
-  border-radius:999px;
-  background:var(--viz-border);
-}
-.cf-sheet-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-}
-.cf-sheet-head h3{
-  margin:4px 0 0;
-  font-size:1.12rem;
-}
-.cf-sheet-close{
-  min-width:52px;
-  min-height:42px;
-  border:1px solid var(--viz-border);
-  border-radius:12px;
-  background:var(--viz-panel);
-  color:var(--viz-text);
-  font-weight:800;
-}
-.cf-sheet-body{
-  margin:13px 0 0;
-  color:var(--viz-muted);
-  font-size:.9rem;
-  line-height:1.75;
+  touch-action:manipulation;
 }
 @media(max-width:520px){
-  .cf-explain-sheet{
-    max-height:58vh;
-    padding-left:15px;
-    padding-right:15px;
+  .cf-inline-detail{
+    height:195px;
+    min-height:195px;
+    max-height:195px;
+    padding:13px;
+  }
+  .cf-inline-detail p{
+    font-size:.8rem;
+    line-height:1.6;
   }
 }
 
@@ -1468,7 +1436,6 @@ window.APP_DATA = {
     $("#answer-content").innerHTML = html;
     if (currentQuestion === 4) bindCuppingForm($("#answer-content"));
     panel.classList.remove("hidden");
-    panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   function renderStudyBean(bean) {
@@ -1576,62 +1543,33 @@ window.APP_DATA = {
           </g>
         </svg>
       </div>
-      <div class="cf-explain-overlay hidden" aria-hidden="true">
-        <div class="cf-explain-backdrop" data-cf-close></div>
-        <section class="cf-explain-sheet" role="dialog" aria-modal="true" aria-label="커핑폼 항목 설명">
-          <div class="cf-sheet-handle" aria-hidden="true"></div>
-          <div class="cf-sheet-head">
-            <div>
-              <span class="eyebrow">항목 설명</span>
-              <h3 class="cf-sheet-title">커핑폼 항목</h3>
-            </div>
-            <button type="button" class="cf-sheet-close" data-cf-close aria-label="설명 닫기">닫기</button>
-          </div>
-          <p class="cf-sheet-body"></p>
-        </section>
-      </div>`;
+      <section class="cf-inline-detail" aria-live="polite">
+        <span class="eyebrow">항목 설명</span>
+        <h3 class="cf-inline-title">커핑폼의 칸을 눌러보세요</h3>
+        <p class="cf-inline-body">선택한 항목의 의미와 평가 시점이 이 자리에 표시됩니다.</p>
+      </section>`;
   }
 
   function bindCuppingForm(container) {
     if (!container) return;
 
     const svg = container.querySelector(".cf-svg");
-    const overlay = container.querySelector(".cf-explain-overlay");
-    const title = container.querySelector(".cf-sheet-title");
-    const body = container.querySelector(".cf-sheet-body");
+    const title = container.querySelector(".cf-inline-title");
+    const body = container.querySelector(".cf-inline-body");
     const hotspots = [...container.querySelectorAll("[data-cf-field]")];
 
-    if (!svg || !overlay || !title || !body) return;
+    if (!svg || !title || !body) return;
 
-    const openExplanation = (hotspot) => {
+    svg.addEventListener("click", (event) => {
+      const hotspot = event.target.closest("[data-cf-field]");
+      if (!hotspot || !svg.contains(hotspot)) return;
+
       const info = cuppingFieldDescriptions[hotspot.dataset.cfField];
       if (!info) return;
 
       hotspots.forEach(x => x.classList.toggle("is-active", x === hotspot));
       title.textContent = info[0];
       body.textContent = info[1];
-
-      // fixed overlay만 열고 문서의 스크롤 위치/높이는 전혀 건드리지 않는다.
-      overlay.classList.remove("hidden");
-      overlay.setAttribute("aria-hidden", "false");
-    };
-
-    const closeExplanation = () => {
-      overlay.classList.add("hidden");
-      overlay.setAttribute("aria-hidden", "true");
-      hotspots.forEach(x => x.classList.remove("is-active"));
-    };
-
-    // SVG 자체에 하나의 click listener만 둔다.
-    // SVG 요소에 focus/tabindex를 주지 않아 iOS Safari의 자동 스크롤을 유발하지 않는다.
-    svg.addEventListener("click", (event) => {
-      const hotspot = event.target.closest("[data-cf-field]");
-      if (!hotspot || !svg.contains(hotspot)) return;
-      openExplanation(hotspot);
-    });
-
-    overlay.addEventListener("click", (event) => {
-      if (event.target.closest("[data-cf-close]")) closeExplanation();
     });
   }
 
@@ -1788,7 +1726,6 @@ window.APP_DATA = {
   function switchScreen(screen) {
     setActive("[data-screen]", el => el.dataset.screen === screen, "aria-selected");
     $$(".screen").forEach(s => s.classList.toggle("hidden", s.dataset.screen !== screen));
-    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   // Events
