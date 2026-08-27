@@ -1345,6 +1345,13 @@ window.APP_DATA = {
     const label = $("#question-label");
     const body = $("#question-body");
     const variantBtn = $("#new-variant");
+    const summaryBtn = $("#summary-answer");
+    const fullBtn = $("#full-answer");
+
+    // 기본 상태: 1·2·3·5번은 요약/풀버전 두 버튼
+    summaryBtn.textContent = "요약 답안";
+    summaryBtn.classList.remove("wide");
+    fullBtn.classList.remove("hidden");
     $("#answer-panel").classList.add("hidden");
 
     if (currentQuestion === 1) {
@@ -1368,6 +1375,13 @@ window.APP_DATA = {
       label.textContent = `문제 ${currentQuestion} · ${q.title}`;
       body.innerHTML = `<span class="eyebrow">기출형</span><h2>${esc(q.title)}</h2><p>${esc(q.prompt)}</p>`;
       variantBtn.textContent = "문제 다시 보기";
+
+      // 4번은 정답이 커핑폼 하나이므로 '답안' 단일 버튼으로 통일
+      if (currentQuestion === 4) {
+        summaryBtn.textContent = "답안";
+        summaryBtn.classList.add("wide");
+        fullBtn.classList.add("hidden");
+      }
     }
   }
 
@@ -1428,7 +1442,9 @@ window.APP_DATA = {
       }
     }
 
-    $("#answer-title").textContent = type === "summary" ? "요약 답안" : "풀버전 답안";
+    $("#answer-title").textContent =
+      currentQuestion === 4 ? "답안" :
+      (type === "summary" ? "요약 답안" : "풀버전 답안");
     $("#answer-content").innerHTML = html;
     if (currentQuestion === 4) bindCuppingForm($("#answer-content"));
     panel.classList.remove("hidden");
@@ -1653,33 +1669,62 @@ window.APP_DATA = {
 
   function memoryCards() {
     const cards = [
-      { cat: "cupping", label: "커핑", q: "커핑용 원두는 언제 로스팅하고 얼마나 디개싱하는가?", a: "24시간 전 로스팅 / 8시간 이상 디개싱" },
-      { cat: "cupping", label: "커핑", q: "커핑용 물의 권장 ppm과 사용 온도는?", a: "50~100ppm 권장 / 92~94℃" },
-      { cat: "cupping", label: "커핑", q: "Buyer 6명, 원두 6종일 때 최소 커핑컵 수는?", a: "36개 — 샘플당 6개(린싱 컵 포함)" },
-      { cat: "cupping", label: "커핑", q: "Buyer 6명일 때 최소 커핑스푼 수는?", a: "12개 — 1인당 2개" },
-      { cat: "cupping", label: "커핑", q: "샘플 원두는 컵당 몇 g, 몇 컵에 담는가?", a: "약 11g씩 / 5개의 커핑 컵" },
+      // ─────────────────────────────
+      // 커핑 암기 26문제
+      // ─────────────────────────────
+      { cat: "cupping", label: "커핑", q: "Buyer 6명·생두 6종일 때 최소 커핑 컵 수는?", a: "36개 — 샘플당 6개(린싱 컵 포함)" },
+      { cat: "cupping", label: "커핑", q: "Buyer 6명일 때 최소 커핑 스푼 수는?", a: "12개 — 1인당 2개" },
+      { cat: "cupping", label: "커핑", q: "커핑에 필요한 기타 기물은?", a: "커핑 폼, 그라인더, 저울, 온도계, 린싱 컵, 전기포트, 타이머, 린넨 및 행주, 필기구" },
+      { cat: "cupping", label: "커핑", q: "샘플 원두는 한 컵당 몇 g씩 몇 컵에 담는가?", a: "약 11g씩 / 5개의 커핑 컵" },
       { cat: "cupping", label: "커핑", q: "시험자료의 디팅 그라인더 분쇄도는?", a: "7.5" },
+      { cat: "cupping", label: "커핑", q: "샘플 원두를 분쇄하기 전에 먼저 분쇄하는 것은?", a: "린싱 원두" },
       { cat: "cupping", label: "커핑", q: "물을 붓기 전에 평가하는 것은?", a: "Fragrance — 분쇄커피의 향" },
-      { cat: "cupping", label: "커핑", q: "물을 부은 직후 체크하는 것은?", a: "Wet Aroma — 추출커피의 향" },
-      { cat: "cupping", label: "커핑", q: "약 5분 시점에 진행하는 것은?", a: "Break(결정향) / Skimming" },
-      { cat: "cupping", label: "커핑", q: "Fragrance : Wet Aroma : Break 점수 반영 비율은?", a: "5 : 3 : 2 정도" },
-      { cat: "cupping", label: "커핑", q: "약 10분 첫 번째 Slurping 평가항목은?", a: "Flavor / Aftertaste" },
-      { cat: "cupping", label: "커핑", q: "약 15분 두 번째 Slurping 평가항목은?", a: "Acidity / Body / Balance" },
-      { cat: "cupping", label: "커핑", q: "약 20분 세 번째 Slurping 평가항목은?", a: "Uniformity / Clean Cup / Sweetness / Overall" },
-      { cat: "cupping", label: "커핑", q: "Skimming이 끝난 뒤 주최자가 해야 하는 일은?", a: "사용한 린싱 컵을 정리하고 새 린싱 컵에 물을 부어 테이블에 준비" },
-      { cat: "cupping", label: "커핑", q: "모든 샘플 커핑이 끝난 뒤 하는 것은?", a: "Calibration 및 샘플 정보 의견 공유 후 생두 구입 여부 결정" },
+      { cat: "cupping", label: "커핑", q: "물을 부은 후 평가하는 향은?", a: "Wet Aroma — 추출커피의 향" },
+      { cat: "cupping", label: "커핑", q: "약 5분에 진행하는 것은?", a: "Break + Skimming" },
+      { cat: "cupping", label: "커핑", q: "Skimming이 끝난 뒤 린싱 컵은 어떻게 하는가?", a: "사용한 린싱 컵을 정리하고 새 린싱 컵에 물을 준비" },
+      { cat: "cupping", label: "커핑", q: "10분의 평가항목은?", a: "Flavor / Aftertaste" },
+      { cat: "cupping", label: "커핑", q: "15분의 평가항목은?", a: "Acidity / Body / Balance" },
+      { cat: "cupping", label: "커핑", q: "20분의 평가항목은?", a: "Uniformity / Clean Cup / Sweetness / Overall" },
+      { cat: "cupping", label: "커핑", q: "Fragrance : Wet Aroma : Break의 점수 비율은?", a: "5 : 3 : 2 정도" },
+      { cat: "cupping", label: "커핑", q: "Buyer가 커핑 폼에 처음 기재하는 것은?", a: "샘플 넘버, 날짜, 이름" },
+      { cat: "cupping", label: "커핑", q: "Fragrance 전에 시각적으로 확인하는 것은?", a: "로스팅 정도" },
 
-      { cat: "defect", label: "결점", q: "Full Black 몇 개가 Full Defect 1점인가?", a: "1개" },
-      { cat: "defect", label: "결점", q: "Full Sour 몇 개가 Full Defect 1점인가?", a: "1개" },
-      { cat: "defect", label: "결점", q: "Severe Insect Damaged 몇 개가 1점인가?", a: "5개" },
-      { cat: "defect", label: "결점", q: "Partial Black 몇 개가 1점인가?", a: "3개" },
-      { cat: "defect", label: "결점", q: "Partial Sour 몇 개가 1점인가?", a: "3개" },
-      { cat: "defect", label: "결점", q: "Parchment·Floater·Immature·Withered·Shell·Broken/Chipped/Cut·Hull/Husk는 몇 개가 1점인가?", a: "각 5개" },
-      { cat: "defect", label: "결점", q: "Slight Insect Damaged 몇 개가 1점인가?", a: "10개" },
-      { cat: "defect", label: "결점", q: "Ethiopia G1의 결점수 범위는?", a: "0~4점" },
-      { cat: "defect", label: "결점", q: "Ethiopia G2의 결점수 범위는?", a: "5~12점" },
-      { cat: "defect", label: "결점", q: "Ethiopia G3의 결점수 범위는?", a: "13~24점" },
-      { cat: "defect", label: "결점", q: "결점두 환산에서 나머지는 올림하는가?", a: "아니오. 완성된 묶음만 환산합니다." }
+      { cat: "cupping", label: "커핑", q: "Fragrance 평가의 기본 기준점수는?", a: "7.0~7.5점" },
+      { cat: "cupping", label: "커핑", q: "고무탄 내·암모니아·페놀 향의 점수 범위는?", a: "6.0~6.5점" },
+      { cat: "cupping", label: "커핑", q: "흙·나무·익히지 않은 야채 향의 점수 범위는?", a: "6.5~6.75점" },
+      { cat: "cupping", label: "커핑", q: "볶은 곡물·볶은 견과류 향의 점수 범위는?", a: "7.0~7.5점" },
+      { cat: "cupping", label: "커핑", q: "고소한 향 + 잘 익은 과일의 달콤·새콤한 향의 점수 범위는?", a: "7.5~8.0점" },
+      { cat: "cupping", label: "커핑", q: "과일의 달콤·새콤함 + 블랙티·허브·꽃향의 점수 범위는?", a: "8.0~8.5점" },
+
+      { cat: "cupping", label: "커핑", q: "Flavor / Aftertaste의 의미는?", a: "Flavor: 커피에서 느껴지는 지배적인 향미 / Aftertaste: 커피를 마신 뒤 느껴지는 후미·여운" },
+      { cat: "cupping", label: "커핑", q: "Acidity / Body / Balance의 의미는?", a: "Acidity: 산미 / Body: 농도와 촉감 / Balance: 맛·향·바디의 조화로움" },
+      { cat: "cupping", label: "커핑", q: "Uniformity / Clean Cup / Sweetness / Overall의 의미는?", a: "Uniformity: 균일성 / Clean Cup: 결점향의 여부 및 투명성 / Sweetness: 단맛의 속성 / Overall: 평가자의 기호" },
+      { cat: "cupping", label: "커핑", q: "평가 종료 후 점수 산출 순서는?", a: "각 평가항목 점수 → Total Score → Defect 반영 → Final Score" },
+
+      // ─────────────────────────────
+      // 결점두 암기 19문제
+      // ─────────────────────────────
+      { cat: "defect", label: "결점", q: "Full Black 몇 개 = 1점?", a: "1개" },
+      { cat: "defect", label: "결점", q: "Full Sour 몇 개 = 1점?", a: "1개" },
+      { cat: "defect", label: "결점", q: "Dried Cherry/Pod 몇 개 = 1점?", a: "1개" },
+      { cat: "defect", label: "결점", q: "Fungus Damaged 몇 개 = 1점?", a: "1개" },
+      { cat: "defect", label: "결점", q: "Foreign Matter 몇 개 = 1점?", a: "1개" },
+      { cat: "defect", label: "결점", q: "Severe Insect Damaged 몇 개 = 1점?", a: "5개" },
+
+      { cat: "defect", label: "결점", q: "Partial Black 몇 개 = 1점?", a: "3개" },
+      { cat: "defect", label: "결점", q: "Partial Sour 몇 개 = 1점?", a: "3개" },
+      { cat: "defect", label: "결점", q: "Parchment 몇 개 = 1점?", a: "5개" },
+      { cat: "defect", label: "결점", q: "Floater 몇 개 = 1점?", a: "5개" },
+      { cat: "defect", label: "결점", q: "Immature 몇 개 = 1점?", a: "5개" },
+      { cat: "defect", label: "결점", q: "Withered 몇 개 = 1점?", a: "5개" },
+      { cat: "defect", label: "결점", q: "Shell 몇 개 = 1점?", a: "5개" },
+      { cat: "defect", label: "결점", q: "Broken / Chipped / Cut 몇 개 = 1점?", a: "5개" },
+      { cat: "defect", label: "결점", q: "Hull / Husk 몇 개 = 1점?", a: "5개" },
+      { cat: "defect", label: "결점", q: "Slight Insect Damaged 몇 개 = 1점?", a: "10개" },
+
+      { cat: "defect", label: "결점", q: "Ethiopia G1 결점수는?", a: "0~4점" },
+      { cat: "defect", label: "결점", q: "Ethiopia G2 결점수는?", a: "5~12점" },
+      { cat: "defect", label: "결점", q: "Ethiopia G3 결점수는?", a: "13~24점" }
     ];
     return cards;
   }
