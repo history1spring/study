@@ -804,7 +804,7 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
 .cf-quality-box{fill:#fff;stroke:#3f3f3f;stroke-width:2.6}
 .cf-form-field:hover > .cf-quality-box,.cf-form-field.is-active > .cf-quality-box{fill:#f7f0e7;stroke:#7b5139}
 .cf-quality-title{font-size:17px;font-weight:800;fill:#333;pointer-events:none}
-.cf-quality-text{font-size:10px;font-weight:800;fill:#333;pointer-events:none}
+.cf-quality-text{font-size:9px;font-weight:800;fill:#333;pointer-events:none}
 .cf-quality-sub{font-size:9px;fill:#333;pointer-events:none}
 .cf-defect-text{font-size:8px;fill:#222;pointer-events:none}
 .cf-total-text{font-size:7px;font-weight:800;fill:#333;pointer-events:none}
@@ -1394,6 +1394,406 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   }
 }
 
+
+/* ===== 문제1·공부 원두 설명: 항목형 문장 정리 ===== */
+.bean-explanation-list{
+  display:grid;
+  gap:10px;
+  margin-top:10px;
+}
+.bean-explanation-item{
+  display:grid;
+  grid-template-columns:12px minmax(0,1fr);
+  gap:8px;
+  align-items:start;
+}
+.bean-explanation-mark{
+  width:6px;
+  height:6px;
+  margin-top:.67em;
+  border-radius:50%;
+  background:#7b5639;
+}
+.bean-explanation-item p{
+  margin:0!important;
+  min-width:0;
+  color:var(--text);
+  font-size:.88rem;
+  line-height:1.72;
+}
+.bean-exam-answer .bean-explanation-list{
+  margin-top:11px;
+}
+@media(max-width:620px){
+  .bean-explanation-list{
+    gap:9px;
+  }
+  .bean-explanation-item{
+    grid-template-columns:10px minmax(0,1fr);
+    gap:7px;
+  }
+  .bean-explanation-mark{
+    width:5px;
+    height:5px;
+    margin-top:.68em;
+  }
+  .bean-explanation-item p{
+    font-size:.84rem;
+    line-height:1.68;
+  }
+}
+
+
+/* ===== 2026-08-27 최종 보정: 결점두 3열 / Quality Scale ===== */
+.defect-study-host .defect-exam-subhead-3col,
+.defect-study-host .defect-exam-row-3col{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 78px 78px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.defect-study-host .defect-exam-subhead-3col span{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:0!important;
+  padding:8px 5px!important;
+  text-align:center!important;
+  line-height:1.2!important;
+}
+.defect-study-host .defect-exam-subhead-3col span:first-child{
+  justify-content:flex-start!important;
+  padding-left:10px!important;
+}
+.defect-study-host .defect-exam-subhead-3col span+span{
+  border-left:1px solid #d7c6b6!important;
+}
+.defect-study-host .defect-exam-count,
+.defect-study-host .defect-exam-score{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:0!important;
+  padding:10px 5px!important;
+  border-left:1px solid #d7c6b6!important;
+  color:#56361f!important;
+  font-size:.84rem!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+}
+.defect-study-host .defect-exam-count{background:#f5eadc!important}
+.defect-study-host .defect-exam-score{background:#ead8c4!important}
+@media(max-width:720px){
+  .defect-study-host .defect-exam-subhead-3col,
+  .defect-study-host .defect-exam-row-3col{
+    grid-template-columns:minmax(0,1fr) 72px 72px!important;
+  }
+  .defect-study-host .defect-exam-subhead-3col{
+    font-size:.72rem!important;
+  }
+  .defect-study-host .defect-exam-count,
+  .defect-study-host .defect-exam-score{
+    font-size:.82rem!important;
+  }
+}
+@media(max-width:380px){
+  .defect-study-host .defect-exam-subhead-3col,
+  .defect-study-host .defect-exam-row-3col{
+    grid-template-columns:minmax(0,1fr) 66px 66px!important;
+  }
+  .defect-study-host .defect-exam-subhead-3col{
+    font-size:.68rem!important;
+  }
+  .defect-study-host .defect-exam-count,
+  .defect-study-host .defect-exam-score{
+    font-size:.78rem!important;
+  }
+}
+
+
+/* ===== 공부 > 커핑 Fragrance 점수 가이드 ===== */
+.fragrance-score-guide{
+  margin-top:10px;
+  border:1px solid #cbb49e;
+  border-radius:13px;
+  overflow:hidden;
+  background:#fffaf4;
+}
+.fragrance-score-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:9px 11px;
+  background:#7b5639;
+  color:#fff;
+}
+.fragrance-score-head strong{
+  font-size:.82rem;
+}
+.fragrance-score-head span{
+  padding:4px 7px;
+  border-radius:999px;
+  background:rgba(255,255,255,.16);
+  font-size:.68rem;
+  font-weight:850;
+  white-space:nowrap;
+}
+.fragrance-score-row{
+  display:grid;
+  grid-template-columns:82px minmax(0,1fr);
+  gap:9px;
+  align-items:center;
+  padding:8px 10px;
+  border-top:1px solid #eadfd4;
+  font-size:.76rem;
+  line-height:1.45;
+}
+.fragrance-score-row b{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:29px;
+  padding:0 7px;
+  border-radius:9px;
+  background:#ead9c5;
+  color:#56361f;
+  font-size:.73rem;
+  white-space:nowrap;
+}
+.fragrance-score-row span{
+  color:#5f554c;
+}
+@media(max-width:520px){
+  .fragrance-score-head{
+    align-items:flex-start;
+  }
+  .fragrance-score-row{
+    grid-template-columns:76px minmax(0,1fr);
+    gap:7px;
+    padding:8px 9px;
+    font-size:.73rem;
+  }
+  .fragrance-score-row b{
+    font-size:.69rem;
+  }
+}
+
+
+/* ===== 최종 요청 보정: SCA 공식 마크 + Q5 풀답안 ===== */
+.cf-sca-official-mark{
+  filter:brightness(0);
+}
+
+/* 문제 5 풀버전 */
+.q5-answer-category-stack{
+  display:grid;
+  gap:12px;
+}
+.q5-answer-category{
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  background:#fff;
+}
+.q5-answer-category-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  background:#ead9c5;
+  color:#4b301e;
+}
+.q5-answer-category-head strong{
+  font-size:.9rem;
+}
+.q5-answer-category-head span{
+  color:#786454;
+  font-size:.7rem;
+  font-weight:800;
+}
+.q5-answer-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+.q5-answer-table th,
+.q5-answer-table td{
+  padding:9px 7px;
+  border-top:1px solid #e5d9ce;
+  text-align:center;
+  font-size:.77rem;
+  line-height:1.35;
+  word-break:keep-all;
+}
+.q5-answer-table th{
+  background:#f7f0e8;
+  color:#5b4432;
+  font-size:.72rem;
+  font-weight:900;
+}
+.q5-answer-table th:first-child,
+.q5-answer-table td:first-child{
+  width:36%;
+  text-align:left;
+}
+.q5-answer-table td:first-child{
+  font-weight:750;
+}
+.q5-answer-empty{
+  text-align:center!important;
+  color:var(--muted);
+}
+.q5-answer-summary{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  margin-top:12px;
+}
+.q5-answer-summary>div{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  min-height:70px;
+  padding:9px 7px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--surface-2);
+  text-align:center;
+}
+.q5-answer-summary span{
+  color:var(--muted);
+  font-size:.7rem;
+  font-weight:800;
+}
+.q5-answer-summary strong{
+  color:#4b301e;
+  font-size:1rem;
+}
+.q5-answer-summary .grade{
+  background:#ead9c5;
+}
+.q5-answer-grade-note{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+  margin-top:10px;
+}
+.q5-answer-grade-note>span{
+  padding:7px 8px;
+  border-radius:9px;
+  background:#f5eadc;
+  color:#5b4432;
+  font-size:.75rem;
+  text-align:center;
+}
+.q5-answer-grade-note small{
+  grid-column:1/-1;
+  color:var(--muted);
+  font-size:.7rem;
+  line-height:1.5;
+  text-align:center;
+}
+
+@media(max-width:620px){
+  .q5-answer-table th,
+  .q5-answer-table td{
+    padding:8px 4px;
+    font-size:.7rem;
+  }
+  .q5-answer-table th{
+    font-size:.66rem;
+  }
+  .q5-answer-table th:first-child,
+  .q5-answer-table td:first-child{
+    width:34%;
+  }
+  .q5-answer-summary{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .q5-answer-summary>div{
+    min-height:64px;
+  }
+}
+
+
+/* ===== 결점두 표 색상 완화 + SCA 심볼 정렬 ===== */
+.cf-sca-official-mark{
+  filter:none!important;
+}
+
+.defect-study-host .defect-exam-sheet{
+  border-color:#d9cabc!important;
+  background:#fff!important;
+}
+.defect-study-host .defect-exam-caption{
+  background:#f1e7dc!important;
+  color:#59402f!important;
+  border-bottom:1px solid #d9cabc!important;
+}
+.defect-study-host .defect-exam-col{
+  background:#fff!important;
+  border-color:#ded2c7!important;
+}
+.defect-study-host .defect-exam-head,
+.defect-study-host .defect-exam-col:nth-child(2) .defect-exam-head{
+  background:#f7f0e8!important;
+  color:#433329!important;
+  border-bottom-color:#ded2c7!important;
+}
+.defect-study-host .defect-exam-head small{
+  color:#807266!important;
+}
+.defect-study-host .defect-exam-subhead{
+  background:#fbf8f4!important;
+  color:#5d4b3e!important;
+  border-bottom-color:#e4dad1!important;
+}
+.defect-study-host .defect-exam-subhead span:last-child,
+.defect-study-host .defect-exam-subhead-3col span:nth-child(2),
+.defect-study-host .defect-exam-subhead-3col span:nth-child(3){
+  border-left-color:#e4dad1!important;
+}
+.defect-study-host .defect-exam-row,
+.defect-study-host .defect-exam-row:nth-child(even){
+  background:#fff!important;
+  border-bottom-color:#eee6df!important;
+}
+.defect-study-host .defect-exam-name{
+  background:#fff!important;
+  color:#2f2924!important;
+}
+.defect-study-host .defect-exam-count{
+  background:#fcfaf7!important;
+  color:#61452f!important;
+  border-left-color:#e7ddd4!important;
+}
+.defect-study-host .defect-exam-score{
+  background:#f5eee6!important;
+  color:#6a4428!important;
+  border-left-color:#e1d4c8!important;
+}
+.defect-study-host .defect-exam-grade{
+  background:#faf6f1!important;
+  border-top-color:#d9cabc!important;
+}
+.defect-study-host .defect-exam-grade>div{
+  background:#faf6f1!important;
+  color:#544238!important;
+  border-right-color:#e0d5ca!important;
+}
+.defect-study-host .defect-exam-grade b{
+  color:#80583c!important;
+}
+.defect-study-host .defect-exam-foot{
+  background:#fff!important;
+  border-top-color:#e8dfd7!important;
+  color:#7c7168!important;
+}
+
 </style>
 </head>
 <body>
@@ -1489,10 +1889,10 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
 
       <div class="study-pane hidden" data-study-pane="form">
         <div class="card">
-          <span class="eyebrow">SCAA ARABICA CUPPING FORM</span>
-          <h2>Arabica Cupping Form 틀</h2>
+          <span class="eyebrow">SCA</span>
+          <h2>Arabica Cupping Form</h2>
           <div id="cupping-form-model"></div>
-          <p class="note">시험에서는 아래 틀의 항목 위치와 전체 배치를 그대로 그릴 수 있도록 암기합니다.</p>
+          <p class="note">각 칸을 클릭하면 해당 항목의 설명을 아래에서 확인할 수 있습니다.</p>
         </div>
       </div>
 
@@ -1508,8 +1908,6 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
     <section class="screen hidden" data-screen="memory">
       <div class="card">
         <span class="eyebrow">ACTIVE RECALL</span>
-        <h2 style="margin:5px 0 0">먼저 떠올리고 정답 확인</h2>
-
         <div class="memory-filters" aria-label="암기 범위">
           <button type="button" data-memory-filter="all" aria-pressed="true">전체</button>
           <button type="button" data-memory-filter="cupping" aria-pressed="false">커핑</button>
@@ -1563,7 +1961,7 @@ window.APP_DATA = {
         ["200℃", "-", "30~40", "60"],
         ["배출", "203~205℃", "0", "60"]
       ],
-      full: "과테말라 안티구아 필라델피아 SHB는 높은 밀도의 SHB와 워시드 특성을 고려하여 깨끗한 산미와 단맛, 실키한 질감을 살리는 방향으로 로스팅하겠습니다. 초반에는 충분한 열량을 공급하고 Yellow 이후 배기를 확보하겠습니다. 170℃ 이후부터 화력을 단계적으로 낮추어 RoR이 완만하게 감소하도록 유지하고, 1차 크랙은 약 193~195℃를 목표로 하겠습니다. 1차 크랙 이후 약 1분 40초~2분 정도 발현한 뒤 203~205℃에서 배출하여 잘 익은 사과의 산미, 아몬드 같은 고소한 단맛, 실키한 바디와 깔끔한 후미를 표현하겠습니다."
+      full: "과테말라 안티구아 필라델피아 SHB의 높은 밀도와 워시드 특성을 고려한 깨끗한 산미·단맛·실키한 질감 중심 로스팅. 초반 충분한 열량 공급 및 Yellow 이후 배기 확보. 170℃ 이후 단계적 감열을 통한 RoR의 완만한 감소 유지 및 약 193~195℃ 1차 크랙 진입. 1차 크랙 이후 약 1분 40초~2분 발현 및 203~205℃ 배출. 잘 익은 사과의 산미·아몬드 같은 고소한 단맛·실키한 바디·깔끔한 후미 표현."
     },
     {
       id: "colombia",
@@ -1595,7 +1993,7 @@ window.APP_DATA = {
         ["205℃", "-", "30", "60"],
         ["배출", "206~208℃", "0", "60"]
       ],
-      full: "콜롬비아 카우카 수프리모는 산미와 단맛의 균형을 중심으로 로스팅하겠습니다. 초반에는 충분한 열량으로 건조를 진행하고, Maillard 구간을 충분히 확보하여 캐러멜과 초콜릿 계열의 단맛을 형성하겠습니다. 170℃ 이후부터 단계적으로 감열해 RoR이 과도하게 상승하지 않도록 하고, 약 193~195℃에서 1차 크랙에 진입하겠습니다. 1차 크랙 이후 약 1분 50초~2분 10초 정도 발현한 뒤 206~208℃에서 배출하여 과일 산미, 캐러멜과 밀크초콜릿의 단맛, 부드러운 바디와 균형 잡힌 후미를 표현하겠습니다."
+      full: "콜롬비아 카우카 수프리모의 산미와 단맛의 균형 중심 로스팅. 초반 충분한 열량을 통한 건조 진행 및 Maillard 구간 확보로 캐러멜·초콜릿 계열 단맛 형성. 170℃ 이후 단계적 감열을 통한 RoR 과상승 방지 및 약 193~195℃ 1차 크랙 진입. 1차 크랙 이후 약 1분 50초~2분 10초 발현 및 206~208℃ 배출. 과일 산미·캐러멜·밀크초콜릿의 단맛·부드러운 바디·균형 잡힌 후미 표현."
     },
     {
       id: "ethiopia",
@@ -1628,7 +2026,7 @@ window.APP_DATA = {
         ["203℃", "-", "20", "70"],
         ["배출", "205~206℃", "0", "70"]
       ],
-      full: "에티오피아 코케 허니 예가체프 G1은 플로럴한 아로마와 잘 익은 과일의 산미, Honey process에서 오는 시럽 같은 단맛을 살리는 방향으로 로스팅하겠습니다. 초반에는 충분한 에너지를 공급하되 생두 크기와 섬세한 향미를 고려해 과도한 표면 열을 피하겠습니다. 160~170℃ 이후 화력을 점진적으로 줄이고 배기를 충분히 확보하여 연기와 채프를 제거하겠습니다. 1차 크랙 이후 약 1분 20초~1분 40초 정도 발현한 뒤 205~206℃에서 배출하여 플로럴, 과일 산미, 시럽 같은 단맛과 깔끔한 후미를 유지하겠습니다."
+      full: "에티오피아 코케 허니 예가체프 G1의 플로럴 아로마·잘 익은 과일 산미·Honey process의 시럽 같은 단맛 중심 로스팅. 초반 충분한 에너지 공급과 생두 크기 및 섬세한 향미를 고려한 표면 과열 억제. 160~170℃ 이후 점진적 감열 및 충분한 배기를 통한 연기·채프 제거. 1차 크랙 이후 약 1분 20초~1분 40초 발현 및 205~206℃ 배출. 플로럴·과일 산미·시럽 같은 단맛·깔끔한 후미 유지."
     },
     {
       id: "brazil",
@@ -1659,7 +2057,7 @@ window.APP_DATA = {
         ["210℃", "-", "20", "80"],
         ["배출", "211℃", "0", "80"]
       ],
-      full: "브라질 시에라 옐로우 버번 내추럴 NY2 FC는 Natural process와 Yellow Bourbon의 단맛을 중심으로 로스팅하겠습니다. 초반에는 충분한 열량을 공급하고 Yellow 이후부터 배기를 확보합니다. 170℃ 이후부터 화력을 단계적으로 낮추어 표면 과열과 쓴맛을 방지하되, 1차 크랙 이후 열량을 지나치게 빨리 끊어 RoR이 급락하지 않도록 하겠습니다. 약 193℃에서 1차 크랙에 진입한 뒤 2분 30초~2분 40초 정도 충분히 발현하여 211℃에서 배출합니다. 갈색설탕과 밀크초콜릿의 단맛, 피칸과 아몬드 같은 고소함, 건과일의 풍미와 부드러운 바디를 목표로 하겠습니다."
+      full: "브라질 시에라 옐로우 버번 내추럴 NY2 FC의 Natural process와 Yellow Bourbon의 단맛 중심 로스팅. 초반 충분한 열량 공급 및 Yellow 이후 배기 확보. 170℃ 이후 단계적 감열을 통한 표면 과열·쓴맛 방지와 1차 크랙 이후 과도한 감열에 따른 RoR 급락 방지. 약 193℃ 1차 크랙 진입 후 2분 30초~2분 40초 충분한 발현 및 211℃ 배출. 갈색설탕·밀크초콜릿의 단맛, 피칸·아몬드 같은 고소함, 건과일 풍미, 부드러운 바디 표현."
     },
     {
       id: "mandheling",
@@ -1691,7 +2089,7 @@ window.APP_DATA = {
         ["210℃", "-", "20", "70"],
         ["배출", "212~214℃", "0", "70"]
       ],
-      full: "인도네시아 만델링 G1 TP는 묵직한 바디와 다크초콜릿, 허브와 스파이스 계열의 풍미를 살리는 방향으로 로스팅하겠습니다. 초반에는 내부까지 충분한 열이 전달되도록 열량을 확보하고, Yellow 이후부터 배기를 증가시키겠습니다. 170℃ 이후부터 단계적으로 감열하여 과도한 쓴맛과 탄맛을 방지하고 약 194~196℃에서 1차 크랙에 진입하겠습니다. 1차 크랙 후 약 2분 20초~2분 40초 정도 충분히 발현한 뒤 212~214℃에서 배출하여 낮고 둥근 산미, 다크초콜릿, 허브와 스파이스, 묵직한 바디와 긴 후미를 표현하겠습니다."
+      full: "인도네시아 만델링 G1 TP의 묵직한 바디·다크초콜릿·허브·스파이스 계열 풍미 중심 로스팅. 초반 내부까지 충분한 열 전달을 위한 열량 확보 및 Yellow 이후 배기 증가. 170℃ 이후 단계적 감열을 통한 과도한 쓴맛·탄맛 방지 및 약 194~196℃ 1차 크랙 진입. 1차 크랙 이후 약 2분 20초~2분 40초 발현 및 212~214℃ 배출. 낮고 둥근 산미·다크초콜릿·허브·스파이스·묵직한 바디·긴 후미 표현."
     }
   ],
 
@@ -1954,7 +2352,6 @@ window.APP_DATA = {
         <div class="roast-practice-head">
           <div>
             <strong>예시 로스팅 프로파일</strong>
-            <span>설명에 기반한 온도 · 화력 · 배기 구성 예시</span>
           </div>
           <span class="practice-badge answer">예시</span>
         </div>
@@ -2012,14 +2409,7 @@ window.APP_DATA = {
 
     return `
       <div class="q5-entry">
-        <div class="q5-entry-head">
-          <div>
-            <strong>내 답안 작성</strong>
-            <span>Category 1과 Category 2를 구분하여 계산</span>
-          </div>
-        </div>
-
-        <div class="q5-category-stack">
+<div class="q5-category-stack">
           ${categoryBlock(1, "Primary Defects")}
           ${categoryBlock(2, "Secondary Defects")}
         </div>
@@ -2190,10 +2580,11 @@ window.APP_DATA = {
     const summaryBtn = $("#summary-answer");
     const fullBtn = $("#full-answer");
 
-    // 기본 상태: 1·2·3·5번은 요약/풀버전 두 버튼
+    // 기본 상태
     summaryBtn.textContent = "요약 답안";
     summaryBtn.classList.remove("wide");
     fullBtn.classList.remove("hidden");
+    variantBtn.classList.remove("hidden");
     $("#answer-panel").classList.add("hidden");
 
     if (currentQuestion === 1) {
@@ -2216,7 +2607,7 @@ window.APP_DATA = {
       const q = data.questions[currentQuestion];
       label.textContent = `문제 ${currentQuestion} · ${q.title}`;
       body.innerHTML = `<span class="eyebrow">기출형</span><h2>${esc(q.title)}</h2><p>${esc(q.prompt)}</p>`;
-      variantBtn.textContent = "문제 다시 보기";
+      variantBtn.classList.add("hidden");
 
       // 4번은 정답이 커핑폼 하나이므로 '답안' 단일 버튼으로 통일
       if (currentQuestion === 4) {
@@ -2344,6 +2735,22 @@ window.APP_DATA = {
     return answerSection("Buyer 평가 순서", answerSteps(items), "시간의 흐름 + Cupping Form 순서");
   }
 
+  function beanFullBulletMarkup(fullText) {
+    const items = String(fullText || '')
+      .split('.')
+      .map(s => s.trim())
+      .filter(Boolean);
+
+    return `
+      <div class="bean-explanation-list">
+        ${items.map(item => `
+          <div class="bean-explanation-item">
+            <span class="bean-explanation-mark" aria-hidden="true"></span>
+            <p>${esc(item)}</p>
+          </div>`).join('')}
+      </div>`;
+  }
+
   function beanFlavorChips(bean) {
     return `
       <div class="bean-answer-flavors">
@@ -2363,7 +2770,7 @@ window.APP_DATA = {
       ${beanFlavorChips(bean)}
       <div class="bean-answer-copy">
         <span class="eyebrow">설명</span>
-        <p>${esc(bean.full)}</p>
+        ${beanFullBulletMarkup(bean.full)}
       </div>
       ${roastAnswerTable(bean)}`;
   }
@@ -2387,18 +2794,58 @@ window.APP_DATA = {
             <div><span>등급</span><strong>${grade(t.total)}</strong></div>
           </div>`;
       } else {
-        const used = t.rows.filter(d => d.eq > 0);
+        const answerCategoryTable = (cat, title) => {
+          const rows = t.rows.filter(d => d.cat === cat && d.count > 0);
+          return `
+            <section class="q5-answer-category">
+              <div class="q5-answer-category-head">
+                <strong>${title}</strong>
+                <span>${cat === 1 ? "Primary Defects" : "Secondary Defects"}</span>
+              </div>
+              <div class="table-wrap compact">
+                <table class="q5-answer-table">
+                  <thead>
+                    <tr>
+                      <th>결점</th>
+                      <th>출제 개수</th>
+                      <th>환산 기준</th>
+                      <th>환산 점수</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${rows.length ? rows.map(d => `
+                      <tr>
+                        <td>${esc(d.name)}</td>
+                        <td><strong>${d.count}개</strong></td>
+                        <td>${d.ratio}개 → 1점</td>
+                        <td><strong>${d.eq}점</strong></td>
+                      </tr>`).join("") : `
+                      <tr><td colspan="4" class="q5-answer-empty">출제된 결점 없음</td></tr>`}
+                  </tbody>
+                </table>
+              </div>
+            </section>`;
+        };
+
         html = `
-          <div class="answer-lines">
-            ${used.length ? used.map(d => `<p><strong>${esc(d.name)}</strong>: ${d.count}개 ÷ ${d.ratio} → ${d.eq}점</p>`).join("") : "<p>환산되는 결점 없음</p>"}
+          <div class="q5-answer-category-stack">
+            ${answerCategoryTable(1, "Category 1")}
+            ${answerCategoryTable(2, "Category 2")}
           </div>
-          <div class="score-grid">
-            <div><span>Category 1</span><strong>${t.c1}</strong></div>
-            <div><span>Category 2</span><strong>${t.c2}</strong></div>
-            <div><span>총 결점수</span><strong>${t.total}</strong></div>
-            <div><span>등급</span><strong>${grade(t.total)}</strong></div>
+
+          <div class="q5-answer-summary">
+            <div><span>Category 1 합계</span><strong>${t.c1}점</strong></div>
+            <div><span>Category 2 합계</span><strong>${t.c2}점</strong></div>
+            <div><span>총 결점수</span><strong>${t.total}점</strong></div>
+            <div class="grade"><span>에티오피아 등급</span><strong>${grade(t.total)}</strong></div>
           </div>
-          <p class="note">등급 기준: G1 0~4 / G2 5~12 / G3 13~24. 환산 시 나머지는 올림하지 않습니다.</p>`;
+
+          <div class="q5-answer-grade-note">
+            <span><b>G1</b> 0~4</span>
+            <span><b>G2</b> 5~12</span>
+            <span><b>G3</b> 13~24</span>
+            <small>환산 시 완성된 묶음만 계산하고 나머지는 올림하지 않음</small>
+          </div>`;
       }
     } else if (currentQuestion === 4) {
       html = `
@@ -2425,6 +2872,12 @@ window.APP_DATA = {
     panel.classList.remove("hidden");
   }
 
+  function beanStudyFullText(bean) {
+    const full = String(bean.full || "");
+    const prefix = `${bean.name}의 `;
+    return full.startsWith(prefix) ? full.slice(prefix.length) : full;
+  }
+
   function renderStudyBean(bean) {
     currentStudyBean = bean;
     setActive("[data-bean]", el => el.dataset.bean === bean.id);
@@ -2438,7 +2891,7 @@ window.APP_DATA = {
       <div class="keyword-wrap bean-keywords">${bean.keywords.map(k => `<span class="tag">${esc(k)}</span>`).join("")}</div>
       <section class="bean-exam-answer">
         <span class="eyebrow">시험용 풀답안</span>
-        <p class="full-answer">${esc(bean.full)}</p>
+        ${beanFullBulletMarkup(beanStudyFullText(bean))}
       </section>`;
   }
 
@@ -2451,7 +2904,7 @@ window.APP_DATA = {
   const cuppingFieldDescriptions = {
     sample: ["Sample No.", "샘플 번호를 기록하는 칸입니다."],
     roast: ["Roast Level of Sample", "샘플의 로스팅 정도를 시각적으로 확인해 표시합니다. Buyer는 Fragrance 평가 전에 확인합니다."],
-    fragrance: ["Fragrance / Aroma", "분쇄 상태의 Fragrance와 물을 부은 뒤의 Aroma를 평가합니다. 양식 안에는 Dry · Crust · Break와 강도 표시 영역이 함께 있습니다. 시험자료 기준 Fragrance : Wet Aroma : Break는 약 5 : 3 : 2로 반영합니다."],
+    fragrance: ["Fragrance / Aroma", "분쇄 상태의 Fragrance와 물을 부은 뒤의 Aroma를 평가합니다."],
     flavor: ["Flavor", "약 10분의 첫 번째 Slurping에서 평가합니다. 커피에서 느껴지는 지배적인 향미입니다."],
     aftertaste: ["Aftertaste", "Flavor와 함께 약 10분의 첫 번째 Slurping에서 평가합니다. 마신 뒤 남는 후미와 여운입니다."],
     acidity: ["Acidity", "약 15분의 두 번째 Slurping에서 평가합니다. 산미와 Intensity(High / Low)를 함께 봅니다."],
@@ -2461,7 +2914,7 @@ window.APP_DATA = {
     clean: ["Clean Cup", "약 20분의 세 번째 Slurping에서 평가합니다. 결점향 여부와 컵의 깨끗함·투명성을 봅니다."],
     sweetness: ["Sweetness", "약 20분의 세 번째 Slurping에서 평가합니다. 단맛의 속성을 확인합니다."],
     overall: ["Overall", "약 20분의 세 번째 Slurping에서 평가합니다. 평가자의 전체적인 기호와 종합 인상을 반영합니다."],
-    defects: ["Defects (subtracted)", "결점이 있으면 감점하는 영역입니다. 원본 양식처럼 Taint - 2 / Fault - 4, # of cups, intensity를 기록하여 결점 점수를 계산합니다."],
+    defects: ["Defects (subtracted)", "결점이 있으면 감점하는 영역입니다. Taint - 2 / Fault - 4, # of cups, intensity를 기록하여 결점 점수를 계산합니다."],
     total: ["Total Score", "각 평가항목의 점수를 합산한 Total Score를 적는 칸입니다."],
     final: ["Final Score", "Total Score에서 Defect를 반영한 최종 점수를 적는 칸입니다."],
     notes: ["Notes", "샘플의 특징이나 평가 중 확인한 내용을 메모하는 영역입니다."],
@@ -2485,23 +2938,17 @@ window.APP_DATA = {
       <text x="${x + 17}" y="${y + 15}" text-anchor="middle" class="cf-score-label">Score</text>`;
 
     return `
-      <div class="cf-guide">
-        <span>시험지의 실제 순서와 배치를 기준으로 구현</span>
-        <strong>각 영역을 누르면 아래 설명만 바뀝니다.</strong>
-      </div>
       <div class="cf-svg-scroll cf-form-scroll">
         <svg class="cf-form-svg" viewBox="0 0 1180 430" xmlns="http://www.w3.org/2000/svg" aria-label="Arabica Cupping Form 재현 도식">
           <rect x="1" y="1" width="1178" height="428" class="cf-form-page" />
 
           <!-- Header -->
           <g class="cf-form-header">
-            <g aria-hidden="true">
-              <circle cx="58" cy="57" r="25" class="cf-logo-ring" />
-              <path d="M47 42 C62 28 74 45 66 56 C60 64 48 62 47 75 M53 51 C57 47 65 49 64 56 C63 62 56 64 51 61" class="cf-logo-mark" />
-              <text x="27" y="92" class="cf-logo-small">Specialty</text>
-              <text x="27" y="104" class="cf-logo-small">Coffee</text>
-              <text x="27" y="116" class="cf-logo-small">Association</text>
-            </g>
+            <image x="48" y="17" width="66" height="82"
+              href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE4AAABhCAYAAAB4UJf+AAAY8ElEQVR4nN1da1CU59m+XvYELLDsLrssy1HZRY7qKgcpFbF4iImdmERrqhMn1tEefnTMtKZ2OknbybSTpolTO22nidNOm4lRm1GpEYlBMCJBQTYKEVjYA7rCspwW9sBhWeD+flD2i5Y9GXbx+66Z54d4P897v9f7nO7D8yxDRHgSYLFYaGJiwqdcYmIiEwJ1fIK91AoAgEajocrKSlRXV3uUCQsLg0gkwmuvvUYrVqxYcvKeCOLa2tpw9uxZ3Lhxw6MMh8NBUVERnE5nCDXzjLClVmBsbIw6OjrQ1tbmVY7D4eCb3/wmYmNjQ6OYDyw5cXq9HlqtFjabzaNMWFgY+Hw+ysvLIRKJQqidZyw5cQ0NDWhpafEqw+VykZqaCpVKhaioqCWf34AngDi9Xo/e3l6vMrGxsSgtLQWXyw2RVr6xpMR1dXWRVqvF6OioVzmJRIKdO3ciOjr6iehtwBITd+PGDdy/fx/T09MeZfh8PtLS0pCXlxdCzXxjSYlrampCf3+/Vxm5XI6ioqInZm6bx5IRNzQ0RB0dHRgZGfEql5qaitLS0hBp5T+WhLjx8XGqqanBvXv3MDk56VGOzWZDJpNhxYoVIdTOPywVcbh48aLPRSE5ORk5OTmQSqVP1DAFloi44eFh1NbWet30AkBOTg5UKlWItAoMISfOYrHQF198AYvFgpmZGa+yGRkZyMnJCZFmgSHkxA0ODqK2ttYnaWlpacjKykJSUtITN0yBJfCOmEwm1NXVuYljsVgQCoWQSCSIiYmBUCgEh8PBmjVrsHbt2lCr5zdCSpzFYiGdTgetVgs2m424uDjEx8dDpVKhsLAQCoUCubm5iIqKgkAgeCJ72jxCSpzZbEZXVxfYbDYSExNx6NAh7N69G8uXL3+iSVoIISXOYDDAZDLh17/+NXbu3AmxWAyRSMSYTCZSq9W4ffs2zGYzDAYDrFYrXC4X+Hw+4uPjIZfLsW7dOqxevRrJycng8/lLSjYTypiDXq+n7u5uZGRkICUlhWlqaqJr167h1q1b0Ov1GBkZwcTEBBwOB6ampkBEYLPZCA8PR0REBOLi4iAUCrF27Vps2bIFRUVFiI2NXRICQ0ocAFitVnI4HLh8+TJqampw+/ZtGI1GjI2N+d1GYmIicnNzUVhYiLKyMnzrW98KOXkhX1UfPHiAf//73zh9+jR0Op1Xk8sTent70dvbC7Vajfb2dlitViouLoZMJgsdgUQUstLa2kq/+MUviM/nE8MwBOBrFw6HQwqFgv72t79Rb28vhepdQkaaVqulV199lfh8/qIQ9mhRKpX04Ycfks1mCwl5ISGtv7+ffv7zn1NSUtKi9bRHC5vNprKyMjp//nxIiAuJyVVVVYVr166hv79/7msFAdPT01Cr1aipqUFnZ2fQV7ygE2cwGOjixYtob2+Hy+Xyux6PxwObHdjaZbfbce3aNa8ZAYuFoK+q169fR2trq0/fW1hYGKKjo5GVlYXs7Gx3/NThcKCvrw8ajQZ6vd5rfAIAdDod6uvrsWPHDgqmgyCoxFmtVqqqqsLQ0JB3Jf5jgpWUlODpp5/Gpk2bEB8fzwCA3W4njUaD6upqVFRUoL293eOe7z82LlgsFgYGBpCUlLT4LzWPYE6gOp2O4uPjfU7siYmJdPjwYTKbzV4n9gsXLlBBQQFxuVwCQAzDEIfDIYFAQAkJCVReXk4/+clPqKKighwOR1AXiaA1bLPZqLKyksRisU/ifvSjH/m9B3vvvfdIpVIRAIqIiKCcnBw6evQoNTQ00PDwcEhWVCIK3lCdmJhAV1eXzzlp2bJlyM7Ohlwu92s+2rZtG+x2O7Zs2YL8/Hzk5uZCIBAgISEhpGZX0IhzOp3o6enx6enNzs6GQqHwu92kpCTmueeeI5fLBalUumRGftCIm56ehsViwezsrFc5qVQacAbSsmXLltx/F9R9nC/SAMDlcvkczk8igkYci8WCQCAAw3jvHCaTCYODg8FSI2gIGnFcLhdyuRwsFsurnMlkwsDAQLDUCBqCRlxERAQyMjJ8mk0GgwG1tbVobGx8MtLf/UTQFgeBQMCoVCoSCASwWq0eV9epqSnU19cjPj4eiYmJQTWTFhNBNbkkEgkKCgowOjrqNSupr68PFy9exNTUFEpLSyk3NxdxcXHgcDhzSrLZiImJeaIIDSpxfD6fefbZZ6m1tdUrcdPT09DpdDCZTGhpaYFKpYJEInGnrnI4HMTGxlJsbCz4fD5EIhEkEgni4uKWLEsz6MGagYEBOnjwIGpqagIKyDwKFouFlJQUSKVSpKenIysrCytWrIBCoUBCQgJiYmIQGRn5/yvmcOLECVq7du2ie38jIiIoNzeX/vCHP9D169d9Ogn+Txj5Xy1DQ0N0+PBhEgqFi0ocwzDEZrMpKiqKYmNjaf/+/XTp0iUaGhoKOoEhIY6I0NLSQocPHyaRSBSUmAMAiouLo4KCAnrllVfo+vXrQSUvZHHVlStXMnv27CGGYfCPf/wDo6Ojc19uETE0NASbzQaz2Yzu7m4YDAbatm0bJBLJos99IQ1IFxQUMBwOh1gsFqqrq9HV1QV/jloGgqmpKTx48ADDw8Po6+tDT08PduzYQdnZ2YtKXsgj+atXr2YSEhIoJSUF1dXVaGtrg9lsxvj4+KI+Z3x8HE1NTdDr9XA6ndi1axfl5uYuGnkhzx35Krq7u+n06dOoqqpCd3c3nE4npqam4HK5MDMzg9nZWfdwnp2d9cvbshDi4uJw6NAhvPzyy1AqlYtC3pISN4+hoSHSarX44osvoNFo0NnZiZGREdjtdkxOTmJmZgZ2ux02m+2x5kWGYSAWi7F3714cPXp0UXJMngji5mGxWMjpdMLpdGJ6etrd44gI09PT6Ovrw7lz53Djxg3cu3cPVqvV77ZZLBbS0tKwe/du/OY3v/n/RZwvjI+PU3d3N/r7+9He3o7a2lrU1dXBYrH41RN5PB5yc3Nx5MgR7N69+2uR90QRZ7VayWAwYGhoCBMTE5iZmQGLxUJ0dDTkcjkkEglEIhEDAIODg3T37l00NjbiypUraGxshMPh8PmMmJgYFBUV4dixY/g6i8UTcSbfaDSSXq9HZ2cn7ty5A5PJBIfDgZmZGbDZbMTGxmL58uWQy+VIT0+njIwMJCUlYePGjUxRURFlZmYiMjISDQ0NGB4e9vosm82GGzduoLKyEnFxcfTY812oLIeFisViocbGRvrd735HGzdu9CsFbMWKFfTKK6/Q5cuXqa+vz20dfPbZZ7Rr1y6/4rgcDodWr15NdXV1j21dLClx//znP6mkpITCw8MDNq+ysrLoV7/6Fen1evfLt7e304EDB4jFYvnVxtGjR6mzs/OxyFsSwrq7u2nfvn2UmppKPB7vsbwmHA6HZDIZffvb3yaDweB++erqanrhhRf8auMb3/gGffrpp/83iGtubqa9e/eSRCIhNpv9tYx6FotFYrGYXnjhBVKr1UREGB0dpVOnTtGqVat81o+JiaE333yTTCZTwOQ91stXV1fTiRMn6OOPPw6oqzc1NdHBgwdJJBItmm8uLCyMYmJiaP/+/dTU1EREBKPRSG+//TZFRET4fM6ePXuovr4+YOICXlXHx8epqqoKNTU1kMlkyM7Oxtq1a0kqlSI1NRVyuXzBY+D379+nS5cuoaKiAhaLxWP7DMNAKpUiOjoaPB4PLpcLFovFY6rY7OwsbDYbzp07B6VSCalUSqmpqczWrVupoqICzc3NXjPbW1tbodFoUFJSEhAPARPX19cHnU6HlpYWtLS0oKamBnFxccjKysK6deuQn5+P9PR0kkqlDyXC1NbWoqqqymPwOSIiAjKZDElJScjJyUFCQgKio6MxMTEBg8GA1tZW94mbhSL/VqsVV65cQVZWFlJTU5GQkIA9e/ZAo9F4JU6r1aKrqytQGgIfqtXV1bRhwwaPXV8gEFBZWRn99a9/dXd/g8FAu3fv9liHy+WSSqWi48ePk9VqXXDYdHR00L59+ygxMdHj3Mjn8+m1115zt9Hf308KhYLCwsK8DteXXnqJurq6AhquAQek29vbvWZY2mw2mEymh2QqKipw9+5dj3Xy8/Nx+PBh/PjHP2Y8hQEzMzOZv/zlLzhw4ADS0tI8ttXb2wudTgcAkEqljEqlgkAg8PpOw8PD6Onp8SrzKAIeqt3d3V6NayKCRCLBqlWrAMxdOnX16lUYDIYF5VevXo29e/fimWee8flsPp/PvPTSS6TT6fDgwQM4nU7weLz5eRZlZWVYs2YNkpOT3XUUCgVu3rzpNTxpsViCT9zo6KjPY0RCoRBKpRIAYDQaYTabPXp6y8rKsHHjRojFYr9MH4VCwTz11FMUHh6O8PBwrFq1CsnJyUhISEBKSorblp1HTk4OYmJivLY5MTHh836AR/E4q6rPtPuoqCjI5XIAc5OvJ+8ul8tFbm4usrKyArIXS0tLkZGRgcjISOTl5Xmtu3z5cvD5fK/tjY+PB+SiAh6DOKvV6vPyOx6P546w9/b2euyhYrEYYrE4UBWQmprKpKam+iUbFxcHHo/nVWZyctIvz8pXEfDi4A9xX8X4+LjHhBupVIrIyMhAVQgIPB4PYWHeX5PFYgV8GCVg4iIjI93JMF8Xg4ODix7lehQOh8NnxmdUVFTAPd8v4ux2OzkcDgLmbtfyRZzL5cL4+DgBgEwm8zhUBgYG0NvbC5vNRoEobTabyWAw0PDwsM96Y2NjAaXK2u12v3Tx2T/n73jLz89HVFSUX8RNTExgaGgIKSkp7lsdFsL09DSuX7+OvLw8rF+/3h99AQAff/wxqqqqwGKxkJmZSWVlZVAqlUhJSVnI1PMZeoyMjIRAIIDD4aCamhqkpKSQQqHwmlrmkzi9Xo/Lly9DJpMhPj4e8fHx4PP5Xs9mjYyMwGAwICUlBcuWLYNUKgWPx1twbmxoaEBSUhJiY2PJ1woJAGq1mj799FN88sknmJ2dRVNTE27fvg25XA6lUkmFhYVYtWqVO41fr9f7zJKKjY2FTCaD0+lES0sLjEYjBAKB122M16E6Pj5Oer0ezc3NuH//PoC5G2h87cQHBgbc917GxMQw2dnZkEgkC8oajUZcvHgRZ86c8Xlc8s6dO/T+++9DrVZjYmICTqcTRqMRlZWVOHHiBI4fP46rV68+tEJqNBrY7Xav+goEAshkMkxPT+PevXuora2F2Wz2Wsdrj7t//z46OzthNpsDIq6/vx9qtdr979LSUqjVaphMpgWDyhqNBqdOncLMzAy++93vklAoRFRUFMLCwuByueBwOGAymfD3v/8dFy5c8OgosNlsmJ2dde/bTCYT3b171+vmls1muxMVp6am0NnZCa1WixdffNHrO3olrrm5GU1NTbDb7bhz5w7GxsYoLS3N5128w8PDaGlpgU6nI4VCwZSXl+Ozzz6DWq32+PUNBgPeeecdnD59Gtu3b0dRUREiIyNhNpvR3NyMs2fPwm63zzkRPaCoqAgFBQUQCoXM8PAwnT9/Hvfu3fO6fRKJRFi2bBkSExMZrVZLnZ2dsFqtaG9vR3d3N3k8jOLNA/DGG29QfHw8cblcysvLcx9UO3jwoM84gUwmo1dffdXtqaisrKSnn37aax2GYYjFYlFUVBSJRCISi8UkFAqJz+f79HAAoLfeesudXKjRaCg3N9d90tBTKSoqopMnT5LFYqEzZ864PS9bt26lqqoqjx4Tj3OcwWCgrq4uWCwWuFwuDA4OQqfTYWxsjFavXo2MjAyPXxGY63Xnz5+H0WgEABQXF2PPnj1eHYZEhJmZGTgcDlgsFgwPD2NkZARjY2M+80a2b9+O4uJixMfHM2azma5evQqdTufTPMzMzER6ejr6+/tRW1vrfs68g9MTPBI3f/uMy+UCEWFsbAyXLl3C6Ogo8vLy3Ea8J7hcLhiNRpw4cQIGg4GEQiGzceNGfO9734NKpfK5m/cXPB4PhYWFOHDgALKzswEALS0tOHfuHCYnJ70O7ZiYGKhUKiiVSgwPD+PWrVtu+aGhIXR0dECj0SzYgEftm5qa3AsCMGfPVVdXY3BwEOnp6cjLy/O523a5XPjoo49QXV2Nvr4+ksvlzLZt23Dw4EGsW7fOp/HtC1FRUVCpVPjhD3+IDRs2QCQSMTdv3qSKigo0NTX5rJ+fn4+VK1cCADo6OmAwGNzEuVwudHR0eL4Ve6Hx29/fT1u3biUOh/PQ/MPn8+nUqVNksViosrKSysvL/QqorF+/nj744AN3bq7D4aCTJ0/Ss88+S0qlkqKjowMK0ERGRlJaWhpt376d3n33Xfc8NJ8u6+tUNsMwFB4eTu+88w4ZjUaqr69f0EMtk8no6NGjC85zCxL3/vvvU2Zm5oIP3bt3LzU2NpLRaKS33nrL72ByeXk5ffjhhzQ6OupWxGw207vvvktbtmwhqVRKsbGxFBERQVwul9hstrtwuVyKiIigmJgYEovFVFJSQm+++SZ1dHS427p37x4dOnSIJBKJT13YbDbl5ORQfX092e12+uMf/0hxcXELyj7//PM0MDDwX+QtSNz3v/99j19NKBTSn//8ZxoeHqb6+noqKyvzizg2m01ZWVn0+uuvU09Pz0OKmEwmunbtGv3+97+n7du305o1ayg9PZ1SU1NJoVBQQUEB7dixg44cOUKnTp16KHpPRLh//z69+OKLJJFI/Ao7RkdH07Fjx6ivr48aGhroP7nJC8oWFBTQv/71L9/E6XQ6ysrK8hgQYbFYtGXLFrpw4QINDg7SBx98QNHR0X5tF3g8HqWmptLOnTvp3LlzD/U+h8NBZrOZtFottbW1UWtrK7W0tFBrayu1t7eTTqejnp4eGhkZcdfp7OykY8eOUWlpKYnFYr9SH6Kjo6m8vNwd/f/tb39LaWlpHuWTk5Pppz/9qXfiRkdH6dy5cz67u0gkojfeeIMcDgd1d3fTkSNH/E7DZ7FYJBQKad26dXTo0CE6efIktbe3e4xuLVSampro7bffpueff56ysrL8TqMIDw+ndevW0dmzZ917vV27dnnd64WHh9OmTZtobGzsIf0eshxsNhtqa2t9xhS4XC64XC74fD7D5/Px8ssv07yN5yvNamZmBiMjI7h58yba2trQ1taGzMxMpKSkIC0tjRISEsDj8dxemKmpKXcaa19fHwYHB6HRaHD79m3o9XpMTU15fd5XkZGRgT179qC8vBzAXPCbiLzuEScnJ2E0GnHjxg13PeARk2tgYMAv4rKzsx+6Rjs7O5vZv38/TU9Po66uzid587Db7fj888/x+eefg8/nIzk5GQqFAuHh4RAKheByuZicnHRvhrVaLYaGhgK6amgeycnJeOaZZ7Br1y73xaUZGRlMeno6icVir5fVj46OorKyEmvWrCGhUMgAXyHOarWSXq9He3u7VwXCwsIW3ABv27aNAUBEhJqaGp8eiUcxNjYGjUbjdbf+OAgLC4NQKMSOHTvwne98578Sp1etWgWlUumVuLGxMajValitVgiFwrk/fnVReP311/2aXE+dOuVxPrpy5Qo999xzQbvuLJDCMAwJBAL62c9+Rm1tbQvqrNFo6Ac/+IFf8+OZM2fIYrHQQ3Ncd3c3KisrfX7BgoICJCQkePz/4uJiMAwDNpuNjz76yGd7wQKHw0FiYiJ++ctfoqysDGlpaQt6OVasWMEoFAqKjIz06imenZ3FnTt3UFhYONfr5rcC7733HkVFRflk/tEsyIWK1WqlW7du0Z/+9CdKT0/36aFY7CIQCGjz5s104cIFv45iVlRUUHFxsdc2w8LCKDc3l27evPm/PW7+cIa32GJYWBhiYmJQWFiI+Ph4j3LAnNc3Pz8faWlpFB0djcuXL6O5uRk9PT2LfvToq+Dz+VCpVNi4cSOKi4vn512fWLZsGdauXev1B9VmZ2eh1Wqh1WqRmZlJbGAukaa5udlr42w2G0qlEqmpqX5fXhwXF8fs27cP6enpVFdXh6amJrS3t6O3txfj4+NePRf+gsViQSKRICUlBTk5Odi8eTM2bNjg911NAJCUlISVK1fC13B1Op1obW1Ffn7+XI/T6XTuDB9P4HK5WL9+vc88jIVQUlLC5ObmUllZGa5du4aGhgbodDqMjo66jx0FEsKLiIgAn893x0MLCwtRWlqKDRs2PNblVCKRiMnMzCSFQoEvv/zS6wdVq9XYtGkT2K2trTT/S2zefGRRUVHYtWvXY/9MgEAgYIqLi1FcXAwA+OSTT6iurg63bt2CTqfDyMgIZmZm/mv+YRjGrReLxQLDMMjIyMCaNWvcJT8//2sfMZLJZNi0aRO+/PJLr3KNjY3Q6/Vg63Q62O12JCYmehRms9lIS0tDZmbm19XPjaeeeoopKSkhl8uFsbEx9Pf3w2AwoK+vDw6Hwx2Bn7/1gcViQalUQi6XQywWuzMKFusCg4SEBGzevBnHjx/3egPZ+Pg4dDodmIGBAerv7/e6MDAMM59SFdRbFkZGRsjpdGJmZgbT09MgIrBYLHA4HDAMg8jIyKBelzE6OkotLS0+596kpCT8DwMkJ/M2mY4OAAAAAElFTkSuQmCC"
+              preserveAspectRatio="xMidYMid meet"
+              class="cf-sca-official-mark"
+              aria-label="Specialty Coffee Association official mark" />
 
             <text x="155" y="37" class="cf-form-brand">Specialty Coffee Association</text>
             <text x="155" y="63" class="cf-form-title">Arabica Cupping Form</text>
@@ -2517,13 +2964,13 @@ window.APP_DATA = {
           <g class="cf-form-field" data-cf-field="quality">
             <rect x="650" y="20" width="485" height="130" class="cf-quality-box cf-field-box" />
             <text x="672" y="50" class="cf-quality-title">Quality Scale</text>
-            <text x="672" y="78" class="cf-quality-text">6.00 · GOOD</text>
-            <text x="785" y="78" class="cf-quality-text">7.00 · VERY GOOD</text>
-            <text x="925" y="78" class="cf-quality-text">8.00 · EXCELLENT</text>
-            <text x="1053" y="78" class="cf-quality-text">9.00 · OUTSTANDING</text>
-            <text x="672" y="101" class="cf-quality-sub">6.25</text><text x="785" y="101" class="cf-quality-sub">7.25</text><text x="925" y="101" class="cf-quality-sub">8.25</text><text x="1053" y="101" class="cf-quality-sub">9.25</text>
-            <text x="672" y="120" class="cf-quality-sub">6.50</text><text x="785" y="120" class="cf-quality-sub">7.50</text><text x="925" y="120" class="cf-quality-sub">8.50</text><text x="1053" y="120" class="cf-quality-sub">9.50</text>
-            <text x="672" y="139" class="cf-quality-sub">6.75</text><text x="785" y="139" class="cf-quality-sub">7.75</text><text x="925" y="139" class="cf-quality-sub">8.75</text><text x="1053" y="139" class="cf-quality-sub">9.75</text>
+            <text x="705" y="78" text-anchor="middle" class="cf-quality-text">6.00 · GOOD</text>
+            <text x="830" y="78" text-anchor="middle" class="cf-quality-text">7.00 · VERY GOOD</text>
+            <text x="955" y="78" text-anchor="middle" class="cf-quality-text">8.00 · EXCELLENT</text>
+            <text x="1080" y="78" text-anchor="middle" class="cf-quality-text">9.00 · OUTSTANDING</text>
+            <text x="705" y="101" text-anchor="middle" class="cf-quality-sub">6.25</text><text x="830" y="101" text-anchor="middle" class="cf-quality-sub">7.25</text><text x="955" y="101" text-anchor="middle" class="cf-quality-sub">8.25</text><text x="1080" y="101" text-anchor="middle" class="cf-quality-sub">9.25</text>
+            <text x="705" y="120" text-anchor="middle" class="cf-quality-sub">6.50</text><text x="830" y="120" text-anchor="middle" class="cf-quality-sub">7.50</text><text x="955" y="120" text-anchor="middle" class="cf-quality-sub">8.50</text><text x="1080" y="120" text-anchor="middle" class="cf-quality-sub">9.50</text>
+            <text x="705" y="139" text-anchor="middle" class="cf-quality-sub">6.75</text><text x="830" y="139" text-anchor="middle" class="cf-quality-sub">7.75</text><text x="955" y="139" text-anchor="middle" class="cf-quality-sub">8.75</text><text x="1080" y="139" text-anchor="middle" class="cf-quality-sub">9.75</text>
           </g>
 
           <!-- Main form -->
@@ -2692,30 +3139,31 @@ window.APP_DATA = {
 
   function defectStudyMarkup() {
     const primary = [
-      ["Full Black", "1 = 1"],
-      ["Full Sour", "1 = 1"],
-      ["Dried Cherry / Pod", "1 = 1"],
-      ["Fungus Damaged", "1 = 1"],
-      ["Foreign Matter", "1 = 1"],
-      ["Severe Insect Damaged", "5 = 1"]
+      ["Full Black", 1],
+      ["Full Sour", 1],
+      ["Dried Cherry / Pod", 1],
+      ["Fungus Damaged", 1],
+      ["Foreign Matter", 1],
+      ["Severe Insect Damaged", 5]
     ];
     const secondary = [
-      ["Partial Black", "3 = 1"],
-      ["Partial Sour", "3 = 1"],
-      ["Parchment", "5 = 1"],
-      ["Floater", "5 = 1"],
-      ["Immature", "5 = 1"],
-      ["Withered", "5 = 1"],
-      ["Shell", "5 = 1"],
-      ["Broken / Chipped / Cut", "5 = 1"],
-      ["Hull / Husk", "5 = 1"],
-      ["Slight Insect Damaged", "10 = 1"]
+      ["Partial Black", 3],
+      ["Partial Sour", 3],
+      ["Parchment", 5],
+      ["Floater", 5],
+      ["Immature", 5],
+      ["Withered", 5],
+      ["Shell", 5],
+      ["Broken / Chipped / Cut", 5],
+      ["Hull / Husk", 5],
+      ["Slight Insect Damaged", 10]
     ];
 
-    const rows = (items) => items.map(([name, ratio]) => `
-      <div class="defect-exam-row">
+    const rows = (items) => items.map(([name, count]) => `
+      <div class="defect-exam-row defect-exam-row-3col">
         <span class="defect-exam-name">${name}</span>
-        <strong class="defect-exam-ratio">${ratio}</strong>
+        <strong class="defect-exam-count">${count}개</strong>
+        <strong class="defect-exam-score">1점</strong>
       </div>`).join("");
 
     return `
@@ -2727,8 +3175,8 @@ window.APP_DATA = {
               <span>Category 1 defects</span>
               <small>(Primary Defects)</small>
             </div>
-            <div class="defect-exam-subhead">
-              <span>Defect</span><span>환산</span>
+            <div class="defect-exam-subhead defect-exam-subhead-3col">
+              <span>Defect</span><span>결점 개수</span><span>환산 점수</span>
             </div>
             ${rows(primary)}
           </section>
@@ -2738,8 +3186,8 @@ window.APP_DATA = {
               <span>Category 2 defects</span>
               <small>(Secondary Defects)</small>
             </div>
-            <div class="defect-exam-subhead">
-              <span>Defect</span><span>환산</span>
+            <div class="defect-exam-subhead defect-exam-subhead-3col">
+              <span>Defect</span><span>결점 개수</span><span>환산 점수</span>
             </div>
             ${rows(secondary)}
           </section>
@@ -2788,11 +3236,15 @@ window.APP_DATA = {
 
     const buyerFlow = [
       `주최측 안내와 주의사항 확인 → 커핑 폼에 <strong>샘플 넘버·날짜·이름</strong> 기재`,
-      `샘플의 <strong>로스팅 정도</strong>를 시각적으로 체크한 뒤 <strong>Fragrance</strong> 평가<br>
-       <span class="study-sub">Fragrance 기준: 7.0~7.5점을 기준으로 명확성·복합성·강도 등을 반영<br>
-       6.0~6.5: 고무탄 내·암모니아·페놀 등 / 6.5~6.75: 흙·나무·익히지 않은 야채 등<br>
-       7.0~7.5: 볶은 곡물·볶은 견과류 / 7.5~8.0: 고소함 + 잘 익은 과일의 달콤·새콤함<br>
-       8.0~8.5: 과일의 달콤·새콤함 + 블랙 티·허브·꽃향</span>`,
+      `샘플의 <strong>로스팅 정도</strong>를 시각적으로 체크한 뒤 <strong>Fragrance</strong> 평가
+       <div class="fragrance-score-guide">
+         <div class="fragrance-score-head"><strong>Fragrance 점수 가이드</strong><span>기준점 7.0~7.5</span></div>
+         <div class="fragrance-score-row"><b>6.0~6.5</b><span>고무탄 내 · 암모니아 · 페놀 등</span></div>
+         <div class="fragrance-score-row"><b>6.5~6.75</b><span>흙 · 나무 · 익히지 않은 야채 등</span></div>
+         <div class="fragrance-score-row"><b>7.0~7.5</b><span>볶은 곡물 · 볶은 견과류</span></div>
+         <div class="fragrance-score-row"><b>7.5~8.0</b><span>고소함 + 잘 익은 과일의 달콤·새콤함</span></div>
+         <div class="fragrance-score-row"><b>8.0~8.5</b><span>과일의 달콤·새콤함 + 블랙티 · 허브 · 꽃향</span></div>
+       </div>`,
       `물 주입 후 <strong>Wet Aroma → Break → Skimming</strong> 진행 후 점수 기입<br>
        <span class="study-sub"><strong>Fragrance : Wet Aroma : Break = 5 : 3 : 2</strong> 정도의 비율로 점수 산정</span>`,
       `물 주입 후 <strong>10분</strong>: 첫 번째 Slurping → <strong>Flavor(지배적 향미) / Aftertaste(후미·여운)</strong> 평가`,
@@ -2817,36 +3269,48 @@ window.APP_DATA = {
   function memoryCards() {
     const cards = [
       // ─────────────────────────────
-      // 커핑 암기 26문제
+      // 커핑 암기 32문제
       // ─────────────────────────────
-      { cat: "cupping", label: "커핑", q: "Buyer 6명·생두 6종일 때 최소 커핑 컵 수는?", a: "36개 — 샘플당 6개(린싱 컵 포함)" },
+
+      // ① 준비 · 세팅
+      { cat: "cupping", label: "커핑", q: "커핑 원두의 로스팅 시점은?", a: "24시간 전" },
+      { cat: "cupping", label: "커핑", q: "커핑 원두의 최소 디게싱 시간은?", a: "8시간 이상" },
+      { cat: "cupping", label: "커핑", q: "커핑 원두의 보관 조건은?", a: "실온(24℃ 기준) / 직사광선 없는 서늘한 곳" },
+      { cat: "cupping", label: "커핑", q: "커핑 물의 온도는?", a: "92~94℃" },
+      { cat: "cupping", label: "커핑", q: "생두 6종일 때 최소 커핑 컵 수는?", a: "36개 — 샘플당 6개(린싱 컵 포함)" },
       { cat: "cupping", label: "커핑", q: "Buyer 6명일 때 최소 커핑 스푼 수는?", a: "12개 — 1인당 2개" },
-      { cat: "cupping", label: "커핑", q: "커핑에 필요한 기타 기물은?", a: "커핑 폼, 그라인더, 저울, 온도계, 린싱 컵, 전기포트, 타이머, 린넨 및 행주, 필기구" },
-      { cat: "cupping", label: "커핑", q: "샘플 원두는 한 컵당 몇 g씩 몇 컵에 담는가?", a: "약 11g씩 / 5개의 커핑 컵" },
-      { cat: "cupping", label: "커핑", q: "시험자료의 디팅 그라인더 분쇄도는?", a: "7.5" },
-      { cat: "cupping", label: "커핑", q: "샘플 원두를 분쇄하기 전에 먼저 분쇄하는 것은?", a: "린싱 원두" },
-      { cat: "cupping", label: "커핑", q: "물을 붓기 전에 평가하는 것은?", a: "Fragrance — 분쇄커피의 향" },
-      { cat: "cupping", label: "커핑", q: "물을 부은 후 평가하는 향은?", a: "Wet Aroma — 추출커피의 향" },
-      { cat: "cupping", label: "커핑", q: "약 5분에 진행하는 것은?", a: "Break + Skimming" },
-      { cat: "cupping", label: "커핑", q: "Skimming이 끝난 뒤 린싱 컵은 어떻게 하는가?", a: "사용한 린싱 컵을 정리하고 새 린싱 컵에 물을 준비" },
-      { cat: "cupping", label: "커핑", q: "10분의 평가항목은?", a: "Flavor / Aftertaste" },
-      { cat: "cupping", label: "커핑", q: "15분의 평가항목은?", a: "Acidity / Body / Balance" },
-      { cat: "cupping", label: "커핑", q: "20분의 평가항목은?", a: "Uniformity / Clean Cup / Sweetness / Overall" },
-      { cat: "cupping", label: "커핑", q: "Fragrance : Wet Aroma : Break의 점수 비율은?", a: "5 : 3 : 2 정도" },
-      { cat: "cupping", label: "커핑", q: "Buyer가 커핑 폼에 처음 기재하는 것은?", a: "샘플 넘버, 날짜, 이름" },
-      { cat: "cupping", label: "커핑", q: "Fragrance 전에 시각적으로 확인하는 것은?", a: "로스팅 정도" },
+      { cat: "cupping", label: "커핑", q: "샘플 원두 소분량은?", a: "약 11g × 5컵" },
+      { cat: "cupping", label: "커핑", q: "디팅 그라인더 분쇄도는?", a: "7.5" },
+      { cat: "cupping", label: "커핑", q: "커핑에 필요한 측정·추출 기물은?", a: "그라인더 / 저울 / 온도계 / 전기포트 / 타이머" },
+      { cat: "cupping", label: "커핑", q: "그 밖에 필요한 기물은?", a: "커핑 폼 / 린싱 컵 / 린넨·행주 / 필기구" },
 
-      { cat: "cupping", label: "커핑", q: "Fragrance 평가의 기본 기준점수는?", a: "7.0~7.5점" },
-      { cat: "cupping", label: "커핑", q: "고무탄 내·암모니아·페놀 향의 점수 범위는?", a: "6.0~6.5점" },
-      { cat: "cupping", label: "커핑", q: "흙·나무·익히지 않은 야채 향의 점수 범위는?", a: "6.5~6.75점" },
-      { cat: "cupping", label: "커핑", q: "볶은 곡물·볶은 견과류 향의 점수 범위는?", a: "7.0~7.5점" },
-      { cat: "cupping", label: "커핑", q: "고소한 향 + 잘 익은 과일의 달콤·새콤한 향의 점수 범위는?", a: "7.5~8.0점" },
-      { cat: "cupping", label: "커핑", q: "과일의 달콤·새콤함 + 블랙티·허브·꽃향의 점수 범위는?", a: "8.0~8.5점" },
+      // ② 시간순서
+      { cat: "cupping", label: "커핑", q: "물을 붓기 전에 평가하는 것은?", a: "Fragrance" },
+      { cat: "cupping", label: "커핑", q: "물을 부은 후 평가하는 향은?", a: "Wet Aroma" },
+      { cat: "cupping", label: "커핑", q: "약 5분에 진행하는 것은?", a: "Break → Skimming" },
+      { cat: "cupping", label: "커핑", q: "10분 평가항목은?", a: "Flavor / Aftertaste" },
+      { cat: "cupping", label: "커핑", q: "15분 평가항목은?", a: "Acidity / Body / Balance" },
+      { cat: "cupping", label: "커핑", q: "20분 평가항목은?", a: "Uniformity / Clean Cup / Sweetness / Overall" },
+      { cat: "cupping", label: "커핑", q: "Fragrance : Wet Aroma : Break 비율은?", a: "5 : 3 : 2" },
 
-      { cat: "cupping", label: "커핑", q: "Flavor / Aftertaste의 의미는?", a: "Flavor: 커피에서 느껴지는 지배적인 향미 / Aftertaste: 커피를 마신 뒤 느껴지는 후미·여운" },
-      { cat: "cupping", label: "커핑", q: "Acidity / Body / Balance의 의미는?", a: "Acidity: 산미 / Body: 농도와 촉감 / Balance: 맛·향·바디의 조화로움" },
-      { cat: "cupping", label: "커핑", q: "Uniformity / Clean Cup / Sweetness / Overall의 의미는?", a: "Uniformity: 균일성 / Clean Cup: 결점향의 여부 및 투명성 / Sweetness: 단맛의 속성 / Overall: 평가자의 기호" },
-      { cat: "cupping", label: "커핑", q: "평가 종료 후 점수 산출 순서는?", a: "각 평가항목 점수 → Total Score → Defect 반영 → Final Score" },
+      // ③ 평가항목
+      { cat: "cupping", label: "커핑", q: "Flavor란?", a: "지배적인 향미" },
+      { cat: "cupping", label: "커핑", q: "Aftertaste란?", a: "후미·여운" },
+      { cat: "cupping", label: "커핑", q: "Acidity란?", a: "산미" },
+      { cat: "cupping", label: "커핑", q: "Body란?", a: "농도·촉감" },
+      { cat: "cupping", label: "커핑", q: "Balance란?", a: "맛·향·바디의 조화" },
+      { cat: "cupping", label: "커핑", q: "Uniformity란?", a: "균일성" },
+      { cat: "cupping", label: "커핑", q: "Clean Cup이란?", a: "결점향 여부·투명성" },
+      { cat: "cupping", label: "커핑", q: "Sweetness란?", a: "단맛의 속성" },
+      { cat: "cupping", label: "커핑", q: "Overall이란?", a: "평가자의 기호" },
+      { cat: "cupping", label: "커핑", q: "평가 후 점수 계산 순서는?", a: "Total Score → Defect → Final Score" },
+
+      // ④ Fragrance 점수
+      { cat: "cupping", label: "커핑", q: "고무탄 내·암모니아·페놀은?", a: "6.0~6.5점" },
+      { cat: "cupping", label: "커핑", q: "흙·나무·익히지 않은 야채는?", a: "6.5~6.75점" },
+      { cat: "cupping", label: "커핑", q: "볶은 곡물·볶은 견과류는?", a: "7.0~7.5점" },
+      { cat: "cupping", label: "커핑", q: "고소함 + 잘 익은 과일의 달콤·새콤함은?", a: "7.5~8.0점" },
+      { cat: "cupping", label: "커핑", q: "과일의 달콤·새콤함 + 블랙티·허브·꽃향은?", a: "8.0~8.5점" },
 
       // ─────────────────────────────
       // 결점두 암기 19문제
