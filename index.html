@@ -839,6 +839,70 @@ summary{cursor:pointer;font-weight:900;min-height:44px;display:flex;align-items:
   .cf-inline-detail p{font-size:.8rem;line-height:1.6}
 }
 
+
+/* ===== 2026-08 가시성 개선: 결점두 / 2·3번 답안 / 1번 답안 ===== */
+.defect-exam-sheet{max-width:880px;margin-left:auto;margin-right:auto;border-radius:16px}
+.defect-exam-caption{padding:10px 12px;font-size:.9rem}
+.defect-exam-head{min-height:58px;padding:9px 11px;font-size:.86rem;line-height:1.3}
+.defect-exam-head small{font-size:.72rem}
+.defect-exam-subhead,.defect-exam-row{grid-template-columns:minmax(0,1fr) 76px}
+.defect-exam-subhead{font-size:.74rem}
+.defect-exam-subhead span{padding:7px 9px}
+.defect-exam-row{font-size:.81rem;line-height:1.3}
+.defect-exam-name{padding:9px 10px}
+.defect-exam-ratio{padding:9px 5px;font-size:.79rem}
+.defect-exam-grade>div{padding:10px 5px;font-size:.82rem}
+.defect-exam-grade b{font-size:.88rem}
+.defect-exam-foot{padding:9px 11px;font-size:.75rem;line-height:1.5}
+@media(max-width:620px){
+  .defect-exam-grid{grid-template-columns:1fr}
+  .defect-exam-col{border-right:0;border-bottom:8px solid var(--bg)}
+  .defect-exam-col:last-child{border-bottom:0}
+  .defect-exam-head{min-height:54px;font-size:.88rem;padding:9px 12px}
+  .defect-exam-head small{font-size:.72rem}
+  .defect-exam-subhead,.defect-exam-row{grid-template-columns:minmax(0,1fr) 82px}
+  .defect-exam-subhead{font-size:.76rem}
+  .defect-exam-row{font-size:.84rem}
+  .defect-exam-ratio{font-size:.82rem}
+  .defect-exam-grade>div{font-size:.8rem}
+  .defect-exam-foot{font-size:.74rem}
+}
+.answer-section{margin-top:14px}
+.answer-section:first-child{margin-top:0}
+.answer-section-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:0 0 9px;padding:0 2px}
+.answer-section-head strong{font-size:.95rem}
+.answer-section-head span{color:var(--muted);font-size:.73rem;font-weight:750}
+.answer-step-list{display:grid;gap:8px}
+.answer-step{display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px;align-items:start;padding:10px 11px;border:1px solid var(--border);border-radius:13px;background:var(--surface-2)}
+.answer-step-num{display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:var(--accent);color:#fff;font-size:.76rem;font-weight:900}
+.answer-step-text{min-width:0;padding-top:3px;font-size:.86rem;line-height:1.65}
+.answer-point-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.answer-point{min-width:0;padding:11px 12px;border:1px solid var(--border);border-radius:13px;background:var(--surface-2);font-size:.83rem;line-height:1.55}
+.answer-point strong,.answer-point span{display:block}
+.answer-point span{margin-top:4px;color:#5b534c}
+.answer-subnote{margin-top:5px;padding:7px 9px;border-radius:9px;background:#fff;color:var(--muted);font-size:.77rem;line-height:1.55}
+.ratio-callout{display:inline-block;margin-top:6px;padding:6px 9px;border-radius:9px;background:var(--accent-2);font-size:.78rem}
+.score-band-list{display:grid;gap:4px;margin-top:7px}
+.score-band-list>div{display:grid;grid-template-columns:68px minmax(0,1fr) auto;gap:7px;align-items:center;padding:6px 8px;border-radius:8px;background:#fff;border:1px solid var(--border);font-size:.73rem;line-height:1.4}
+.score-band-list b{white-space:nowrap}
+.score-band-list em{color:var(--muted);font-style:normal;white-space:nowrap;font-size:.68rem;font-weight:800}
+.bean-answer-flavors{margin-bottom:14px}
+.bean-flavor-label{display:block;margin-bottom:8px;color:var(--muted);font-size:.75rem;font-weight:900}
+.bean-flavor-chips{display:flex;flex-wrap:wrap;gap:7px}
+.bean-flavor-chip{display:inline-flex;align-items:center;min-height:38px;padding:0 12px;border:1px solid #d6c7b8;border-radius:999px;background:var(--accent-2);color:var(--text);font-size:.82rem;font-weight:850}
+.bean-answer-copy{padding:14px 15px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2)}
+.bean-answer-copy p{margin:7px 0 0;line-height:1.75;font-size:.88rem}
+.bean-roast-line{color:var(--muted);font-size:.78rem!important}
+@media(max-width:620px){
+  .answer-point-grid{grid-template-columns:1fr}
+  .answer-step{grid-template-columns:30px minmax(0,1fr);padding:9px 9px}
+  .answer-step-num{width:27px;height:27px}
+  .answer-step-text{font-size:.83rem}
+  .score-band-list>div{grid-template-columns:66px minmax(0,1fr)}
+  .score-band-list em{grid-column:2}
+  .bean-flavor-chip{min-height:36px;padding:0 11px;font-size:.8rem}
+}
+
 </style>
 </head>
 <body>
@@ -1673,26 +1737,162 @@ window.APP_DATA = {
     }
   }
 
+
+  function answerSteps(items) {
+    return `
+      <div class="answer-step-list">
+        ${items.map((item, i) => `
+          <div class="answer-step">
+            <span class="answer-step-num">${i + 1}</span>
+            <div class="answer-step-text">${item}</div>
+          </div>`).join("")}
+      </div>`;
+  }
+
+  function answerSection(title, body, subtitle = "") {
+    return `
+      <section class="answer-section">
+        <div class="answer-section-head">
+          <strong>${title}</strong>
+          ${subtitle ? `<span>${subtitle}</span>` : ""}
+        </div>
+        ${body}
+      </section>`;
+  }
+
+  function q2SummaryMarkup() {
+    const equipment = [
+      `<strong>원두</strong> — 24시간 전 로스팅 · 8시간 이상 디개싱 · 실온(24℃ 기준) · 직사광선 없는 서늘한 곳`,
+      `<strong>물</strong> — 정수된 물 또는 일반 생수(50~100ppm 권장) · 92~94℃`,
+      `<strong>커핑 컵</strong> — 샘플당 6개(린싱 컵 포함) · 6종 기준 최소 36개`,
+      `<strong>커핑 스푼</strong> — 1인당 2개 · Buyer 6명 기준 최소 12개`,
+      `<strong>기타</strong> — 커핑 폼 · 그라인더 · 저울 · 온도계 · 린싱 컵 · 전기포트 · 타이머 · 린넨 및 행주 · 필기구`
+    ];
+    const flow = [
+      `<strong>Fragrance</strong> 확인`,
+      `물 주입 후 <strong>Wet Aroma</strong> 확인`,
+      `<strong>약 5분</strong> — Break · Skimming`,
+      `<strong>약 10분</strong> — Flavor · Aftertaste`,
+      `<strong>약 15분</strong> — Acidity · Body · Balance`,
+      `<strong>약 20분</strong> — Uniformity · Clean Cup · Sweetness · Overall`,
+      `평가 종료 — <strong>Defect 반영 → Final Score</strong>`
+    ];
+    return `
+      ${answerSection("필요 기물", answerSteps(equipment))}
+      ${answerSection("진행 핵심", answerSteps(flow), "시간 순서대로 암기")}`;
+  }
+
+  function q3SummaryMarkup() {
+    const items = [
+      `안내 확인 → 커핑 폼에 <strong>샘플 넘버 · 날짜 · 이름</strong> 기재`,
+      `로스팅 정도 확인 → <strong>Fragrance</strong> 평가`,
+      `물 주입 후 <strong>Wet Aroma · Break · Skimming</strong> → Fragrance : Wet Aroma : Break = <strong>5 : 3 : 2</strong>`,
+      `<strong>10분</strong> — Flavor · Aftertaste`,
+      `<strong>15분</strong> — Acidity · Body · Balance`,
+      `<strong>20분</strong> — Uniformity · Clean Cup · Sweetness · Overall`,
+      `<strong>Total Score</strong> 계산 → Defect 반영 → <strong>Final Score</strong>`,
+      `다음 샘플도 같은 방법으로 진행`,
+      `전체 종료 후 <strong>Calibration · 샘플 정보 의견 공유 → 구매 여부 결정</strong>`
+    ];
+    return answerSteps(items);
+  }
+
+  function q2FullMarkup() {
+    const equipment = [
+      `<strong>원두</strong><span>24시간 전 로스팅 · 8시간 이상 디개싱 · 실온(24℃ 기준) · 직사광선 없는 서늘한 곳에 보관</span>`,
+      `<strong>물</strong><span>정수된 물 또는 일반 생수(50~100ppm 권장) · 92~94℃ 사용</span>`,
+      `<strong>커핑 컵</strong><span>샘플당 6개(린싱 컵 포함) · 생두 6종 기준 최소 36개</span>`,
+      `<strong>커핑 스푼</strong><span>1인당 2개 · Buyer 6명 기준 최소 12개</span>`,
+      `<strong>기타</strong><span>커핑 폼 · 그라인더 · 저울 · 온도계 · 린싱 컵 · 전기포트 · 타이머 · 린넨 및 행주 · 필기구</span>`
+    ];
+    const flow = [
+      `참가자에게 <strong>사전정보와 진행 안내사항</strong> 전달`,
+      `각 샘플을 약 <strong>11g씩 5개의 커핑 컵</strong>에 소분`,
+      `<strong>디팅 그라인더 7.5</strong> → 린싱 원두 먼저 분쇄 → 샘플 원두 순서대로 분쇄`,
+      `테이블에 순서대로 세팅 → <strong>Fragrance</strong> 체크 안내`,
+      `<strong>92~94℃</strong> 물 주입 · 타이머 시작 → <strong>Wet Aroma</strong> 체크`,
+      `약 <strong>5분</strong> → <strong>Break · Skimming</strong>`,
+      `Skimming 종료 → 사용한 린싱 컵 정리 · <strong>새 린싱 컵</strong> 준비`,
+      `<strong>10분</strong> → 첫 Slurping · <strong>Flavor / Aftertaste</strong>`,
+      `<strong>15분</strong> → 두 번째 Slurping · <strong>Acidity / Body / Balance</strong>`,
+      `<strong>20분</strong> → 세 번째 Slurping · <strong>Uniformity / Clean Cup / Sweetness / Overall</strong>`,
+      `평가 종료 → <strong>Defect 점수 · Final Score</strong> 산출 → 의견 공유`,
+      `의견 공유 중 다음 샘플 준비 → <strong>동일 절차 반복</strong>`
+    ];
+    return `
+      ${answerSection("필요한 기물 · 최소 수량", `
+        <div class="answer-point-grid">
+          ${equipment.map(item => `<div class="answer-point">${item}</div>`).join("")}
+        </div>
+      `)}
+      ${answerSection("커핑 진행 순서", answerSteps(flow), "주최자 입장")}`;
+  }
+
+  function q3FullMarkup() {
+    const fragranceBands = `
+      <div class="score-band-list">
+        <div><b>6.0~6.5</b><span>고무탄 내 · 암모니아 · 페놀 등</span><em>부정</em></div>
+        <div><b>6.5~6.75</b><span>흙 · 나무 · 익히지 않은 야채 등</span><em>부정</em></div>
+        <div><b>7.0~7.5</b><span>볶은 곡물 · 볶은 견과류</span><em>긍정</em></div>
+        <div><b>7.5~8.0</b><span>고소함 + 잘 익은 과일의 달콤·새콤함</span><em>긍정</em></div>
+        <div><b>8.0~8.5</b><span>과일의 달콤·새콤함 + 블랙 티 · 허브 · 꽃향</span><em>매우 긍정</em></div>
+      </div>`;
+    const items = [
+      `주최측 안내·주의사항 확인 → 커핑 폼에 <strong>샘플 넘버 · 날짜 · 이름</strong> 기재`,
+      `<strong>로스팅 정도</strong>를 시각적으로 확인 → <strong>Fragrance</strong> 평가
+       <div class="answer-subnote">기본 기준 <strong>7.0~7.5점</strong>에서 향의 명확성 · 복합성 · 강도를 반영</div>
+       ${fragranceBands}`,
+      `물 주입 후 <strong>Wet Aroma → Break → Skimming</strong>
+       <div class="ratio-callout">Fragrance : Wet Aroma : Break = <strong>5 : 3 : 2</strong></div>`,
+      `<strong>10분 · 첫 Slurping</strong> → Flavor(지배적 향미) · Aftertaste(후미·여운)`,
+      `<strong>15분 · 두 번째 Slurping</strong> → Acidity(산미) · Body(농도·촉감) · Balance(맛·향·바디의 조화)`,
+      `<strong>20분 · 세 번째 Slurping</strong> → Uniformity(균일성) · Clean Cup(결점향 여부·투명성) · Sweetness(단맛 속성) · Overall(평가자 기호)`,
+      `각 항목 점수 합산 → <strong>Total Score</strong> → Defect 반영 → <strong>Final Score</strong>`,
+      `주최자 진행에 따라 <strong>다음 샘플도 동일하게</strong> 평가`,
+      `모든 샘플 종료 → <strong>Calibration · 샘플 정보 의견 공유</strong> → 생두 구입 여부 결정`
+    ];
+    return answerSection("Buyer 평가 순서", answerSteps(items), "시간의 흐름 + Cupping Form 순서");
+  }
+
+  function beanFlavorChips(bean) {
+    return `
+      <div class="bean-answer-flavors">
+        <span class="bean-flavor-label">핵심 맛</span>
+        <div class="bean-flavor-chips">
+          ${bean.keywords.map(k => `<span class="bean-flavor-chip">${esc(k)}</span>`).join("")}
+        </div>
+      </div>`;
+  }
+
+  function q1SummaryMarkup(bean) {
+    const roastInfo = bean.summary.slice(1, 4).map(x => esc(x)).join(" · ");
+    const strategy = bean.summary[bean.summary.length - 1] || "";
+    return `
+      ${beanFlavorChips(bean)}
+      <div class="bean-answer-copy">
+        <span class="eyebrow">핵심 로스팅 방향</span>
+        <p>${esc(strategy.replace(/^핵심:\s*/, ""))}</p>
+        <p class="bean-roast-line">${roastInfo}</p>
+      </div>`;
+  }
+
+  function q1FullMarkup(bean) {
+    return `
+      ${beanFlavorChips(bean)}
+      <div class="bean-answer-copy">
+        <span class="eyebrow">설명</span>
+        <p>${esc(bean.full)}</p>
+      </div>`;
+  }
+
   function showAnswer(type) {
     const panel = $("#answer-panel");
     let html = "";
 
     if (currentQuestion === 1) {
-      if (type === "summary") {
-        html = `
-          ${roastAnswerTable(currentBean)}
-          <div class="answer-lines">${currentBean.summary.map(x => `<p>${esc(x)}</p>`).join("")}</div>`;
-      } else {
-        html = `
-          <div class="bean-facts">
-            <div><span>배전</span><strong>${esc(currentBean.roastLevel)}</strong></div>
-            <div><span>1C</span><strong>${esc(currentBean.firstCrack)}</strong></div>
-            <div><span>배출</span><strong>${esc(currentBean.drop)}</strong></div>
-            <div><span>발현</span><strong>${esc(currentBean.development)}</strong></div>
-          </div>
-          ${roastAnswerTable(currentBean)}
-          <p class="full-answer">${esc(currentBean.full)}</p>`;
-      }
+      html = type === "summary"
+        ? q1SummaryMarkup(currentBean)
+        : q1FullMarkup(currentBean);
     } else if (currentQuestion === 5) {
       const t = defectTotals(currentDefects);
       if (type === "summary") {
@@ -1723,7 +1923,11 @@ window.APP_DATA = {
         <p class="note">커핑폼의 각 칸을 눌러 항목 설명을 확인할 수 있습니다. 시험에서는 항목의 위치와 전체 틀을 함께 암기하세요.</p>`;
     } else {
       const q = data.questions[currentQuestion];
-      if (type === "summary") {
+      if (currentQuestion === 2) {
+        html = type === "summary" ? q2SummaryMarkup() : q2FullMarkup();
+      } else if (currentQuestion === 3) {
+        html = type === "summary" ? q3SummaryMarkup() : q3FullMarkup();
+      } else if (type === "summary") {
         html = `<div class="answer-lines">${q.summary.map(x => `<p>${esc(x)}</p>`).join("")}</div>`;
       } else {
         html = `<p class="full-answer">${esc(q.full)}</p>`;
